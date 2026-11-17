@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 330" width="420" height="330"><g transform="translate(110,6)"><g>
+    <g fill="none" stroke="#231F1A" stroke-width="24" stroke-linejoin="round">
+      <rect x="100" y="76" width="68" height="46" rx="23"/>
+      <path d="M123,122 H94 C94,180 32,180 32,118"/>
+    </g>
+    <path d="M20,119 L24,106 L28,119 Z M28,119 L32,106 L36,119 Z M36,119 L40,106 L44,119 Z" fill="#231F1A"/>
+    <circle cx="134" cy="40" r="17" fill="#EC9915"/>
+  </g></g>
+  <text x="210" y="262" direction="rtl" text-anchor="middle" font-family="'Alexandria', 'IBM Plex Sans Arabic', Tahoma, sans-serif" font-weight="800" font-size="58" fill="#231F1A">ضواحي البادية</text>
+  <text x="210" y="306" text-anchor="middle" font-family="'Alexandria', 'IBM Plex Sans Arabic', Tahoma, sans-serif" font-weight="800" font-size="22" letter-spacing="6" fill="#231F1A">DWAHI-ALBADIA</text>
+</svg>

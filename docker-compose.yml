@@ -1,4 +1,4 @@
-# بيئة التطوير المحلية (04 §9): MySQL 8.4 و Redis و خادم Laravel
+# بيئة التطوير المحلية (04 §9): MySQL 8.4 و Redis و خادم Laravel (backend/)
 # التشغيل: docker compose up -d
 name: dwahi
 
@@ -38,15 +38,16 @@ services:
     build: ./infra/docker/api
     image: dwahi-api-dev
     command: php artisan serve --host=0.0.0.0 --port=8000
-    working_dir: /var/www/api
+    # المسارات داخل الحاوية تطابق المستودع، فأوامر مثل scramble:export تعمل بنفس المسار النسبي في كل مكان
+    working_dir: /var/www/backend
     environment:
       PHP_CLI_SERVER_WORKERS: 4
     volumes:
-      - ./apps/api:/var/www/api
+      - ./backend:/var/www/backend
       # الاعتماديات في Volume داخلي لا في مجلد Windows: قراءتها أسرع بكثير. تُثبَّت بـ composer install داخل الحاوية
-      - api-vendor:/var/www/api/vendor
+      - api-vendor:/var/www/backend/vendor
       # عقد OpenAPI المولّد (04 §13)، يقرؤه الويب والتطبيقات لتوليد عملائها
-      - ./openapi:/var/www/openapi
+      - ./contracts:/var/www/contracts
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
@@ -58,10 +59,10 @@ services:
   worker:
     image: dwahi-api-dev
     command: php artisan queue:work --tries=3 --backoff=10
-    working_dir: /var/www/api
+    working_dir: /var/www/backend
     volumes:
-      - ./apps/api:/var/www/api
-      - api-vendor:/var/www/api/vendor
+      - ./backend:/var/www/backend
+      - api-vendor:/var/www/backend/vendor
     depends_on:
       - api
     profiles: ["worker"]
