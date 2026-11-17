@@ -1,0 +1,72 @@
+# بيئة التطوير المحلية (04 §9): MySQL 8.4 و Redis و خادم Laravel
+# التشغيل: docker compose up -d
+name: dwahi
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --default-time-zone=+00:00
+      # لإنشاء Triggers (سجل التدقيق الإلحاقي) بمستخدم التطبيق مع تفعيل السجل الثنائي
+      - --log-bin-trust-function-creators=1
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./infra/docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+
+  api:
+    build: ./infra/docker/api
+    image: dwahi-api-dev
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    working_dir: /var/www/api
+    environment:
+      PHP_CLI_SERVER_WORKERS: 4
+    volumes:
+      - ./apps/api:/var/www/api
+      # الاعتماديات في Volume داخلي لا في مجلد Windows: قراءتها أسرع بكثير. تُثبَّت بـ composer install داخل الحاوية
+      - api-vendor:/var/www/api/vendor
+      # عقد OpenAPI المولّد (04 §13)، يقرؤه الويب والتطبيقات لتوليد عملائها
+      - ./openapi:/var/www/openapi
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  worker:
+    image: dwahi-api-dev
+    command: php artisan queue:work --tries=3 --backoff=10
+    working_dir: /var/www/api
+    volumes:
+      - ./apps/api:/var/www/api
+      - api-vendor:/var/www/api/vendor
+    depends_on:
+      - api
+    profiles: ["worker"]
+
+volumes:
+  mysql-data:
+  redis-data:
+  api-vendor:

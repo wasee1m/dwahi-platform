@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* رموز التصميم من 01_srs.md §9.1 (هوية "الضاد"). هذا الملف يعكس الجدول ولا يعرّف قيماً جديدة.
+   الوضع الداكن للتطبيقين فقط في P1، فالموقع بالنهار فقط. */
+:root {
+  --sun: #ec9915;
+  --sun-deep: #d57e10;
+  --on-sun: #231f1a;
+  --sun-text: #9a5b00;
+  --ink: #231f1a;
+  --ink-muted: #6b6256;
+  --sand-100: #f7f3ec;
+  --sand-0: #ffffff;
+  --sand-200: #e9e2d3;
+  --sand-300: #d2cbba;
+  --night: #2b386b;
+  --on-night: #f6f1e7;
+  --focus: #2b386b;
+  --success: #1e7a3a;
+  --info: #1a5fb4;
+  --danger: #b3261e;
+
+  /* ألوان الحالات من 01 §9.2 */
+  --status-neutral: #6b7280;
+  --status-progress: #1a73e8;
+  --status-waiting: #b26a00;
+  --status-active: #7c3aed;
+  --status-hold: #c2410c;
+  --status-success: #1e8e3e;
+  --status-closed: #374151;
+  --status-negative: #c5221f;
+}
+
+@theme inline {
+  --color-sun: var(--sun);
+  --color-sun-deep: var(--sun-deep);
+  --color-on-sun: var(--on-sun);
+  --color-sun-text: var(--sun-text);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-sand-0: var(--sand-0);
+  --color-sand-100: var(--sand-100);
+  --color-sand-200: var(--sand-200);
+  --color-sand-300: var(--sand-300);
+  --color-night: var(--night);
+  --color-on-night: var(--on-night);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-danger: var(--danger);
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+
+  --font-display: var(--font-alexandria), var(--font-plex-arabic), system-ui, sans-serif;
+  --font-sans: var(--font-plex-arabic), var(--font-plex), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--sand-100);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--sand-100);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+:lang(en) h1, :lang(en) h2, :lang(en) .display-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* حلقة التركيز 2px بإزاحة 2px (01 §9.1) */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* الأرقام والمبالغ بخط ثابت العرض (06 §4.2) */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}

@@ -1,0 +1,11 @@
+.env
+node_modules/
+.next/
+apps/api/vendor/
+apps/api/.env
+apps/api/storage/*.key
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

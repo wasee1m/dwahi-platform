@@ -1,0 +1,64 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../core/api.dart';
+
+/// المستخدم الحالي (MeResource في العقد openapi/openapi.json)
+class Me {
+  Me(this.json);
+  final Map<String, dynamic> json;
+
+  String get fullName => json['full_name'] as String? ?? '';
+  String? get phone => json['phone'] as String?;
+  bool get needsOnboarding => json['needs_onboarding'] == true;
+  List<Map<String, dynamic>> get organizations =>
+      (json['organizations'] as List? ?? const []).cast<Map<String, dynamic>>();
+}
+
+/// حالة الدخول: null = غير مسجل. عند التشغيل تُستعاد الجلسة من رمز التحديث المحفوظ.
+class AuthController extends AsyncNotifier<Me?> {
+  Api get _api => ref.read(apiProvider);
+
+  @override
+  Future<Me?> build() async {
+    final store = ref.read(tokenStoreProvider);
+    if (await store.readRefresh() == null) return null;
+    try {
+      return Me(await _api.get('/me')); // 401 ← تجديد تلقائي في Api
+    } on ApiException {
+      await store.clear();
+      return null;
+    }
+  }
+
+  /// M-03: يرسل الرمز. يعيد رمز التطوير إن وُجد (بيئة local فقط).
+  Future<String?> requestCode(String phone) async {
+    final data = await _api.post('/auth/otp/request', {'phone': phone}, auth: false);
+    return data['debug_code'] as String?;
+  }
+
+  /// M-04: يتحقق ويحفظ الجلسة
+  Future<Me> verify(String phone, String code) async {
+    final data = await _api.post('/auth/otp/verify', {'phone': phone, 'code': code, 'client': 'customer_app'}, auth: false);
+    await ref.read(tokenStoreProvider).save(data);
+    final me = Me(data['user'] as Map<String, dynamic>);
+    state = AsyncData(me);
+    return me;
+  }
+
+  /// M-05: إكمال الملف (US-06)
+  Future<void> completeOnboarding(Map<String, dynamic> body) async {
+    state = AsyncData(Me(await _api.post('/me/onboarding', body)));
+  }
+
+  Future<void> logout() async {
+    try {
+      await _api.post('/auth/logout', {});
+    } on ApiException {
+      // الجلسة منتهية أصلاً
+    }
+    await ref.read(tokenStoreProvider).clear();
+    state = const AsyncData(null);
+  }
+}
+
+final authProvider = AsyncNotifierProvider<AuthController, Me?>(AuthController.new);
