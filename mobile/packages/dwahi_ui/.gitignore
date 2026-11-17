@@ -1,0 +1,8 @@
+# مخرجات Flutter المحلية
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# حزمة مكتبة: القفل في التطبيقات التي تستخدمها، لا هنا
+pubspec.lock

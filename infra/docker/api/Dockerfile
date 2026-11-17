@@ -13,4 +13,4 @@ RUN apt-get update \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY php.ini /usr/local/etc/php/conf.d/zz-dwahi.ini
 
-WORKDIR /var/www/api
+WORKDIR /var/www/backend

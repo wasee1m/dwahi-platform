@@ -1,4 +1,4 @@
-# بوابات الجودة لكل تعديل (04 §9، 09 §13.3)
+# بوابات الجودة لكل تعديل (04 §9، 09 §13.3): backend و frontend و mobile كل منها في وظيفة مستقلة
 name: CI
 
 on:
@@ -11,12 +11,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  api:
-    name: API (Laravel + MySQL 8.4)
+  backend:
+    name: Backend (Laravel + MySQL 8.4)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apps/api
+        working-directory: backend
     services:
       mysql:
         image: mysql:8.4
@@ -66,30 +66,30 @@ jobs:
       # العقد مولّد من الكود: يجب أن يكون الملف المحفوظ مطابقاً للكود
       - name: OpenAPI contract is up to date
         run: |
-          php artisan scramble:export --path=../../openapi/openapi.json
-          git diff --exit-code -- ../../openapi/openapi.json || (echo "::error::openapi/openapi.json is stale. Run scramble:export and commit it." && exit 1)
+          php artisan scramble:export --path=../contracts/openapi/openapi.json
+          git diff --exit-code -- ../contracts/openapi/openapi.json || (echo "::error::contracts/openapi/openapi.json is stale. Run scramble:export and commit it." && exit 1)
 
       # منع التغيير الكاسر للتطبيقات القديمة (04 §4.1): تحتاج /api/v2 بدلاً منه
       - name: No breaking API changes
         if: github.event_name == 'pull_request'
         working-directory: .
         run: |
-          git show origin/${{ github.base_ref }}:openapi/openapi.json > /tmp/base.json 2>/dev/null || { echo "No base contract yet"; exit 0; }
-          docker run --rm -v /tmp:/base -v "$PWD/openapi":/head tufin/oasdiff:v1.11.7 breaking /base/base.json /head/openapi.json --fail-on ERR
+          git show origin/${{ github.base_ref }}:contracts/openapi/openapi.json > /tmp/base.json 2>/dev/null || { echo "No base contract yet"; exit 0; }
+          docker run --rm -v /tmp:/base -v "$PWD/contracts/openapi":/head tufin/oasdiff:v1.11.7 breaking /base/base.json /head/openapi.json --fail-on ERR
 
-  web:
-    name: Web (Next.js)
+  frontend:
+    name: Frontend (Next.js)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apps/web
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
           cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
       - run: npm ci
 
       - name: Generated API types are up to date
@@ -105,15 +105,15 @@ jobs:
       - name: Lint
         run: npx eslint src
 
-  apps:
-    name: Flutter apps
+  mobile:
+    name: Mobile (Flutter)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: [customer_app, technician_app]
+        package: [packages/dwahi_ui, customer_app, technician_app]
     defaults:
       run:
-        working-directory: apps/${{ matrix.app }}
+        working-directory: mobile/${{ matrix.package }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2

@@ -1,11 +1,16 @@
+# عام
 .env
-node_modules/
-.next/
-apps/api/vendor/
-apps/api/.env
-apps/api/storage/*.key
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
 *.log
+
+# backend (Laravel): لكل مشروع .gitignore خاص به أيضاً
+backend/vendor/
+backend/.env
+backend/storage/*.key
+
+# frontend (Next.js)
+node_modules/
+.next/
