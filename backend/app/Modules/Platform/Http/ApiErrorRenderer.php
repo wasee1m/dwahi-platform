@@ -2,7 +2,7 @@
 
 namespace App\Modules\Platform\Http;
 
-use App\Modules\Identity\Exceptions\AuthFlowException;
+use App\Support\ApiProblem;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -46,12 +46,16 @@ final class ApiErrorRenderer
         'WRONG_CLIENT' => ['ar' => 'لا يمكن استخدام هذه الجلسة هنا.', 'en' => 'This session cannot be used here.'],
         'PHONE_TAKEN' => ['ar' => 'هذا الرقم مسجل لحساب آخر.', 'en' => 'This number belongs to another account.'],
         'INVALID_PHONE' => ['ar' => 'اكتب رقم جوال صحيحاً.', 'en' => 'Enter a valid mobile number.'],
+        'INVALID_TRANSITION' => ['ar' => 'لا يمكن الانتقال لهذه الحالة الآن.', 'en' => 'This status change is not allowed now.'],
+        'STOCK_INSUFFICIENT' => ['ar' => 'الكمية تتجاوز المتاح في المخزن.', 'en' => 'The quantity exceeds what is in stock.'],
+        'IMPORT_EXPIRED' => ['ar' => 'انتهت مهلة المعاينة. ارفع الملف من جديد.', 'en' => 'The preview expired. Upload the file again.'],
+        'IMPORT_HAS_ERRORS' => ['ar' => 'صحّح أخطاء الملف قبل التطبيق.', 'en' => 'Fix the errors in the file before applying it.'],
     ];
 
     public static function render(Throwable $e): JsonResponse
     {
         [$status, $code, $details] = match (true) {
-            $e instanceof AuthFlowException => [$e->status, $e->errorCode,
+            $e instanceof ApiProblem => [$e->status, $e->errorCode,
                 ($e->retryAfter !== null ? ['retry_after' => $e->retryAfter] : []) + $e->details ?: null],
             $e instanceof ValidationException => [422, 'VALIDATION_FAILED', $e->errors()],
             $e instanceof AuthenticationException => [401, 'UNAUTHENTICATED', null],
@@ -69,7 +73,7 @@ final class ApiErrorRenderer
         }
 
         $headers = $e instanceof HttpExceptionInterface ? $e->getHeaders() : [];
-        if ($e instanceof AuthFlowException && $e->retryAfter !== null) {
+        if ($e instanceof ApiProblem && $e->retryAfter !== null) {
             $headers['Retry-After'] = (string) $e->retryAfter;
         }
 

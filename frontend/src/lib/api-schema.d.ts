@@ -20,6 +20,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/brands": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["catalogSetup.brands"];
+        put?: never;
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_49"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["catalogSetup.categories"];
+        put?: never;
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_51"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["catalogSetup.models"];
+        put?: never;
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_53"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/brands/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_50"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_52"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/models/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_54"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/auth/otp/request": {
         parameters: {
             query?: never;
@@ -116,6 +212,73 @@ export interface paths {
         get: operations["equipment.show"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/equipment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["equipmentAdmin.index"];
+        put?: never;
+        post: operations["equipmentAdmin.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/equipment/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["equipmentAdmin.show"];
+        /** PUT: النموذج يرسل كل الحقول */
+        put: operations["equipmentAdmin.update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/equipment/{id}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** PUT /admin/equipment/{id}/media: الصور بالترتيب (سحب وترتيب في A-02) */
+        put: operations["equipmentAdmin.media"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/equipment/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /admin/equipment/{id}/status: نشر، حجز، بيع، أرشفة، إعادة لمسودة */
+        post: operations["equipmentAdmin.status"];
         delete?: never;
         options?: never;
         head?: never;
@@ -252,6 +415,140 @@ export interface paths {
         get: operations["part.show"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/parts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["partAdmin.index"];
+        put?: never;
+        post: operations["partAdmin.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/parts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["partAdmin.show"];
+        /** PUT: النموذج يرسل كل الحقول، والأرقام البديلة والتوافق تُستبدل */
+        put: operations["partAdmin.update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/stock-locations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["partAdmin.locations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/stock/receipts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /admin/stock/receipts: استلام شحنة مورد، حركة "استلام" لكل صنف (US-37) */
+        post: operations["partAdmin.receive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/stock/adjustments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /admin/stock/adjustments: تسوية يدوية بسبب إلزامي، في الدفتر والتدقيق (US-37) */
+        post: operations["partAdmin.adjust"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/parts/import/template": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GET /admin/parts/import/template: CSV بترميز UTF-8 يفتحه Excel بالعربية */
+        get: operations["partImport.template"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/parts/import/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /admin/parts/import/preview */
+        post: operations["partImport.preview"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/parts/import/commit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /admin/parts/import/commit */
+        post: operations["partImport.commit"];
         delete?: never;
         options?: never;
         head?: never;
@@ -628,6 +925,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["upload.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -662,6 +975,20 @@ export interface components {
             } | null;
             cover_image_url: string | null;
             is_featured: string;
+        };
+        /** EquipmentCategory */
+        EquipmentCategory: {
+            id: string;
+            parent_id: string | null;
+            name_ar: string;
+            name_en: string;
+            slug: string;
+            icon: string | null;
+            sort_order: number;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
         };
         /** EquipmentDetailResource */
         EquipmentDetailResource: {
@@ -734,6 +1061,16 @@ export interface components {
             roles: string[];
             permissions: string[];
             two_factor_enabled: boolean | null;
+        };
+        /** StockLocation */
+        StockLocation: {
+            id: string;
+            branch_id: string;
+            name: string;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
         };
         /**
          * StoreLeadRequest
@@ -860,6 +1197,444 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "catalogSetup.brands": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            slug: string;
+                            logo_id: string | null;
+                            is_represented: boolean;
+                            sort_order: number;
+                            is_active: boolean;
+                            logo_url: null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveBrand_49": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    slug?: string | null;
+                    /** Format: uuid */
+                    logo_id?: string | null;
+                    is_represented?: boolean;
+                    sort_order?: number;
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "catalogSetup.categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["EquipmentCategory"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveCategory_51": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name_ar: string;
+                    name_en: string;
+                    slug?: string | null;
+                    /** Format: uuid */
+                    parent_id?: string | null;
+                    sort_order?: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "catalogSetup.models": {
+        parameters: {
+            query?: {
+                brand_id?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand_id: string;
+                            category_id: string;
+                            model_name: string;
+                            slug: string;
+                            operating_weight_kg: number | null;
+                            lifting_capacity_kg: number | null;
+                            spec_sheet_id: string | null;
+                            specs: unknown[];
+                            engine_power_kw: string | null;
+                            bucket_capacity_m3: string | null;
+                            brand: string;
+                            category: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveModel_53": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    brand_id: string;
+                    /** Format: uuid */
+                    category_id: string;
+                    model_name: string;
+                    operating_weight_kg?: number | null;
+                    engine_power_kw?: number | null;
+                    bucket_capacity_m3?: number | null;
+                    lifting_capacity_kg?: number | null;
+                    /** Format: uuid */
+                    spec_sheet_id?: string | null;
+                    /** @description مواصفات للعرض فقط (03 §4) */
+                    specs?: {
+                        label_ar: string;
+                        label_en: string;
+                        value: string;
+                        unit?: string | null;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveBrand_50": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    slug?: string | null;
+                    /** Format: uuid */
+                    logo_id?: string | null;
+                    is_represented?: boolean;
+                    sort_order?: number;
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveCategory_52": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name_ar: string;
+                    name_en: string;
+                    slug?: string | null;
+                    /** Format: uuid */
+                    parent_id?: string | null;
+                    sort_order?: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.catalog.admin.catalogSetup.saveModel_54": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    brand_id: string;
+                    /** Format: uuid */
+                    category_id: string;
+                    model_name: string;
+                    operating_weight_kg?: number | null;
+                    engine_power_kw?: number | null;
+                    bucket_capacity_m3?: number | null;
+                    lifting_capacity_kg?: number | null;
+                    /** Format: uuid */
+                    spec_sheet_id?: string | null;
+                    /** @description مواصفات للعرض فقط (03 §4) */
+                    specs?: {
+                        label_ar: string;
+                        label_en: string;
+                        value: string;
+                        unit?: string | null;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -1153,6 +1928,410 @@ export interface operations {
                     };
                 };
             };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.index": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: string | null;
+                kind?: "machine" | "component" | "scrap" | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            kind: string;
+                            title_ar: string;
+                            title_en: string;
+                            model: string | null;
+                            condition: string;
+                            price: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            price_visibility: string;
+                            branch: string;
+                            status: string;
+                            is_featured: boolean;
+                            cover_url: null;
+                            updated_at: string | null;
+                        }[];
+                        next_cursor: string | null;
+                        total: number;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            listing_kind: string;
+                            model_id: string | null;
+                            component_type: string | null;
+                            component_model: string | null;
+                            source_machine: string | null;
+                            missing_parts: string | null;
+                            condition: string;
+                            warranty_months: number | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            serial_number: string | null;
+                            title_ar: string;
+                            title_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            price_visibility: string;
+                            status: string;
+                            is_featured: boolean;
+                            price: string | null;
+                            branch_code: string;
+                            published_at: string | null;
+                            media: {
+                                id: string;
+                                url: null;
+                            }[];
+                            allowed_transitions: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            listing_kind: string;
+                            model_id: string | null;
+                            component_type: string | null;
+                            component_model: string | null;
+                            source_machine: string | null;
+                            missing_parts: string | null;
+                            condition: string;
+                            warranty_months: number | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            serial_number: string | null;
+                            title_ar: string;
+                            title_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            price_visibility: string;
+                            status: string;
+                            is_featured: boolean;
+                            price: string | null;
+                            branch_code: string;
+                            published_at: string | null;
+                            media: {
+                                id: string;
+                                url: null;
+                            }[];
+                            allowed_transitions: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            listing_kind: string;
+                            model_id: string | null;
+                            component_type: string | null;
+                            component_model: string | null;
+                            source_machine: string | null;
+                            missing_parts: string | null;
+                            condition: string;
+                            warranty_months: number | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            serial_number: string | null;
+                            title_ar: string;
+                            title_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            price_visibility: string;
+                            status: string;
+                            is_featured: boolean;
+                            price: string | null;
+                            branch_code: string;
+                            published_at: string | null;
+                            media: {
+                                id: string;
+                                url: null;
+                            }[];
+                            allowed_transitions: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    attachment_ids: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            listing_kind: string;
+                            model_id: string | null;
+                            component_type: string | null;
+                            component_model: string | null;
+                            source_machine: string | null;
+                            missing_parts: string | null;
+                            condition: string;
+                            warranty_months: number | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            serial_number: string | null;
+                            title_ar: string;
+                            title_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            price_visibility: string;
+                            status: string;
+                            is_featured: boolean;
+                            price: string | null;
+                            branch_code: string;
+                            published_at: string | null;
+                            media: {
+                                id: string;
+                                url: null;
+                            }[];
+                            allowed_transitions: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "equipmentAdmin.status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    to: string;
+                    reason?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            listing_kind: string;
+                            model_id: string | null;
+                            component_type: string | null;
+                            component_model: string | null;
+                            source_machine: string | null;
+                            missing_parts: string | null;
+                            condition: string;
+                            warranty_months: number | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            serial_number: string | null;
+                            title_ar: string;
+                            title_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            price_visibility: string;
+                            status: string;
+                            is_featured: boolean;
+                            price: string | null;
+                            branch_code: string;
+                            published_at: string | null;
+                            media: {
+                                id: string;
+                                url: null;
+                            }[];
+                            allowed_transitions: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -1561,6 +2740,607 @@ export interface operations {
                     };
                 };
             };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.index": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                brand_id?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand: string;
+                            part_number: string;
+                            name_ar: string;
+                            name_en: string;
+                            price: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            is_active: boolean;
+                            on_hand: string;
+                            reserved: string;
+                        }[];
+                        next_cursor: string | null;
+                        total: number;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand_id: string;
+                            part_number: string;
+                            part_number_normalized: string | null;
+                            name_ar: string;
+                            name_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            category: string | null;
+                            unit: string;
+                            is_returnable: boolean;
+                            warranty_months: number | null;
+                            is_active: boolean;
+                            price: string;
+                            vat_rate: string;
+                            weight_kg: string | null;
+                            brand: string;
+                            alternatives: {
+                                number: string;
+                                brand: string | null;
+                            }[];
+                            compatible_models: {
+                                id: string;
+                                name: string;
+                            }[];
+                            stock: {
+                                location_id: string;
+                                location: string;
+                                on_hand: string;
+                                reserved: string;
+                            }[];
+                            movements: {
+                                qty_delta: string;
+                                reason: string;
+                                note: string;
+                                location: string;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand_id: string;
+                            part_number: string;
+                            part_number_normalized: string | null;
+                            name_ar: string;
+                            name_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            category: string | null;
+                            unit: string;
+                            is_returnable: boolean;
+                            warranty_months: number | null;
+                            is_active: boolean;
+                            price: string;
+                            vat_rate: string;
+                            weight_kg: string | null;
+                            brand: string;
+                            alternatives: {
+                                number: string;
+                                brand: string | null;
+                            }[];
+                            compatible_models: {
+                                id: string;
+                                name: string;
+                            }[];
+                            stock: {
+                                location_id: string;
+                                location: string;
+                                on_hand: string;
+                                reserved: string;
+                            }[];
+                            movements: {
+                                qty_delta: string;
+                                reason: string;
+                                note: string;
+                                location: string;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand_id: string;
+                            part_number: string;
+                            part_number_normalized: string | null;
+                            name_ar: string;
+                            name_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            category: string | null;
+                            unit: string;
+                            is_returnable: boolean;
+                            warranty_months: number | null;
+                            is_active: boolean;
+                            price: string;
+                            vat_rate: string;
+                            weight_kg: string | null;
+                            brand: string;
+                            alternatives: {
+                                number: string;
+                                brand: string | null;
+                            }[];
+                            compatible_models: {
+                                id: string;
+                                name: string;
+                            }[];
+                            stock: {
+                                location_id: string;
+                                location: string;
+                                on_hand: string;
+                                reserved: string;
+                            }[];
+                            movements: {
+                                qty_delta: string;
+                                reason: string;
+                                note: string;
+                                location: string;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.locations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["StockLocation"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.receive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    location_id: string;
+                    note?: string | null;
+                    lines: {
+                        /** Format: uuid */
+                        part_id: string;
+                        qty: number;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            lines: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partAdmin.adjust": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    part_id: string;
+                    /** Format: uuid */
+                    location_id: string;
+                    qty_delta: number;
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            brand_id: string;
+                            part_number: string;
+                            part_number_normalized: string | null;
+                            name_ar: string;
+                            name_en: string;
+                            description_ar: string | null;
+                            description_en: string | null;
+                            category: string | null;
+                            unit: string;
+                            is_returnable: boolean;
+                            warranty_months: number | null;
+                            is_active: boolean;
+                            price: string;
+                            vat_rate: string;
+                            weight_kg: string | null;
+                            brand: string;
+                            alternatives: {
+                                number: string;
+                                brand: string | null;
+                            }[];
+                            compatible_models: {
+                                id: string;
+                                name: string;
+                            }[];
+                            stock: {
+                                location_id: string;
+                                location: string;
+                                on_hand: string;
+                                reserved: string;
+                            }[];
+                            movements: {
+                                qty_delta: string;
+                                reason: string;
+                                note: string;
+                                location: string;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partImport.template": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv; charset=UTF-8": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partImport.preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Maximum file size: 10240 kilobytes.
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            token: string | null;
+                            summary: {
+                                new: number;
+                                updated: number;
+                                errors: number;
+                                total: number;
+                            } | {
+                                /** @constant */
+                                new: 0;
+                                /** @constant */
+                                updated: 0;
+                                /** @constant */
+                                errors: 1;
+                                /** @constant */
+                                total: 0;
+                            };
+                            /** @description أول 200 صف للعرض، والأخطاء كلها */
+                            rows: unknown[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "partImport.commit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    token: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            created: number;
+                            updated: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -2602,6 +4382,60 @@ export interface operations {
                     };
                 };
             };
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "upload.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Maximum file size: 10240 kilobytes.
+                     */
+                    file: string;
+                    /** @enum {string} */
+                    visibility?: "public" | "private";
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            url: null;
+                            mime_type: string;
+                            width: number | null;
+                            height: number | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {

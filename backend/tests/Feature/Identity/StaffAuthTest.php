@@ -2,35 +2,14 @@
 
 use App\Models\User;
 use App\Modules\Identity\Authorization\Permissions;
-use App\Modules\Identity\Models\StaffProfile;
 use App\Modules\Identity\Notifications\SetPasswordLink;
-use App\Modules\Platform\Models\Branch;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use PragmaRX\Google2FA\Google2FA;
 
 // FR-AUTH-03، FR-ADM-01، FR-ADM-04، NFR-08، NFR-10، US-39، US-44
-
-function staffUser(array $roles = ['admin'], string $email = 'admin@dwahi.test', string $password = 'correct horse battery'): User
-{
-    $u = User::factory()->staff()->create(['email' => $email, 'password_hash' => $password]);
-    StaffProfile::query()->create(['user_id' => $u->id, 'employee_no' => 'E-'.substr($u->id, -6), 'branch_id' => Branch::query()->value('id')]);
-    $u->syncRoles($roles);
-
-    return $u;
-}
-
-/** دخول كامل للوحة الإدارة: كلمة المرور ثم إعداد TOTP أو التحقق منه */
-function adminSignIn($test, string $email = 'admin@dwahi.test', string $password = 'correct horse battery'): array
-{
-    $step = $test->postJson(api().'/auth/staff/login', ['email' => $email, 'password' => $password])->assertOk()->json('data');
-    $secret = $step['secret'] ?? decrypt(DB::table('staff_profiles')->join('users', 'users.id', '=', 'staff_profiles.user_id')
-        ->where('users.email', $email)->value('totp_secret_enc'));
-    $code = (new Google2FA)->getCurrentOtp($secret);
-
-    return $test->postJson(api().'/auth/staff/2fa', ['mfa_token' => $step['mfa_token'], 'code' => $code])->assertOk()->json('data');
-}
+// staffUser() و adminSignIn() في tests/Pest.php
 
 it('forces TOTP setup on first staff sign-in, then asks for the code (NFR-08)', function () {
     staffUser();
