@@ -1,4 +1,14 @@
-import type { ReactNode } from "react";
+import { startTransition, type FormEvent, type ReactNode } from "react";
+
+/**
+ * React 19 يفرّغ النموذج بعد كل إرسال عبر action، فيضيع ما كتبه المستخدم عند خطأ التحقق.
+ * هذا المعالج يرسل البيانات نفسها (مع زر الإرسال) دون تفريغ. للمكونات العميلة فقط.
+ */
+export const keepValues = (dispatch: (form: FormData) => void) => (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const form = new FormData(e.currentTarget, (e.nativeEvent as SubmitEvent).submitter);
+  startTransition(() => dispatch(form));
+};
 
 // عناصر النماذج المشتركة (06 §4.2): تسمية فوق الحقل، وخطأ تحته بلون الخطر، وحقول الأرقام باتجاه LTR
 export const inputClass =

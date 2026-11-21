@@ -120,7 +120,53 @@
     "send": "Send",
     "panel": "Admin panel",
     "forbidden": "You do not have permission for this page.",
-    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out" },
+    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock" },
+    "common": {
+      "save": "Save", "saved": "Saved.", "cancel": "Cancel", "new": "New", "edit": "Edit", "search": "Search", "all": "All",
+      "back": "Back", "yes": "Yes", "no": "No", "reason": "Reason", "next": "Next", "total": "Total", "none": "None",
+      "uploading": "Uploading...", "remove": "Remove", "up": "Up", "down": "Down", "empty": "No results.", "errorSave": "Could not save. Check the fields."
+    },
+    "equipment": {
+      "title": "Equipment listings", "new": "New listing", "editTitle": "Edit listing",
+      "kind": "Type", "kinds": { "machine": "Machine", "component": "Major component", "scrap": "Scrap for parts" },
+      "model": "Model", "pickModel": "Choose a model", "componentType": "Component type",
+      "componentTypes": { "diesel_engine": "Diesel engine", "transmission": "Transmission", "hydraulic_pump": "Hydraulic pump", "hydraulic_cylinder": "Hydraulic cylinder", "arm": "Arm", "bucket": "Bucket", "other": "Other" },
+      "componentModel": "Component model", "sourceMachine": "Source machine", "missingParts": "Missing parts",
+      "condition": "Condition", "conditions": { "new": "New", "used": "Used", "rebuilt": "Rebuilt", "for_parts": "Scrap" },
+      "year": "Year", "hours": "Operating hours", "serial": "Serial number", "warranty": "Warranty (months)",
+      "titleAr": "Title in Arabic", "titleEn": "Title in English", "descAr": "Description in Arabic", "descEn": "Description in English",
+      "priceVisibility": "Price display", "shown": "Show price", "onRequest": "Price on request", "price": "Price excl. VAT (OMR)",
+      "branch": "Branch", "featured": "Featured on the home page", "photos": "Photos", "addPhotos": "Add photos (JPG or PNG up to 10MB)",
+      "photosHint": "The first photo is the cover. Save the order after changing it.", "savePhotos": "Save photos",
+      "status": "Publishing", "statuses": { "draft": "Draft", "published": "Published", "reserved": "Reserved", "sold": "Sold", "archived": "Archived" },
+      "actions": { "published": "Publish", "reserved": "Reserve", "sold": "Mark as sold", "archived": "Archive", "draft": "Back to draft" },
+      "reasonRequired": "Enter a reason (required to reserve or release)", "viewPublic": "View on site", "saveFirst": "Save the listing first, then add photos.",
+      "cols": { "photo": "Photo", "title": "Title", "model": "Model", "condition": "Condition", "price": "Price", "status": "Status" }
+    },
+    "catalogSetup": {
+      "title": "Brands, categories and models", "brands": "Brands", "categories": "Categories", "models": "Models",
+      "name": "Name", "slug": "URL slug (optional)", "represented": "Authorised dealer", "active": "Visible", "sort": "Order",
+      "nameAr": "Name in Arabic", "nameEn": "Name in English", "parent": "Parent category", "noParent": "No parent",
+      "brand": "Brand", "category": "Category", "modelName": "Model name", "weight": "Operating weight (kg)", "power": "Engine power (kW)",
+      "bucket": "Bucket capacity (m³)", "lifting": "Lifting capacity (kg)", "extraSpecs": "Extra display specs", "specLine": "One spec per line: Arabic name | English name | value | unit"
+    },
+    "parts": {
+      "title": "Parts and stock", "new": "New part", "editTitle": "Edit part", "import": "Import from Excel", "receive": "Receive shipment",
+      "searchHint": "Part number or name", "brand": "Brand", "partNumber": "Part number", "nameAr": "Name in Arabic", "nameEn": "Name in English",
+      "descAr": "Description in Arabic", "descEn": "Description in English", "category": "Category", "unit": "Unit",
+      "units": { "piece": "Piece", "set": "Set", "liter": "Litre", "meter": "Metre", "kg": "kg" },
+      "price": "Price excl. VAT (OMR)", "vat": "VAT rate %", "returnable": "Returnable", "warranty": "Warranty (months)",
+      "weight": "Weight (kg)", "active": "Visible in catalog", "alternatives": "Alternative numbers", "altLine": "One per line: number | brand (optional)",
+      "compatible": "Compatible models", "onHand": "On hand", "reserved": "Reserved", "stock": "Stock", "movements": "Movement ledger",
+      "reasons": { "receipt": "Receipt", "sale": "Sale", "work_order": "Work order", "return": "Return", "adjustment": "Adjustment", "transfer_in": "Transfer in", "transfer_out": "Transfer out" },
+      "adjust": "Adjust quantity", "qtyDelta": "Change (positive or negative)", "location": "Store", "qty": "Quantity", "note": "Note",
+      "receiveIntro": "One item per line: part number | quantity. Each line records a receipt movement.", "receiveLines": "Items", "received": "Receipt recorded.",
+      "notFoundLines": "Numbers not in the catalog:", "insufficient": "The quantity exceeds what is in stock.",
+      "importIntro": "Upload an Excel (xlsx) or CSV file in the approved template. Nothing is applied until you review the preview and confirm.", "template": "Download template",
+      "preview": "Preview", "apply": "Apply import", "applied": "Import applied:", "created": "new", "updated": "updated", "errors": "errors",
+      "line": "Line", "fixErrors": "Fix the errors in the file and upload it again. A file with errors is never applied.", "rowStatus": { "new": "New", "update": "Update", "error": "Error" },
+      "cols": { "number": "Number", "name": "Name", "brand": "Brand", "price": "Price", "onHand": "On hand", "active": "Visible" }
+    },
     "home": {
       "intro": "The sections available to your role. The rest of the panel arrives in the coming sprints.",
       "signedInAs": "Signed in as"

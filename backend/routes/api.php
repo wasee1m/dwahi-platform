@@ -1,5 +1,7 @@
 <?php
 
+use App\Modules\Catalog\Http\Controllers\Admin\CatalogSetupController;
+use App\Modules\Catalog\Http\Controllers\Admin\EquipmentAdminController;
 use App\Modules\Catalog\Http\Controllers\EquipmentController;
 use App\Modules\Content\Http\Controllers\LeadController;
 use App\Modules\Content\Http\Controllers\PublicContentController;
@@ -9,8 +11,11 @@ use App\Modules\Identity\Http\Controllers\MeController;
 use App\Modules\Identity\Http\Controllers\PasswordController;
 use App\Modules\Identity\Http\Controllers\SessionController;
 use App\Modules\Identity\Http\Controllers\StaffAuthController;
+use App\Modules\Parts\Http\Controllers\Admin\PartAdminController;
+use App\Modules\Parts\Http\Controllers\Admin\PartImportController;
 use App\Modules\Parts\Http\Controllers\PartController;
 use App\Modules\Platform\Http\Controllers\Admin\AuditLogController;
+use App\Modules\Platform\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
 
 // /api/v1 (04 §4)
@@ -79,5 +84,45 @@ Route::prefix('v1')->group(function () {
             Route::delete('devices/{id}', [StaffController::class, 'revokeDevice']);
         });
         Route::get('audit-logs', [AuditLogController::class, 'index'])->middleware('can:audit.view');
+
+        // الملفات (صور الكتالوج، شعارات الماركات، ملفات المواصفات)
+        Route::post('uploads', [UploadController::class, 'store'])->middleware('can:uploads.create');
+
+        Route::middleware('can:catalog.read')->group(function () {
+            Route::get('brands', [CatalogSetupController::class, 'brands']);
+            Route::get('categories', [CatalogSetupController::class, 'categories']);
+            Route::get('models', [CatalogSetupController::class, 'models']);
+        });
+
+        // A-02 و A-03: الكتالوج (مبيعات، مدير)
+        Route::middleware('can:catalog.manage')->group(function () {
+            Route::get('equipment', [EquipmentAdminController::class, 'index']);
+            Route::post('equipment', [EquipmentAdminController::class, 'store']);
+            Route::get('equipment/{id}', [EquipmentAdminController::class, 'show']);
+            Route::put('equipment/{id}', [EquipmentAdminController::class, 'update']);
+            Route::put('equipment/{id}/media', [EquipmentAdminController::class, 'media']);
+            Route::post('equipment/{id}/status', [EquipmentAdminController::class, 'status']);
+
+            Route::post('brands', [CatalogSetupController::class, 'saveBrand']);
+            Route::put('brands/{id}', [CatalogSetupController::class, 'saveBrand']);
+            Route::post('categories', [CatalogSetupController::class, 'saveCategory']);
+            Route::put('categories/{id}', [CatalogSetupController::class, 'saveCategory']);
+            Route::post('models', [CatalogSetupController::class, 'saveModel']);
+            Route::put('models/{id}', [CatalogSetupController::class, 'saveModel']);
+        });
+
+        // A-04: القطع والمخزون (قطع، مدير)
+        Route::middleware('can:parts.manage')->group(function () {
+            Route::get('parts', [PartAdminController::class, 'index']);
+            Route::post('parts', [PartAdminController::class, 'store']);
+            Route::get('parts/import/template', [PartImportController::class, 'template']);
+            Route::post('parts/import/preview', [PartImportController::class, 'preview']);
+            Route::post('parts/import/commit', [PartImportController::class, 'commit']);
+            Route::get('parts/{id}', [PartAdminController::class, 'show']);
+            Route::put('parts/{id}', [PartAdminController::class, 'update']);
+            Route::get('stock-locations', [PartAdminController::class, 'locations']);
+            Route::post('stock/receipts', [PartAdminController::class, 'receive']);
+            Route::post('stock/adjustments', [PartAdminController::class, 'adjust']);
+        });
     });
 });

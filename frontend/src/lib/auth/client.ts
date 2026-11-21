@@ -54,6 +54,18 @@ export async function api<T>(path: string, opts: { method?: string; body?: unkno
   return { ok: true, status: res.status, data: (json.data ?? json) as T };
 }
 
+/** رفع ملف (multipart) باسم الموظف. نوع المحتوى يضبطه fetch مع حدود الأجزاء. */
+export async function apiUpload<T>(path: string, form: FormData, opts: { token: string | null; locale: Locale }): Promise<ApiResult<T>> {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { ...(await clientHeaders()), Accept: "application/json", "Accept-Language": opts.locale, ...(opts.token ? { Authorization: `Bearer ${opts.token}` } : {}) },
+    body: form,
+    cache: "no-store",
+  });
+  const json = (await res.json().catch(() => ({}))) as { data?: T; error?: ApiErrorBody };
+  return res.ok ? { ok: true, status: res.status, data: json.data as T } : { ok: false, status: res.status, error: json.error ?? { code: "INTERNAL_ERROR", message: "" } };
+}
+
 /**
  * طلب محمي لصفحة في منطقة الحساب أو الإدارة. انتهاء الجلسة يعيد لصفحة الدخول.
  * proxy.ts جدّد الرمز قبل العرض، فـ 401 هنا يعني جلسة ملغاة فعلاً.

@@ -10,7 +10,7 @@ final class Permissions
 {
     public const ROLE_ABILITIES = [
         'admin' => ['*'],
-        'sales' => ['rfq.create_on_behalf', 'quotation.send', 'customers.view', 'leads.manage', 'reports.own'],
+        'sales' => ['rfq.create_on_behalf', 'quotation.send', 'customers.view', 'leads.manage', 'reports.own', 'catalog.manage'],
         'service_coordinator' => [
             'rfq.create_on_behalf', 'quotation.send', 'service.triage', 'workorder.verify', 'workshop.handover',
             'devices.manage', 'customers.view', 'reports.own',

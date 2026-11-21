@@ -39,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
         foreach (Permissions::all() as $ability) {
             Gate::define($ability, fn (User $user) => $user->hasAbility($ability));
         }
+        // رفع الملفات لكل من يدير محتوى يحتاج صوراً
+        Gate::define('uploads.create', fn (User $user) => $user->hasAbility('catalog.manage')
+            || $user->hasAbility('parts.manage') || $user->hasAbility('content.manage'));
+        // قراءة الماركات والفئات والموديلات: موظف القطع يحتاجها للتوافق (A-04) دون صلاحية تعديلها
+        Gate::define('catalog.read', fn (User $user) => $user->hasAbility('catalog.manage') || $user->hasAbility('parts.manage'));
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));

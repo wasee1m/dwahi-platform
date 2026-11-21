@@ -27,6 +27,9 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
   const me = await currentUser("admin", lang);
   const items = [
     { href: "/admin", label: t.admin.nav.home, ability: null },
+    { href: "/admin/equipment", label: t.admin.nav.equipment, ability: "catalog.manage" },
+    { href: "/admin/catalog-setup", label: t.admin.nav.catalogSetup, ability: "catalog.manage" },
+    { href: "/admin/parts", label: t.admin.nav.parts, ability: "parts.manage" },
     { href: "/admin/users", label: t.admin.nav.users, ability: "staff.manage" },
     { href: "/admin/audit-log", label: t.admin.nav.audit, ability: "audit.view" },
   ].filter((i) => !i.ability || me.permissions.includes(i.ability));
