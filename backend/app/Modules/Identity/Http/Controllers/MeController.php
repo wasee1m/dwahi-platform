@@ -11,6 +11,7 @@ use App\Modules\Identity\Services\OtpService;
 use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Identity\Support\Phone;
 use App\Modules\Platform\Support\Audit;
+use App\Support\Governorates;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +21,7 @@ use Illuminate\Validation\Rules\Password as PasswordRule;
 /** الملف الشخصي (FR-ACC-01، US-06، US-08) */
 class MeController
 {
-    /** محافظات سلطنة عُمان (01 §2) */
-    public const GOVERNORATES = ['muscat', 'dhofar', 'musandam', 'buraimi', 'dakhiliyah', 'north_batinah',
-        'south_batinah', 'south_sharqiyah', 'north_sharqiyah', 'dhahirah', 'wusta'];
+    public const GOVERNORATES = Governorates::ALL;
 
     public function show(Request $request): MeResource
     {

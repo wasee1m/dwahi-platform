@@ -3,6 +3,8 @@
 use App\Modules\Catalog\Http\Controllers\Admin\CatalogSetupController;
 use App\Modules\Catalog\Http\Controllers\Admin\EquipmentAdminController;
 use App\Modules\Catalog\Http\Controllers\EquipmentController;
+use App\Modules\Content\Http\Controllers\Admin\ContentAdminController;
+use App\Modules\Content\Http\Controllers\Admin\LeadAdminController;
 use App\Modules\Content\Http\Controllers\LeadController;
 use App\Modules\Content\Http\Controllers\PublicContentController;
 use App\Modules\Identity\Http\Controllers\Admin\StaffController;
@@ -15,6 +17,8 @@ use App\Modules\Parts\Http\Controllers\Admin\PartAdminController;
 use App\Modules\Parts\Http\Controllers\Admin\PartImportController;
 use App\Modules\Parts\Http\Controllers\PartController;
 use App\Modules\Platform\Http\Controllers\Admin\AuditLogController;
+use App\Modules\Platform\Http\Controllers\Admin\BranchAdminController;
+use App\Modules\Platform\Http\Controllers\Admin\SettingsController;
 use App\Modules\Platform\Http\Controllers\Admin\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -123,6 +127,38 @@ Route::prefix('v1')->group(function () {
             Route::get('stock-locations', [PartAdminController::class, 'locations']);
             Route::post('stock/receipts', [PartAdminController::class, 'receive']);
             Route::post('stock/adjustments', [PartAdminController::class, 'adjust']);
+        });
+
+        // A-14: المحتوى (محرر، مدير)
+        Route::middleware('can:content.manage')->group(function () {
+            Route::get('pages', [ContentAdminController::class, 'pages']);
+            Route::post('pages', [ContentAdminController::class, 'savePage']);
+            Route::get('pages/{id}', [ContentAdminController::class, 'page']);
+            Route::put('pages/{id}', [ContentAdminController::class, 'savePage']);
+            Route::get('faqs', [ContentAdminController::class, 'faqs']);
+            Route::post('faqs', [ContentAdminController::class, 'saveFaq']);
+            Route::put('faqs/order', [ContentAdminController::class, 'orderFaqs']);
+            Route::put('faqs/{id}', [ContentAdminController::class, 'saveFaq']);
+            Route::get('banners', [ContentAdminController::class, 'banners']);
+            Route::post('banners', [ContentAdminController::class, 'saveBanner']);
+            Route::put('banners/{id}', [ContentAdminController::class, 'saveBanner']);
+        });
+
+        // A-15: الاستفسارات (مبيعات، منسق، مدير)
+        Route::middleware('can:leads.manage')->group(function () {
+            Route::get('leads', [LeadAdminController::class, 'index']);
+            Route::get('leads/assignees', [LeadAdminController::class, 'assignees']);
+            Route::get('leads/{id}', [LeadAdminController::class, 'show']);
+            Route::patch('leads/{id}', [LeadAdminController::class, 'update']);
+        });
+
+        // A-18: الإعدادات والفروع (مدير)
+        Route::middleware('can:settings.manage')->group(function () {
+            Route::get('settings', [SettingsController::class, 'index']);
+            Route::put('settings', [SettingsController::class, 'update']);
+            Route::get('branches', [BranchAdminController::class, 'index']);
+            Route::post('branches', [BranchAdminController::class, 'save']);
+            Route::put('branches/{id}', [BranchAdminController::class, 'save']);
         });
     });
 });

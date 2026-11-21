@@ -138,4 +138,9 @@ it('matches the permission matrix in 01 §3.2', function (string $role, string $
     ['content_editor', 'content.manage', true],
     ['technician', 'quotation.send', false],
     ['accountant', 'audit.view', false],
+    ['service_coordinator', 'leads.manage', true],
+    ['sales', 'leads.manage', true],
+    ['parts_staff', 'leads.manage', false],
+    ['content_editor', 'settings.manage', false],
+    ['sales', 'catalog.manage', true],
 ]);

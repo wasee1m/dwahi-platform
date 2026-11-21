@@ -20,6 +20,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/branches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["branchAdmin.index"];
+        put?: never;
+        post: operations["modules.platform.admin.branchAdmin.save_83"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/branches/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.platform.admin.branchAdmin.save_84"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/brands": {
         parameters: {
             query?: never;
@@ -109,6 +141,119 @@ export interface paths {
         };
         get?: never;
         put: operations["modules.catalog.admin.catalogSetup.saveModel_54"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/pages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["contentAdmin.pages"];
+        put?: never;
+        post: operations["modules.content.admin.contentAdmin.savePage_66"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/pages/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["contentAdmin.page"];
+        put: operations["modules.content.admin.contentAdmin.savePage_68"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/faqs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["contentAdmin.faqs"];
+        put?: never;
+        post: operations["modules.content.admin.contentAdmin.saveFaq_70"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/faqs/order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** PUT /admin/faqs/order: الترتيب داخل القسم بترتيب المعرفات المرسلة */
+        put: operations["contentAdmin.orderFaqs"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/faqs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.content.admin.contentAdmin.saveFaq_72"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/banners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["contentAdmin.banners"];
+        put?: never;
+        post: operations["modules.content.admin.contentAdmin.saveBanner_74"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/banners/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["modules.content.admin.contentAdmin.saveBanner_75"];
         post?: never;
         delete?: never;
         options?: never;
@@ -300,6 +445,56 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/leads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["leadAdmin.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/leads/assignees": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GET /admin/leads/assignees: الموظفون النشطون الذين يتابعون الاستفسارات */
+        get: operations["leadAdmin.assignees"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/leads/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["leadAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** PATCH /admin/leads/{id}: الحالة والإسناد والملاحظة في خطوة واحدة، وكل تغيير في السجل (US-43) */
+        patch: operations["leadAdmin.update"];
         trace?: never;
     };
     "/v1/me": {
@@ -754,6 +949,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["settings.index"];
+        /** PUT /admin/settings {values: {key: value}}: تبويب كامل في طلب واحد، والمحفوظ فقط ما تغيّر */
+        put: operations["settings.update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/staff": {
         parameters: {
             query?: never;
@@ -1038,6 +1250,21 @@ export interface components {
             media: string;
             similar: unknown[];
         };
+        /** Faq */
+        Faq: {
+            id: string;
+            section: string;
+            question_ar: string;
+            question_en: string;
+            answer_ar: string;
+            answer_en: string;
+            sort_order: number;
+            is_active: boolean;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
+        };
         /** MeResource */
         MeResource: {
             id: string;
@@ -1088,6 +1315,35 @@ export interface components {
             branch_code?: string | null;
             source_page?: string | null;
             website?: string | null;
+        };
+        /** User */
+        User: {
+            id: string;
+            user_type: string;
+            full_name: string;
+            phone_e164: string | null;
+            /** Format: date-time */
+            phone_verified_at: string | null;
+            email: string | null;
+            /** Format: date-time */
+            email_verified_at: string | null;
+            preferred_locale: string;
+            avatar_id: string | null;
+            status: string;
+            suspended_reason: string | null;
+            /** Format: date-time */
+            last_login_at: string | null;
+            pickup_no_show_count: number;
+            /** Format: date-time */
+            internal_flag_at: string | null;
+            /** Format: date-time */
+            deleted_at: string | null;
+            /** Format: date-time */
+            anonymized_at: string | null;
+            /** Format: date-time */
+            created_at: string | null;
+            /** Format: date-time */
+            updated_at: string | null;
         };
     };
     responses: {
@@ -1197,6 +1453,174 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "branchAdmin.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            code: string;
+                            name_ar: string;
+                            name_en: string;
+                            governorate: string;
+                            wilayat: string;
+                            address_ar: string | null;
+                            address_en: string | null;
+                            phone: string | null;
+                            whatsapp_sales: string | null;
+                            whatsapp_service: string | null;
+                            whatsapp_parts: string | null;
+                            email: string | null;
+                            working_hours: unknown[];
+                            covered_governorates: unknown[];
+                            is_active: boolean;
+                            latitude: string;
+                            longitude: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.platform.admin.branchAdmin.save_83": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    code: string;
+                    name_ar: string;
+                    name_en: string;
+                    /** @enum {string} */
+                    governorate: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    wilayat: string;
+                    address_ar?: string | null;
+                    address_en?: string | null;
+                    /** @description حدود السلطنة تقريباً: خطأ شائع هو تبديل خط العرض بخط الطول */
+                    latitude: number;
+                    longitude: number;
+                    /** Format: email */
+                    email?: string | null;
+                    working_hours: string;
+                    covered_governorates: ("muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta")[];
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.platform.admin.branchAdmin.save_84": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    code: string;
+                    name_ar: string;
+                    name_en: string;
+                    /** @enum {string} */
+                    governorate: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    wilayat: string;
+                    address_ar?: string | null;
+                    address_en?: string | null;
+                    /** @description حدود السلطنة تقريباً: خطأ شائع هو تبديل خط العرض بخط الطول */
+                    latitude: number;
+                    longitude: number;
+                    /** Format: email */
+                    email?: string | null;
+                    working_hours: string;
+                    covered_governorates: ("muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta")[];
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -1620,6 +2044,538 @@ export interface operations {
                         value: string;
                         unit?: string | null;
                     }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "contentAdmin.pages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            title_ar: string;
+                            title_en: string;
+                            status: string;
+                            updated_at: string | null;
+                            updated_by: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.savePage_66": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description المعرّف ثابت بعد الإنشاء: روابط الموقع تعتمد عليه */
+                    slug: string;
+                    title_ar: string;
+                    title_en: string;
+                    body_ar: string;
+                    body_en?: string | null;
+                    seo_title_ar?: string | null;
+                    seo_title_en?: string | null;
+                    seo_description_ar?: string | null;
+                    seo_description_en?: string | null;
+                    /** @enum {string} */
+                    status: "draft" | "published";
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "contentAdmin.page": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            slug: string;
+                            title_ar: string;
+                            title_en: string;
+                            body_ar: string;
+                            body_en: string;
+                            seo_title_ar: string | null;
+                            seo_title_en: string | null;
+                            seo_description_ar: string | null;
+                            seo_description_en: string | null;
+                            status: string;
+                            updated_at: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.savePage_68": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @description المعرّف ثابت بعد الإنشاء: روابط الموقع تعتمد عليه */
+                    slug: string;
+                    title_ar: string;
+                    title_en: string;
+                    body_ar: string;
+                    body_en?: string | null;
+                    seo_title_ar?: string | null;
+                    seo_title_en?: string | null;
+                    seo_description_ar?: string | null;
+                    seo_description_en?: string | null;
+                    /** @enum {string} */
+                    status: "draft" | "published";
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "contentAdmin.faqs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Faq"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.saveFaq_70": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    section: "equipment" | "parts" | "service";
+                    question_ar: string;
+                    question_en: string;
+                    answer_ar: string;
+                    answer_en: string;
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "contentAdmin.orderFaqs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ids: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Faq"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.saveFaq_72": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    section: "equipment" | "parts" | "service";
+                    question_ar: string;
+                    question_en: string;
+                    answer_ar: string;
+                    answer_en: string;
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "contentAdmin.banners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            placement: string;
+                            image_ar_id: string;
+                            image_en_id: string;
+                            link: string | null;
+                            sort_order: number;
+                            is_active: boolean;
+                            image_ar_url: null;
+                            image_en_url: null;
+                            starts_at: string;
+                            ends_at: string;
+                            /**
+                             * @description للعرض في A-14: هل يظهر الآن؟
+                             * @enum {string}
+                             */
+                            state: "inactive" | "ended" | "scheduled" | "live";
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.saveBanner_74": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    placement: "web_home" | "app_home" | "parts" | "service";
+                    /** Format: uuid */
+                    image_ar_id: string;
+                    /** Format: uuid */
+                    image_en_id: string;
+                    /** @description رابط داخلي يبدأ بـ / أو رابط https فقط */
+                    link?: string | null;
+                    /** Format: date-time */
+                    starts_at: string;
+                    /** Format: date-time */
+                    ends_at: string;
+                    sort_order?: number;
+                    is_active?: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.content.admin.contentAdmin.saveBanner_75": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string | null;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    placement: "web_home" | "app_home" | "parts" | "service";
+                    /** Format: uuid */
+                    image_ar_id: string;
+                    /** Format: uuid */
+                    image_en_id: string;
+                    /** @description رابط داخلي يبدأ بـ / أو رابط https فقط */
+                    link?: string | null;
+                    /** Format: date-time */
+                    starts_at: string;
+                    /** Format: date-time */
+                    ends_at: string;
+                    sort_order?: number;
+                    is_active?: boolean;
                 };
             };
         };
@@ -2372,6 +3328,232 @@ export interface operations {
                     };
                 };
             };
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "leadAdmin.index": {
+        parameters: {
+            query?: {
+                status?: "new" | "contacted" | "qualified" | "closed" | null;
+                topic?: "equipment" | "parts" | "service" | "other" | null;
+                assigned?: "me" | "none" | null;
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            phone: string;
+                            company: string | null;
+                            topic: string;
+                            status: string;
+                            branch: string | null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            created_at: string | null;
+                        }[];
+                        next_cursor: string | null;
+                        total: number;
+                        counts: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "leadAdmin.assignees": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["User"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "leadAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            phone: string;
+                            company: string | null;
+                            topic: string;
+                            status: string;
+                            branch: string | null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            created_at: string | null;
+                            email: string | null;
+                            message: string;
+                            source_page: string | null;
+                            notes: {
+                                id: string;
+                                body: string | null;
+                                status_from: string | null;
+                                status_to: string | null;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "leadAdmin.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    status?: "new" | "contacted" | "qualified" | "closed";
+                    /** Format: uuid */
+                    assigned_to?: string | null;
+                    note?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            phone: string;
+                            company: string | null;
+                            topic: string;
+                            status: string;
+                            branch: string | null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            created_at: string | null;
+                            email: string | null;
+                            message: string;
+                            source_page: string | null;
+                            notes: {
+                                id: string;
+                                body: string | null;
+                                status_from: string | null;
+                                status_to: string | null;
+                                by: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -3817,6 +4999,311 @@ export interface operations {
                 content?: never;
             };
             401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "settings.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @enum {string} */
+                            key: "company.profile" | "review.window_days" | "account.deletion_grace_days" | "vat.default_rate" | "pricing.display" | "parts.availability_thresholds" | "quote.validity_days" | "order.pickup_hold_working_days" | "order.max_open_unpaid_per_customer" | "order.phone_confirm_above_amount" | "returns.window_days" | "delivery.fee_by_governorate" | "fees.inspection" | "sla.triage" | "business_hours" | "service.release_requires_payment" | "service.collection_reminder_days" | "numbering.prefixes";
+                            /** @enum {string} */
+                            group: "general" | "pricing" | "quotes" | "orders" | "service" | "numbering";
+                            /** @enum {string} */
+                            type: "company" | "days" | "percent" | "enum" | "thresholds" | "count" | "money" | "governorate_fees" | "sla" | "business_hours" | "bool" | "list";
+                            /** @enum {string} */
+                            rule: "FR-PAY-03" | "BR-10" | "BR-16" | "BR-01" | "BR-04" | "BR-02" | "BR-05" | "BR-18" | "BR-12" | "FR-ORD-02" | "BR-11" | "BR-09" | "BR-20" | "BR-14";
+                            value: string | {
+                                /** @constant */
+                                name_ar: "ضواحي البادية";
+                                /** @constant */
+                                name_en: "DWAHI-ALBADIA LLC";
+                                /** @constant */
+                                cr_number: "";
+                                /** @constant */
+                                vat_number: "";
+                                /** @constant */
+                                address_ar: "";
+                                /** @constant */
+                                address_en: "";
+                                /** @constant */
+                                phone: "";
+                                /** @constant */
+                                email: "";
+                            } | {
+                                /** @constant */
+                                limited: 1;
+                                /** @constant */
+                                available: 5;
+                            } | unknown[] | null | {
+                                /** @constant */
+                                normal_working_hours: 4;
+                                /** @constant */
+                                urgent_hours: 1;
+                            } | {
+                                days: [
+                                    "sun",
+                                    "mon",
+                                    "tue",
+                                    "wed",
+                                    "thu"
+                                ];
+                                /** @constant */
+                                start: "08:00";
+                                /** @constant */
+                                end: "17:00";
+                            } | boolean | [
+                                "RFQ",
+                                "QT",
+                                "SO",
+                                "SR",
+                                "WO",
+                                "INV",
+                                "CN",
+                                "RC"
+                            ] | ("5.00" | "excl_vat" | "100.000") | (30 | 14 | 3);
+                            default: {
+                                /** @constant */
+                                name_ar: "ضواحي البادية";
+                                /** @constant */
+                                name_en: "DWAHI-ALBADIA LLC";
+                                /** @constant */
+                                cr_number: "";
+                                /** @constant */
+                                vat_number: "";
+                                /** @constant */
+                                address_ar: "";
+                                /** @constant */
+                                address_en: "";
+                                /** @constant */
+                                phone: "";
+                                /** @constant */
+                                email: "";
+                            } | {
+                                /** @constant */
+                                limited: 1;
+                                /** @constant */
+                                available: 5;
+                            } | unknown[] | null | {
+                                /** @constant */
+                                normal_working_hours: 4;
+                                /** @constant */
+                                urgent_hours: 1;
+                            } | {
+                                days: [
+                                    "sun",
+                                    "mon",
+                                    "tue",
+                                    "wed",
+                                    "thu"
+                                ];
+                                /** @constant */
+                                start: "08:00";
+                                /** @constant */
+                                end: "17:00";
+                            } | boolean | [
+                                "RFQ",
+                                "QT",
+                                "SO",
+                                "SR",
+                                "WO",
+                                "INV",
+                                "CN",
+                                "RC"
+                            ] | ("5.00" | "excl_vat" | "100.000") | (30 | 14 | 3);
+                            options: string | [
+                                "excl_vat",
+                                "incl_vat"
+                            ] | null;
+                            readonly: string | boolean;
+                            updated_at: string | null;
+                            updated_by: string | null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "settings.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    values: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @enum {string} */
+                            key: "company.profile" | "review.window_days" | "account.deletion_grace_days" | "vat.default_rate" | "pricing.display" | "parts.availability_thresholds" | "quote.validity_days" | "order.pickup_hold_working_days" | "order.max_open_unpaid_per_customer" | "order.phone_confirm_above_amount" | "returns.window_days" | "delivery.fee_by_governorate" | "fees.inspection" | "sla.triage" | "business_hours" | "service.release_requires_payment" | "service.collection_reminder_days" | "numbering.prefixes";
+                            /** @enum {string} */
+                            group: "general" | "pricing" | "quotes" | "orders" | "service" | "numbering";
+                            /** @enum {string} */
+                            type: "company" | "days" | "percent" | "enum" | "thresholds" | "count" | "money" | "governorate_fees" | "sla" | "business_hours" | "bool" | "list";
+                            /** @enum {string} */
+                            rule: "FR-PAY-03" | "BR-10" | "BR-16" | "BR-01" | "BR-04" | "BR-02" | "BR-05" | "BR-18" | "BR-12" | "FR-ORD-02" | "BR-11" | "BR-09" | "BR-20" | "BR-14";
+                            value: string | {
+                                /** @constant */
+                                name_ar: "ضواحي البادية";
+                                /** @constant */
+                                name_en: "DWAHI-ALBADIA LLC";
+                                /** @constant */
+                                cr_number: "";
+                                /** @constant */
+                                vat_number: "";
+                                /** @constant */
+                                address_ar: "";
+                                /** @constant */
+                                address_en: "";
+                                /** @constant */
+                                phone: "";
+                                /** @constant */
+                                email: "";
+                            } | {
+                                /** @constant */
+                                limited: 1;
+                                /** @constant */
+                                available: 5;
+                            } | unknown[] | null | {
+                                /** @constant */
+                                normal_working_hours: 4;
+                                /** @constant */
+                                urgent_hours: 1;
+                            } | {
+                                days: [
+                                    "sun",
+                                    "mon",
+                                    "tue",
+                                    "wed",
+                                    "thu"
+                                ];
+                                /** @constant */
+                                start: "08:00";
+                                /** @constant */
+                                end: "17:00";
+                            } | boolean | [
+                                "RFQ",
+                                "QT",
+                                "SO",
+                                "SR",
+                                "WO",
+                                "INV",
+                                "CN",
+                                "RC"
+                            ] | ("5.00" | "excl_vat" | "100.000") | (30 | 14 | 3);
+                            default: {
+                                /** @constant */
+                                name_ar: "ضواحي البادية";
+                                /** @constant */
+                                name_en: "DWAHI-ALBADIA LLC";
+                                /** @constant */
+                                cr_number: "";
+                                /** @constant */
+                                vat_number: "";
+                                /** @constant */
+                                address_ar: "";
+                                /** @constant */
+                                address_en: "";
+                                /** @constant */
+                                phone: "";
+                                /** @constant */
+                                email: "";
+                            } | {
+                                /** @constant */
+                                limited: 1;
+                                /** @constant */
+                                available: 5;
+                            } | unknown[] | null | {
+                                /** @constant */
+                                normal_working_hours: 4;
+                                /** @constant */
+                                urgent_hours: 1;
+                            } | {
+                                days: [
+                                    "sun",
+                                    "mon",
+                                    "tue",
+                                    "wed",
+                                    "thu"
+                                ];
+                                /** @constant */
+                                start: "08:00";
+                                /** @constant */
+                                end: "17:00";
+                            } | boolean | [
+                                "RFQ",
+                                "QT",
+                                "SO",
+                                "SR",
+                                "WO",
+                                "INV",
+                                "CN",
+                                "RC"
+                            ] | ("5.00" | "excl_vat" | "100.000") | (30 | 14 | 3);
+                            options: string | [
+                                "excl_vat",
+                                "incl_vat"
+                            ] | null;
+                            readonly: string | boolean;
+                            updated_at: string | null;
+                            updated_by: string | null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {

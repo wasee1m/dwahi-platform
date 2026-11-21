@@ -11,6 +11,7 @@ return [
     'boolean' => 'The :attribute is not valid.',
     'regex' => 'The :attribute format is not valid.',
     'exists' => 'The selected :attribute does not exist.',
+    'required_for_publish' => 'Required to publish: content in both Arabic and English (NFR-14).',
 
     'custom' => [
         'phone' => ['regex' => 'Enter a valid mobile number, such as 9XXX XXXX or with a country code.'],
@@ -19,5 +20,15 @@ return [
     'attributes' => [
         'branch_code' => 'branch',
         'q' => 'search',
+        'setting_value' => 'value',
+        'setting_start' => 'start time',
+        'setting_end' => 'end time',
+        'setting_days' => 'working days',
+        'setting_limited' => '"limited" threshold',
+        'setting_available' => '"available" threshold',
+        'setting_normal_working_hours' => 'normal deadline',
+        'setting_urgent_hours' => 'urgent deadline',
+        'setting_name_ar' => 'Arabic name',
+        'setting_name_en' => 'English name',
     ],
 ];

@@ -120,7 +120,7 @@
     "send": "إرسال",
     "panel": "لوحة الإدارة",
     "forbidden": "لا تملك صلاحية لهذه الصفحة.",
-    "nav": { "home": "الرئيسية", "users": "الموظفون والأدوار", "audit": "سجل التدقيق", "logout": "خروج", "equipment": "المعدات المعروضة", "catalogSetup": "الماركات والفئات والموديلات", "parts": "القطع والمخزون" },
+    "nav": { "home": "الرئيسية", "users": "الموظفون والأدوار", "audit": "سجل التدقيق", "logout": "خروج", "equipment": "المعدات المعروضة", "catalogSetup": "الماركات والفئات والموديلات", "parts": "القطع والمخزون", "content": "المحتوى", "leads": "الاستفسارات", "settings": "الإعدادات والفروع" },
     "common": {
       "save": "حفظ", "saved": "حُفظ.", "cancel": "إلغاء", "new": "جديد", "edit": "تعديل", "search": "بحث", "all": "الكل",
       "back": "رجوع", "yes": "نعم", "no": "لا", "reason": "السبب", "next": "التالي", "total": "الإجمالي", "none": "لا يوجد",
@@ -166,6 +166,60 @@
       "preview": "معاينة", "apply": "تطبيق الاستيراد", "applied": "طُبق الاستيراد:", "created": "جديدة", "updated": "محدّثة", "errors": "أخطاء",
       "line": "السطر", "fixErrors": "صحّح الأخطاء في الملف ثم ارفعه من جديد. لا يُطبق ملف فيه أخطاء.", "rowStatus": { "new": "جديدة", "update": "تحديث", "error": "خطأ" },
       "cols": { "number": "الرقم", "name": "الاسم", "brand": "الماركة", "price": "السعر", "onHand": "في المخزن", "active": "ظاهرة" }
+    },
+    "content": {
+      "title": "المحتوى", "pages": "الصفحات", "faqs": "الأسئلة الشائعة", "banners": "البنرات",
+      "newPage": "صفحة جديدة", "slug": "المعرّف في الرابط", "slugHint": "حروف إنجليزية صغيرة وأرقام وشرطة. لا يتغير بعد الإنشاء.",
+      "titleAr": "العنوان بالعربية", "titleEn": "العنوان بالإنجليزية", "bodyAr": "المحتوى بالعربية", "bodyEn": "المحتوى بالإنجليزية",
+      "bodyHint": "## عنوان، و### عنوان فرعي، و- لعنصر قائمة، و> للتنبيه، و**نص عريض**. سطر فارغ بين الفقرات.",
+      "seo": "محركات البحث", "seoTitleAr": "عنوان البحث بالعربية", "seoTitleEn": "عنوان البحث بالإنجليزية",
+      "seoDescAr": "وصف البحث بالعربية", "seoDescEn": "وصف البحث بالإنجليزية", "preview": "معاينة",
+      "status": "الحالة", "statuses": { "draft": "مسودة", "published": "منشورة" }, "publishRule": "النشر يتطلب المحتوى باللغتين.",
+      "updatedBy": "آخر تعديل", "viewPublic": "عرض في الموقع",
+      "section": "القسم", "sections": { "equipment": "المعدات", "parts": "قطع الغيار", "service": "الصيانة" },
+      "questionAr": "السؤال بالعربية", "questionEn": "السؤال بالإنجليزية", "answerAr": "الجواب بالعربية", "answerEn": "الجواب بالإنجليزية",
+      "active": "ظاهر", "saveOrder": "حفظ الترتيب", "newFaq": "سؤال جديد",
+      "placement": "الموضع", "placements": { "web_home": "الرئيسية في الموقع", "app_home": "الرئيسية في التطبيق", "parts": "قطع الغيار", "service": "الصيانة" },
+      "imageAr": "الصورة بالعربية", "imageEn": "الصورة بالإنجليزية", "upload": "رفع صورة", "link": "الرابط عند النقر",
+      "linkHint": "رابط داخلي يبدأ بـ / مثل /ar/parts، أو رابط https", "startsAt": "يبدأ", "endsAt": "ينتهي", "timeHint": "بتوقيت مسقط",
+      "sort": "الترتيب", "newBanner": "بنر جديد", "states": { "live": "ظاهر الآن", "scheduled": "مجدول", "ended": "انتهى", "inactive": "موقوف" }
+    },
+    "leads": {
+      "title": "الاستفسارات", "intro": "الوارد من نموذج «اتصل بنا». حدّث الحالة وأضف ملاحظة بعد كل تواصل.",
+      "topic": "الموضوع", "topics": { "equipment": "معدات", "parts": "قطع غيار", "service": "صيانة", "other": "أخرى" },
+      "status": "الحالة", "statuses": { "new": "جديد", "contacted": "تم التواصل", "qualified": "فرصة مؤكدة", "closed": "مغلق" },
+      "assigned": "المسند إليه", "assignedMe": "المسندة إلي", "unassigned": "غير مسندة", "nobody": "لا أحد",
+      "name": "الاسم", "phone": "الجوال", "email": "البريد", "company": "الشركة", "branch": "الفرع", "received": "وصل",
+      "message": "الرسالة", "source": "من صفحة", "note": "ملاحظة", "notePlaceholder": "ماذا جرى في التواصل؟", "update": "حفظ",
+      "history": "السجل", "changed": "غيّر الحالة من {from} إلى {to}", "call": "اتصال", "whatsapp": "واتساب",
+      "toRfq": "التحويل لطلب عرض سعر يأتي مع وحدة طلبات العروض."
+    },
+    "settings": {
+      "title": "الإعدادات والفروع", "groups": { "general": "عام", "branches": "الفروع", "pricing": "الأسعار والضريبة", "quotes": "العروض", "orders": "الطلبات والتوصيل", "service": "الصيانة", "numbering": "الترقيم" },
+      "keys": {
+        "company.profile": "بيانات الشركة على الفواتير", "review.window_days": "مدة طلب التقييم بعد الإغلاق (أيام)", "account.deletion_grace_days": "مهلة حذف الحساب (أيام)",
+        "vat.default_rate": "نسبة الضريبة الافتراضية %", "pricing.display": "عرض الأسعار", "parts.availability_thresholds": "حدود عرض التوفر للقطع",
+        "quote.validity_days": "صلاحية العرض (أيام)", "order.pickup_hold_working_days": "مدة حجز الطلب للاستلام (أيام عمل)",
+        "order.max_open_unpaid_per_customer": "أقصى عدد طلبات مفتوحة غير مدفوعة للعميل", "order.phone_confirm_above_amount": "تأكيد هاتفي للطلبات فوق (ر.ع.)",
+        "returns.window_days": "مدة الإرجاع (أيام)", "delivery.fee_by_governorate": "رسوم التوصيل لكل محافظة (ر.ع.)",
+        "fees.inspection": "رسوم الفحص (ر.ع.)", "sla.triage": "مهلة فرز طلب الصيانة", "business_hours": "ساعات العمل لحساب المهل",
+        "service.release_requires_payment": "لا تسليم للمعدة قبل الدفع", "service.collection_reminder_days": "تذكير الاستلام بعد (أيام)",
+        "numbering.prefixes": "بادئات ترقيم المستندات"
+      },
+      "company": { "name_ar": "الاسم بالعربية", "name_en": "الاسم بالإنجليزية", "cr_number": "السجل التجاري", "vat_number": "الرقم الضريبي", "address_ar": "العنوان بالعربية", "address_en": "العنوان بالإنجليزية", "phone": "الهاتف", "email": "البريد" },
+      "displays": { "excl_vat": "قبل الضريبة", "incl_vat": "شامل الضريبة" },
+      "limited": "محدود حتى", "available": "متوفر من", "normalHours": "عادي (ساعات عمل)", "urgentHours": "عاجل (ساعات)",
+      "start": "من", "end": "إلى", "days": { "sat": "السبت", "sun": "الأحد", "mon": "الاثنين", "tue": "الثلاثاء", "wed": "الأربعاء", "thu": "الخميس", "fri": "الجمعة" },
+      "noDelivery": "فارغ = لا توصيل", "readonly": "للعرض فقط: تغيير البادئة بعد الإصدار يكسر تسلسل المستندات (BR-14).",
+      "notSet": "لم تحددها الشركة بعد", "lastChange": "آخر تغيير", "saved": "حُفظت الإعدادات. التغيير في سجل التدقيق.",
+      "notifications": "قوالب الإشعارات تأتي مع وحدة الإشعارات.",
+      "branch": {
+        "new": "فرع جديد", "code": "رمز الفرع", "codeHint": "حروف كبيرة وأرقام، مثل SOH. لا يتغير.", "nameAr": "الاسم بالعربية", "nameEn": "الاسم بالإنجليزية",
+        "governorate": "المحافظة", "wilayat": "الولاية", "addressAr": "العنوان بالعربية", "addressEn": "العنوان بالإنجليزية",
+        "latitude": "خط العرض", "longitude": "خط الطول", "mapHint": "من خرائط جوجل: انقر بالزر الأيمن على الموقع وانسخ الرقمين.",
+        "phone": "الهاتف", "waSales": "واتساب المبيعات", "waService": "واتساب الصيانة", "waParts": "واتساب القطع", "email": "البريد",
+        "hours": "ساعات العمل", "closed": "مغلق", "covered": "المحافظات التي يغطيها", "active": "ظاهر في الموقع", "inactive": "موقوف"
+      }
     },
     "home": {
       "intro": "الأقسام المتاحة لدورك. باقي أقسام اللوحة تُبنى في السبرنتات القادمة.",

@@ -70,9 +70,10 @@ async function Setup({ lang, t, searchParams }: { lang: Locale; t: AppDictionary
 
       <section className="space-y-3">
         <Row title={`+ ${c.new}`}>
-          {tab === "brands" && <BrandForm key="new" lang={lang} t={s} c={c} />}
-          {tab === "categories" && <CategoryForm key="new" lang={lang} t={s} c={c} categories={categories} />}
-          {tab === "models" && <ModelForm key="new" lang={lang} t={s} c={c} brands={brands} categories={categories} />}
+          {/* المفتاح بعدد العناصر: بعد الإضافة يُفرَّغ نموذج "جديد" فلا تتكرر الإضافة بنقرة ثانية */}
+          {tab === "brands" && <BrandForm key={`new-${brands.length}`} lang={lang} t={s} c={c} />}
+          {tab === "categories" && <CategoryForm key={`new-${categories.length}`} lang={lang} t={s} c={c} categories={categories} />}
+          {tab === "models" && <ModelForm key={`new-${models.length}`} lang={lang} t={s} c={c} brands={brands} categories={categories} />}
         </Row>
 
         {tab === "brands" && brands.map((x) => (

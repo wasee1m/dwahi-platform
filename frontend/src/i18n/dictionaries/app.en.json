@@ -120,7 +120,7 @@
     "send": "Send",
     "panel": "Admin panel",
     "forbidden": "You do not have permission for this page.",
-    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock" },
+    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock", "content": "Content", "leads": "Enquiries", "settings": "Settings and branches" },
     "common": {
       "save": "Save", "saved": "Saved.", "cancel": "Cancel", "new": "New", "edit": "Edit", "search": "Search", "all": "All",
       "back": "Back", "yes": "Yes", "no": "No", "reason": "Reason", "next": "Next", "total": "Total", "none": "None",
@@ -166,6 +166,60 @@
       "preview": "Preview", "apply": "Apply import", "applied": "Import applied:", "created": "new", "updated": "updated", "errors": "errors",
       "line": "Line", "fixErrors": "Fix the errors in the file and upload it again. A file with errors is never applied.", "rowStatus": { "new": "New", "update": "Update", "error": "Error" },
       "cols": { "number": "Number", "name": "Name", "brand": "Brand", "price": "Price", "onHand": "On hand", "active": "Visible" }
+    },
+    "content": {
+      "title": "Content", "pages": "Pages", "faqs": "FAQs", "banners": "Banners",
+      "newPage": "New page", "slug": "URL slug", "slugHint": "Lowercase letters, digits and hyphens. Fixed after creation.",
+      "titleAr": "Title in Arabic", "titleEn": "Title in English", "bodyAr": "Content in Arabic", "bodyEn": "Content in English",
+      "bodyHint": "## heading, ### subheading, - list item, > notice, **bold**. A blank line between paragraphs.",
+      "seo": "Search engines", "seoTitleAr": "Search title in Arabic", "seoTitleEn": "Search title in English",
+      "seoDescAr": "Search description in Arabic", "seoDescEn": "Search description in English", "preview": "Preview",
+      "status": "Status", "statuses": { "draft": "Draft", "published": "Published" }, "publishRule": "Publishing needs content in both languages.",
+      "updatedBy": "Last edited", "viewPublic": "View on site",
+      "section": "Section", "sections": { "equipment": "Equipment", "parts": "Spare parts", "service": "Service" },
+      "questionAr": "Question in Arabic", "questionEn": "Question in English", "answerAr": "Answer in Arabic", "answerEn": "Answer in English",
+      "active": "Visible", "saveOrder": "Save order", "newFaq": "New question",
+      "placement": "Placement", "placements": { "web_home": "Website home", "app_home": "App home", "parts": "Spare parts", "service": "Service" },
+      "imageAr": "Arabic image", "imageEn": "English image", "upload": "Upload image", "link": "Link on click",
+      "linkHint": "An internal link starting with /, like /en/parts, or an https link", "startsAt": "Starts", "endsAt": "Ends", "timeHint": "Muscat time",
+      "sort": "Order", "newBanner": "New banner", "states": { "live": "Live now", "scheduled": "Scheduled", "ended": "Ended", "inactive": "Paused" }
+    },
+    "leads": {
+      "title": "Enquiries", "intro": "From the contact form. Update the status and add a note after each contact.",
+      "topic": "Topic", "topics": { "equipment": "Equipment", "parts": "Spare parts", "service": "Service", "other": "Other" },
+      "status": "Status", "statuses": { "new": "New", "contacted": "Contacted", "qualified": "Qualified", "closed": "Closed" },
+      "assigned": "Assigned to", "assignedMe": "Assigned to me", "unassigned": "Unassigned", "nobody": "Nobody",
+      "name": "Name", "phone": "Mobile", "email": "Email", "company": "Company", "branch": "Branch", "received": "Received",
+      "message": "Message", "source": "From page", "note": "Note", "notePlaceholder": "What happened on the call?", "update": "Save",
+      "history": "History", "changed": "changed the status from {from} to {to}", "call": "Call", "whatsapp": "WhatsApp",
+      "toRfq": "Converting to a quote request comes with the quote requests module."
+    },
+    "settings": {
+      "title": "Settings and branches", "groups": { "general": "General", "branches": "Branches", "pricing": "Pricing and VAT", "quotes": "Quotes", "orders": "Orders and delivery", "service": "Service", "numbering": "Numbering" },
+      "keys": {
+        "company.profile": "Company details on invoices", "review.window_days": "Review request window after closing (days)", "account.deletion_grace_days": "Account deletion grace period (days)",
+        "vat.default_rate": "Default VAT rate %", "pricing.display": "Price display", "parts.availability_thresholds": "Parts availability display thresholds",
+        "quote.validity_days": "Quote validity (days)", "order.pickup_hold_working_days": "Order hold for pickup (working days)",
+        "order.max_open_unpaid_per_customer": "Max open unpaid orders per customer", "order.phone_confirm_above_amount": "Phone confirmation for orders above (OMR)",
+        "returns.window_days": "Return window (days)", "delivery.fee_by_governorate": "Delivery fee per governorate (OMR)",
+        "fees.inspection": "Inspection fee (OMR)", "sla.triage": "Service request triage deadline", "business_hours": "Working hours for deadlines",
+        "service.release_requires_payment": "No machine release before payment", "service.collection_reminder_days": "Collection reminder after (days)",
+        "numbering.prefixes": "Document number prefixes"
+      },
+      "company": { "name_ar": "Name in Arabic", "name_en": "Name in English", "cr_number": "Commercial registration", "vat_number": "VAT number", "address_ar": "Address in Arabic", "address_en": "Address in English", "phone": "Phone", "email": "Email" },
+      "displays": { "excl_vat": "Excluding VAT", "incl_vat": "Including VAT" },
+      "limited": "Limited up to", "available": "Available from", "normalHours": "Normal (working hours)", "urgentHours": "Urgent (hours)",
+      "start": "From", "end": "To", "days": { "sat": "Saturday", "sun": "Sunday", "mon": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thu": "Thursday", "fri": "Friday" },
+      "noDelivery": "Empty = no delivery", "readonly": "Read-only: changing a prefix after issuing documents breaks their sequence (BR-14).",
+      "notSet": "Not set by the company yet", "lastChange": "Last change", "saved": "Settings saved. The change is in the audit log.",
+      "notifications": "Notification templates come with the notifications module.",
+      "branch": {
+        "new": "New branch", "code": "Branch code", "codeHint": "Capital letters and digits, like SOH. Fixed.", "nameAr": "Name in Arabic", "nameEn": "Name in English",
+        "governorate": "Governorate", "wilayat": "Wilayat", "addressAr": "Address in Arabic", "addressEn": "Address in English",
+        "latitude": "Latitude", "longitude": "Longitude", "mapHint": "From Google Maps: right-click the location and copy both numbers.",
+        "phone": "Phone", "waSales": "Sales WhatsApp", "waService": "Service WhatsApp", "waParts": "Parts WhatsApp", "email": "Email",
+        "hours": "Working hours", "closed": "Closed", "covered": "Governorates covered", "active": "Shown on the site", "inactive": "Paused"
+      }
     },
     "home": {
       "intro": "The sections available to your role. The rest of the panel arrives in the coming sprints.",

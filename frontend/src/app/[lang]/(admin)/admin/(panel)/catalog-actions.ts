@@ -1,33 +1,26 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { hasLocale, type Locale } from "@/i18n/config";
-import { apiUpload, authed, type ApiErrorBody } from "@/lib/auth/client";
+import { apiUpload, authed } from "@/lib/auth/client";
 import { accessToken } from "@/lib/auth/session";
 import type { AdminState } from "../actions";
+import { bool, fail, id, lang, lines, num, opt, str } from "./form-data";
 
 // A-02 المعدات، A-03 الماركات والفئات والموديلات، A-04 القطع والمخزون (FR-CAT-06، FR-PRT-04، US-36، US-37).
 // الـ API هو الحَكَم في الصلاحيات والقواعد (BR-03، BR-19)، والواجهة تعرض رسائله كما هي.
+// الموقع العام يخزّن الكتالوج مؤقتاً (lib/api.ts)، فكل حفظ يُبطل وسمه ليظهر التغيير فوراً.
 
-const lang = (form: FormData): Locale => {
-  const l = String(form.get("lang"));
-  return hasLocale(l) ? l : "ar";
-};
-const str = (form: FormData, k: string) => String(form.get(k) ?? "").trim();
-const opt = (form: FormData, k: string) => str(form, k) || null;
-const num = (form: FormData, k: string) => (str(form, k) === "" ? null : Number(str(form, k)));
-const bool = (form: FormData, k: string) => form.get(k) === "on";
-const id = (form: FormData) => encodeURIComponent(str(form, "id"));
-
-function fail(error: ApiErrorBody): AdminState {
-  return { error, fieldErrors: error.code === "VALIDATION_FAILED" ? (error.details as Record<string, string[]>) : undefined };
+function changed(l: Locale, area: "equipment" | "catalog-setup" | "parts") {
+  revalidatePath(`/${l}/admin/${area}`);
+  if (area === "parts") updateTag("parts");
+  else {
+    updateTag("equipment");
+    if (area === "catalog-setup") updateTag("brands");
+  }
 }
 
-/** "أ | ب | ج" سطراً سطراً، مع تجاهل الأسطر الفارغة */
-function lines(text: string): string[][] {
-  return text.split(/\r?\n/).map((l) => l.split("|").map((c) => c.trim())).filter((c) => c.some(Boolean));
-}
 
 // ---------- A-02 المعدات المعروضة ----------
 export type Media = { id: string; url: string };
@@ -60,7 +53,7 @@ export async function saveEquipment(_prev: AdminState, form: FormData): Promise<
     method: existing ? "PUT" : "POST", body,
   });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/equipment`);
+  changed(l, "equipment");
   if (!existing) redirect(`/${l}/admin/equipment/${r.data.id}?created=1`);
   return { ok: true };
 }
@@ -85,7 +78,7 @@ export async function saveMedia(locale: string, listingId: string, ids: string[]
   const l: Locale = hasLocale(locale) ? locale : "ar";
   const r = await authed("admin", l, `/admin/equipment/${encodeURIComponent(listingId)}/media`, { method: "PUT", body: { attachment_ids: ids } });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/equipment`);
+  changed(l, "equipment");
   return { ok: true };
 }
 
@@ -95,7 +88,7 @@ export async function changeEquipmentStatus(_prev: AdminState, form: FormData): 
     method: "POST", body: { to: str(form, "to"), reason: opt(form, "reason") },
   });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/equipment`);
+  changed(l, "equipment");
   return { ok: true };
 }
 
@@ -105,7 +98,7 @@ async function saveSetup(form: FormData, path: string, body: Record<string, unkn
   const existing = str(form, "id");
   const r = await authed("admin", l, existing ? `${path}/${id(form)}` : path, { method: existing ? "PUT" : "POST", body });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/catalog-setup`);
+  changed(l, "catalog-setup");
   return { ok: true };
 }
 
@@ -148,7 +141,7 @@ export async function savePart(_prev: AdminState, form: FormData): Promise<Admin
   };
   const r = await authed<{ id: string }>("admin", l, existing ? `/admin/parts/${id(form)}` : "/admin/parts", { method: existing ? "PUT" : "POST", body });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/parts`);
+  changed(l, "parts");
   if (!existing) redirect(`/${l}/admin/parts/${r.data.id}?created=1`);
   return { ok: true };
 }
@@ -159,7 +152,7 @@ export async function adjustStock(_prev: AdminState, form: FormData): Promise<Ad
     method: "POST", body: { part_id: str(form, "id"), location_id: str(form, "location_id"), qty_delta: str(form, "qty_delta"), reason: str(form, "reason") },
   });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/parts`);
+  changed(l, "parts");
   return { ok: true };
 }
 
@@ -185,7 +178,7 @@ export async function receiveStock(_prev: AdminState, form: FormData): Promise<A
     method: "POST", body: { location_id: str(form, "location_id"), note: opt(form, "note"), lines: resolved },
   });
   if (!r.ok) return fail(r.error);
-  revalidatePath(`/${l}/admin/parts`);
+  changed(l, "parts");
   return { ok: true };
 }
 
@@ -200,7 +193,7 @@ export async function importStep(prev: ImportState, form: FormData): Promise<Imp
   if (str(form, "step") === "commit") {
     const r = await authed<{ created: number; updated: number }>("admin", l, "/admin/parts/import/commit", { method: "POST", body: { token: str(form, "token") } });
     if (!r.ok) return { ...prev, error: r.error };
-    revalidatePath(`/${l}/admin/parts`);
+    changed(l, "parts");
     return { applied: r.data };
   }
   const file = form.get("file");

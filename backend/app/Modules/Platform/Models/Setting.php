@@ -35,5 +35,6 @@ class Setting extends Model
     protected static function booted(): void
     {
         static::saved(fn (Setting $s) => Cache::forget("setting:{$s->key}"));
+        static::deleted(fn (Setting $s) => Cache::forget("setting:{$s->key}"));
     }
 }
