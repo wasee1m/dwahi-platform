@@ -26,6 +26,16 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>لتصوير القطعة أو لوحة بياناتها أو أمر الشراء وإرفاقها بطلبك. To photograph a part, its name plate or a purchase order for your request.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>لاختيار صورة القطعة أو أمر الشراء من الصور. To choose a photo of a part or a purchase order.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>whatsapp</string>
+		<string>tel</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

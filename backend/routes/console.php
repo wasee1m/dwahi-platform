@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// المهام المجدولة (02 §9). كلها متكررة الأمان، و onOneServer لأن Scheduler نسخة واحدة (04 §9).
+Schedule::command('quotations:run expire')->hourly()->onOneServer()->withoutOverlapping(); // J-02
+Schedule::command('quotations:run remind')->hourly()->onOneServer()->withoutOverlapping(); // J-03

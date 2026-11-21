@@ -5,7 +5,7 @@ import { Logo } from "@/components/Logo";
 import { Skeleton } from "@/components/ui";
 import { hasLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
-import { currentUser } from "@/lib/auth/client";
+import { authed, currentUser } from "@/lib/auth/client";
 import { staffLogout } from "../actions";
 
 // إطار لوحة الإدارة (06 §3): قائمة جانبية بالأقسام المسموحة لدور المستخدم فقط (01 §3.2، US-39)
@@ -25,8 +25,12 @@ export default async function PanelLayout({ children, params }: LayoutProps<"/[l
 
 async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
   const me = await currentUser("admin", lang);
-  const items = [
+  const count = await authed<{ unread_count: number }>("admin", lang, "/admin/notifications/count");
+  const unread = count.ok ? count.data.unread_count : 0;
+  const items: { href: string; label: string; ability: string | null; badge?: number }[] = [
     { href: "/admin", label: t.admin.nav.home, ability: null },
+    { href: "/admin/rfqs", label: t.admin.nav.rfqs, ability: "quotation.send" },
+    { href: "/admin/notifications", label: t.admin.nav.notifications, ability: null, badge: unread },
     { href: "/admin/equipment", label: t.admin.nav.equipment, ability: "catalog.manage" },
     { href: "/admin/catalog-setup", label: t.admin.nav.catalogSetup, ability: "catalog.manage" },
     { href: "/admin/parts", label: t.admin.nav.parts, ability: "parts.manage" },
@@ -44,7 +48,10 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
         <ul className="space-y-1">
           {items.map((i) => (
             <li key={i.href}>
-              <Link href={`/${lang}${i.href}`} className="block rounded-sm px-3 py-2 font-semibold hover:bg-white/10">{i.label}</Link>
+              <Link href={`/${lang}${i.href}`} className="flex items-center justify-between rounded-sm px-3 py-2 font-semibold hover:bg-white/10">
+                {i.label}
+                {i.badge ? <span className="num rounded-[999px] bg-sun px-2 text-xs font-bold text-on-sun">{i.badge}</span> : null}
+              </Link>
             </li>
           ))}
         </ul>

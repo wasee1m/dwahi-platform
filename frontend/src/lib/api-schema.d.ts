@@ -29,7 +29,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_83"];
+        post: operations["modules.platform.admin.branchAdmin.save_121"];
         delete?: never;
         options?: never;
         head?: never;
@@ -44,7 +44,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_84"];
+        put: operations["modules.platform.admin.branchAdmin.save_122"];
         post?: never;
         delete?: never;
         options?: never;
@@ -61,7 +61,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_49"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_87"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +77,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_51"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_89"];
         delete?: never;
         options?: never;
         head?: never;
@@ -93,7 +93,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_53"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_91"];
         delete?: never;
         options?: never;
         head?: never;
@@ -108,7 +108,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_50"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_88"];
         post?: never;
         delete?: never;
         options?: never;
@@ -124,7 +124,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_52"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_90"];
         post?: never;
         delete?: never;
         options?: never;
@@ -140,7 +140,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_54"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_92"];
         post?: never;
         delete?: never;
         options?: never;
@@ -157,7 +157,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_66"];
+        post: operations["modules.content.admin.contentAdmin.savePage_104"];
         delete?: never;
         options?: never;
         head?: never;
@@ -172,7 +172,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_68"];
+        put: operations["modules.content.admin.contentAdmin.savePage_106"];
         post?: never;
         delete?: never;
         options?: never;
@@ -189,7 +189,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_70"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_108"];
         delete?: never;
         options?: never;
         head?: never;
@@ -221,7 +221,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_72"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_110"];
         post?: never;
         delete?: never;
         options?: never;
@@ -238,7 +238,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_74"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_112"];
         delete?: never;
         options?: never;
         head?: never;
@@ -253,7 +253,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_75"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_113"];
         post?: never;
         delete?: never;
         options?: never;
@@ -306,6 +306,38 @@ export interface paths {
         put?: never;
         /** POST /auth/password/login: بريد + كلمة مرور إن أُنشئت (FR-AUTH-02) */
         post: operations["customerAuth.passwordLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["customerLookup.lookup"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["customerLookup.store"];
         delete?: never;
         options?: never;
         head?: never;
@@ -424,6 +456,57 @@ export interface paths {
         put?: never;
         /** POST /admin/equipment/{id}/status: نشر، حجز، بيع، أرشفة، إعادة لمسودة */
         post: operations["equipmentAdmin.status"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
+        post: operations["modules.platform.file.upload_30"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GET /files/{id} برابط موقّع (middleware signed): الملفات الخاصة لمن أُعطي الرابط */
+        get: operations["files.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/staff-uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
+        post: operations["modules.platform.file.upload_73"];
         delete?: never;
         options?: never;
         head?: never;
@@ -576,6 +659,136 @@ export interface paths {
         put?: never;
         /** POST /me/phone/verify: الحفظ بعد التحقق، وتنبيه للرقم القديم (N-30) */
         post: operations["me.verifyPhoneChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["modules.notifications.notification.index_40"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/notifications/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** للعداد في رأس الصفحة والتطبيق */
+        get: operations["modules.notifications.notification.count_41"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["modules.notifications.notification.readAll_42"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["modules.notifications.notification.read_43"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["modules.notifications.notification.index_54"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/notifications/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** للعداد في رأس الصفحة والتطبيق */
+        get: operations["modules.notifications.notification.count_55"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["modules.notifications.notification.readAll_56"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["modules.notifications.notification.read_57"];
         delete?: never;
         options?: never;
         head?: never;
@@ -858,6 +1071,317 @@ export interface paths {
         get: operations["publicContent.brands"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/quote-catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** بحث الأصناف للمحرر: قطع بالرقم المطبّع أو الاسم، ومعدات منشورة بالعنوان */
+        get: operations["quotationAdmin.catalog"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/quotations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["quotationAdmin.show"];
+        put: operations["quotationAdmin.update"];
+        post?: never;
+        delete: operations["quotationAdmin.destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/quotations/{id}/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["quotationAdmin.send"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/quotations/{id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** المسودة تُولَّد للمعاينة بعلامة DRAFT، والمرسل نسخته المحفوظة */
+        get: operations["quotationAdmin.pdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/rfqs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfq.index"];
+        put?: never;
+        post: operations["rfq.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/rfqs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfq.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/rfqs/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rfq.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/rfqs/{id}/renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** "اطلب تجديد العرض" (SM-1 انتقال 1.9) */
+        post: operations["rfq.renew"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/rfqs/{id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfq.messages"];
+        put?: never;
+        post: operations["rfq.postMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/quotations/{id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GET /me/quotations/{id}/pdf: النسخة المحفوظة عند الإرسال */
+        get: operations["rfq.pdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/quotations/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rfq.respond"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfqAdmin.index"];
+        put?: never;
+        /** إنشاء طلب نيابة عن عميل (01 §3.2، SM-1 1.1) بمصدر الهاتف أو واتساب أو الحضور */
+        post: operations["rfqAdmin.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/assignees": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** موظفو المبيعات والمنسقون للإسناد */
+        get: operations["rfqAdmin.assignees"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfqAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rfqAdmin.assign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}/lose": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rfqAdmin.lose"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rfqAdmin.reopen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}/quotations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** "إعداد عرض": مسودة جديدة أو الموجودة (US-32) */
+        post: operations["rfqAdmin.draft"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["rfqAdmin.messages"];
+        put?: never;
+        post: operations["rfqAdmin.postMessage"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1522,7 +2046,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_83": {
+    "modules.platform.admin.branchAdmin.save_121": {
         parameters: {
             query?: never;
             header?: never;
@@ -1578,7 +2102,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_84": {
+    "modules.platform.admin.branchAdmin.save_122": {
         parameters: {
             query?: never;
             header?: never;
@@ -1680,7 +2204,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_49": {
+    "modules.catalog.admin.catalogSetup.saveBrand_87": {
         parameters: {
             query?: never;
             header?: never;
@@ -1762,7 +2286,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_51": {
+    "modules.catalog.admin.catalogSetup.saveCategory_89": {
         parameters: {
             query?: never;
             header?: never;
@@ -1859,7 +2383,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_53": {
+    "modules.catalog.admin.catalogSetup.saveModel_91": {
         parameters: {
             query?: never;
             header?: never;
@@ -1917,7 +2441,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_50": {
+    "modules.catalog.admin.catalogSetup.saveBrand_88": {
         parameters: {
             query?: never;
             header?: never;
@@ -1966,7 +2490,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_52": {
+    "modules.catalog.admin.catalogSetup.saveCategory_90": {
         parameters: {
             query?: never;
             header?: never;
@@ -2014,7 +2538,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_54": {
+    "modules.catalog.admin.catalogSetup.saveModel_92": {
         parameters: {
             query?: never;
             header?: never;
@@ -2117,7 +2641,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_66": {
+    "modules.content.admin.contentAdmin.savePage_104": {
         parameters: {
             query?: never;
             header?: never;
@@ -2218,7 +2742,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_68": {
+    "modules.content.admin.contentAdmin.savePage_106": {
         parameters: {
             query?: never;
             header?: never;
@@ -2306,7 +2830,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_70": {
+    "modules.content.admin.contentAdmin.saveFaq_108": {
         parameters: {
             query?: never;
             header?: never;
@@ -2395,7 +2919,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_72": {
+    "modules.content.admin.contentAdmin.saveFaq_110": {
         parameters: {
             query?: never;
             header?: never;
@@ -2496,7 +3020,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_74": {
+    "modules.content.admin.contentAdmin.saveBanner_112": {
         parameters: {
             query?: never;
             header?: never;
@@ -2550,7 +3074,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_75": {
+    "modules.content.admin.contentAdmin.saveBanner_113": {
         parameters: {
             query?: never;
             header?: never;
@@ -2744,6 +3268,116 @@ export interface operations {
                     };
                 };
             };
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerLookup.lookup": {
+        parameters: {
+            query: {
+                phone: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            status: string;
+                            needs_onboarding: boolean;
+                        } | null;
+                        phone: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerLookup.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                    full_name: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            status: string;
+                            needs_onboarding: boolean;
+                        };
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            status: string;
+                            needs_onboarding: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -3302,6 +3936,146 @@ export interface operations {
             };
         };
     };
+    "modules.platform.file.upload_30": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Maximum file size: 10240 kilobytes.
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string | null;
+                            mime_type: string;
+                            url: string | null;
+                            width: number | null;
+                            height: number | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "files.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.platform.file.upload_73": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Maximum file size: 10240 kilobytes.
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string | null;
+                            mime_type: string;
+                            url: string | null;
+                            width: number | null;
+                            height: number | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "lead.store": {
         parameters: {
             query?: never;
@@ -3831,6 +4605,328 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.index_40": {
+        parameters: {
+            query?: {
+                category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
+                unread?: boolean | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            event: string;
+                            category: unknown;
+                            title: string;
+                            body: string;
+                            link: string;
+                            read: boolean;
+                            created_at: string;
+                        }[];
+                        unread_count: number;
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.count_41": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.readAll_42": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.read_43": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.index_54": {
+        parameters: {
+            query?: {
+                category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
+                unread?: boolean | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            event: string;
+                            category: unknown;
+                            title: string;
+                            body: string;
+                            link: string;
+                            read: boolean;
+                            created_at: string;
+                        }[];
+                        unread_count: number;
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.count_55": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.readAll_56": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.read_57": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -4819,6 +5915,2650 @@ export interface operations {
                     };
                 };
             };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.catalog": {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: ({
+                            /** @constant */
+                            item_type: "equipment";
+                            listing_id: string;
+                            label: string;
+                            description_ar: string;
+                            description_en: string;
+                            /** @constant */
+                            unit: "unit";
+                            unit_price: string;
+                            vat_rate: null;
+                            warranty_months: number | null;
+                        } | string)[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            version: number;
+                            status: string;
+                            valid_until: string | null;
+                            acceptable: boolean;
+                            subtotal: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            discount_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            vat_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            estimated_duration: string | null;
+                            delivery_terms: string | null;
+                            warranty_terms: string | null;
+                            payment_terms: string | null;
+                            sent_at: string | null;
+                            responded_at: string | null;
+                            response_note: string | null;
+                            lpo_number: string | null;
+                            approval_requested_at: string | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                item_type: string;
+                                listing_id: string | null;
+                                part_id: string | null;
+                                description_ar: string;
+                                description_en: string;
+                                quantity: string;
+                                unit: string;
+                                warranty_months: number | null;
+                                unit_price: string;
+                                discount_amount: string;
+                                vat_rate: string;
+                                line_subtotal: string;
+                                line_vat: string;
+                                line_total: string;
+                            }[] | string[];
+                            rfq: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                delivery_country: string;
+                            };
+                            default_vat_rate: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: date-time */
+                    valid_until?: string | null;
+                    estimated_duration?: string | null;
+                    delivery_terms?: string | null;
+                    warranty_terms?: string | null;
+                    payment_terms?: string | null;
+                    items: {
+                        /** @enum {string} */
+                        item_type: "equipment" | "part" | "labor" | "service_fee" | "other";
+                        /** Format: uuid */
+                        listing_id?: string | null;
+                        /** Format: uuid */
+                        part_id?: string | null;
+                        description_ar: string;
+                        description_en: string;
+                        quantity: number;
+                        unit: string;
+                        unit_price: number;
+                        discount_amount?: number | null;
+                        vat_rate: number;
+                        warranty_months?: number | null;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            version: number;
+                            status: string;
+                            valid_until: string | null;
+                            acceptable: boolean;
+                            subtotal: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            discount_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            vat_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            estimated_duration: string | null;
+                            delivery_terms: string | null;
+                            warranty_terms: string | null;
+                            payment_terms: string | null;
+                            sent_at: string | null;
+                            responded_at: string | null;
+                            response_note: string | null;
+                            lpo_number: string | null;
+                            approval_requested_at: string | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                item_type: string;
+                                listing_id: string | null;
+                                part_id: string | null;
+                                description_ar: string;
+                                description_en: string;
+                                quantity: string;
+                                unit: string;
+                                warranty_months: number | null;
+                                unit_price: string;
+                                discount_amount: string;
+                                vat_rate: string;
+                                line_subtotal: string;
+                                line_vat: string;
+                                line_total: string;
+                            }[] | string[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            version: number;
+                            status: string;
+                            valid_until: string | null;
+                            acceptable: boolean;
+                            subtotal: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            discount_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            vat_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            estimated_duration: string | null;
+                            delivery_terms: string | null;
+                            warranty_terms: string | null;
+                            payment_terms: string | null;
+                            sent_at: string | null;
+                            responded_at: string | null;
+                            response_note: string | null;
+                            lpo_number: string | null;
+                            approval_requested_at: string | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                item_type: string;
+                                listing_id: string | null;
+                                part_id: string | null;
+                                description_ar: string;
+                                description_en: string;
+                                quantity: string;
+                                unit: string;
+                                warranty_months: number | null;
+                                unit_price: string;
+                                discount_amount: string;
+                                vat_rate: string;
+                                line_subtotal: string;
+                                line_vat: string;
+                                line_total: string;
+                            }[] | string[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "quotationAdmin.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Content-Disposition"?: "inline; filename=\"draft.pdf\"";
+                    "Transfer-Encoding"?: "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.index": {
+        parameters: {
+            query?: {
+                tab?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                        }[];
+                        counts: number[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    type: "equipment" | "parts";
+                    /** @enum {string} */
+                    source?: "web" | "app";
+                    notes?: string | null;
+                    delivery_country?: string | null;
+                    delivery_address_text?: string | null;
+                    attachment_ids?: string[];
+                    items: {
+                        /** Format: uuid */
+                        listing_id?: string | null;
+                        /** Format: uuid */
+                        part_id?: string | null;
+                        free_text?: string | null;
+                        quantity: number;
+                        specs?: {
+                            bore_mm?: number | null;
+                            rod_mm?: number | null;
+                            stroke_mm?: number | null;
+                            mounting?: string | null;
+                            pressure_bar?: number | null;
+                        };
+                        attachment_ids?: string[];
+                    }[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            can_decide: boolean;
+                            can_cancel: boolean;
+                            can_renew: boolean;
+                            unread_messages: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    reason?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            can_decide: boolean;
+                            can_cancel: boolean;
+                            can_renew: boolean;
+                            unread_messages: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            can_decide: boolean;
+                            can_cancel: boolean;
+                            can_renew: boolean;
+                            unread_messages: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            body: string | null;
+                            mine: boolean;
+                            /** @description العميل يرى "فريق الشركة" باسم الموظف الأول فقط، دون بريده أو دوره */
+                            sender: {
+                                name: string;
+                                is_staff: boolean;
+                            };
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.postMessage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    id: string;
+                    body?: string | null;
+                    attachment_ids?: string[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            body: string | null;
+                            mine: boolean;
+                            /** @description العميل يرى "فريق الشركة" باسم الموظف الأول فقط، دون بريده أو دوره */
+                            sender: {
+                                name: string;
+                                is_staff: boolean;
+                            };
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfq.respond": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    lpo_number?: string | null;
+                    /** Format: uuid */
+                    lpo_attachment_id?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: null;
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            can_decide: boolean;
+                            can_cancel: boolean;
+                            can_renew: boolean;
+                            unread_messages: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.index": {
+        parameters: {
+            query?: {
+                status?: "submitted" | "in_review" | "quoted" | "won" | "lost" | "cancelled" | null;
+                type?: "equipment" | "parts" | "service" | null;
+                assigned?: "me" | "none" | null;
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                        }[];
+                        counts: unknown[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    customer_id: string;
+                    /** @enum {string} */
+                    source: "phone" | "whatsapp" | "walk_in";
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.assignees": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["User"][];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            unread_messages: number;
+                            can_reopen: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /**
+                     * Format: uuid
+                     * @enum {string|null}
+                     */
+                    user_id?: "01a1e9cd-736e-7560-90a6-be7af06ea353" | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            unread_messages: number;
+                            can_reopen: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.lose": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            unread_messages: number;
+                            can_reopen: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            type: string;
+                            status: string;
+                            source: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            quotation: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                version: number;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                valid_until: string | null;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            lost_reason: string | null;
+                            created_at: string | null;
+                            closed_at: string | null;
+                            notes: string | null;
+                            cancel_reason: string | null;
+                            delivery_country: string;
+                            delivery_address_text: string | null;
+                            branch: {
+                                code: string;
+                                name: string | null;
+                                whatsapp_sales: string | null;
+                                whatsapp_parts: string | null;
+                            } | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                title: string;
+                                quantity: string;
+                                specs: unknown[] | null;
+                                listing: {
+                                    id: string;
+                                    slug: string;
+                                    status: string;
+                                    cover_url: null;
+                                } | null;
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    brand: string;
+                                    brand_slug: string;
+                                } | null;
+                                free_text: string | null;
+                                attachments: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                }[];
+                            }[];
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            quotations: {
+                                id: string;
+                                number: string | null;
+                                version: number;
+                                status: string;
+                                valid_until: string | null;
+                                acceptable: boolean;
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                discount_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                estimated_duration: string | null;
+                                delivery_terms: string | null;
+                                warranty_terms: string | null;
+                                payment_terms: string | null;
+                                sent_at: string | null;
+                                responded_at: string | null;
+                                response_note: string | null;
+                                lpo_number: string | null;
+                                approval_requested_at: string | null;
+                                items: {
+                                    id: string;
+                                    line_no: number;
+                                    item_type: string;
+                                    listing_id: string | null;
+                                    part_id: string | null;
+                                    description_ar: string;
+                                    description_en: string;
+                                    quantity: string;
+                                    unit: string;
+                                    warranty_months: number | null;
+                                    unit_price: string;
+                                    discount_amount: string;
+                                    vat_rate: string;
+                                    line_subtotal: string;
+                                    line_vat: string;
+                                    line_total: string;
+                                }[] | string[];
+                            }[];
+                            unread_messages: number;
+                            can_reopen: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            version: number;
+                            status: string;
+                            valid_until: string | null;
+                            acceptable: boolean;
+                            subtotal: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            discount_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            vat_total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            estimated_duration: string | null;
+                            delivery_terms: string | null;
+                            warranty_terms: string | null;
+                            payment_terms: string | null;
+                            sent_at: string | null;
+                            responded_at: string | null;
+                            response_note: string | null;
+                            lpo_number: string | null;
+                            approval_requested_at: string | null;
+                            items: {
+                                id: string;
+                                line_no: number;
+                                item_type: string;
+                                listing_id: string | null;
+                                part_id: string | null;
+                                description_ar: string;
+                                description_en: string;
+                                quantity: string;
+                                unit: string;
+                                warranty_months: number | null;
+                                unit_price: string;
+                                discount_amount: string;
+                                vat_rate: string;
+                                line_subtotal: string;
+                                line_vat: string;
+                                line_total: string;
+                            }[] | string[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            body: string | null;
+                            mine: boolean;
+                            /** @description العميل يرى "فريق الشركة" باسم الموظف الأول فقط، دون بريده أو دوره */
+                            sender: {
+                                name: string;
+                                is_staff: boolean;
+                            };
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "rfqAdmin.postMessage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    id: string;
+                    body?: string | null;
+                    attachment_ids?: string[];
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            body: string | null;
+                            mine: boolean;
+                            /** @description العميل يرى "فريق الشركة" باسم الموظف الأول فقط، دون بريده أو دوره */
+                            sender: {
+                                name: string;
+                                is_staff: boolean;
+                            };
+                            attachments: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            }[];
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {

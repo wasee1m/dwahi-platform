@@ -7,7 +7,7 @@ import { hasLocale, intlLocale } from "@/i18n/config";
 import { getAppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { formatPhone } from "@/lib/format";
-import { LeadForm } from "../LeadForm";
+import { ConvertLead, LeadForm } from "../LeadForm";
 import { LEAD_COLOR, type LeadRow } from "../shared";
 
 // A-15 تفاصيل استفسار: الرسالة، والتواصل المباشر، والحالة والإسناد، والسجل باسم الموظف ووقته (US-43)
@@ -72,7 +72,10 @@ async function Detail({ params }: { params: Props["params"] }) {
       </section>
 
       <LeadForm key={`${lead.status}-${lead.notes.length}`} lang={lang} t={l} lead={lead} assignees={people.ok ? people.data : []} />
-      <Notice>{l.toRfq}</Notice>
+      {lead.topic !== "service" && lead.status !== "closed" && me.permissions.includes("rfq.create_on_behalf") && (
+        <ConvertLead lang={lang} label={l.convert} lead={lead} />
+      )}
+      {lead.topic === "service" && <Notice>{l.toRfq}</Notice>}
 
       <section>
         <h2 className="mb-3 text-xl">{l.history}</h2>

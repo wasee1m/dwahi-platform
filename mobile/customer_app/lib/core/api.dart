@@ -22,6 +22,15 @@ class ApiException implements Exception {
   String toString() => 'ApiException($code, $status)';
 }
 
+/// صفحة من قائمة: الصفوف وبقية الاستجابة
+class ApiPage {
+  ApiPage(this.rows, this.meta);
+  final List<Map<String, dynamic>> rows;
+  final Map<String, dynamic> meta;
+
+  String? get nextCursor => meta['next_cursor'] as String?;
+}
+
 /// تخزين الرموز (04 §5): رمز الوصول في الذاكرة فقط، ورمز التحديث في Keychain/Keystore.
 class TokenStore {
   TokenStore([FlutterSecureStorage? storage]) : _storage = storage ?? const FlutterSecureStorage();
@@ -119,13 +128,36 @@ class Api {
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool auth = true}) =>
       _call(() => _dio.post(path, data: body, options: Options(extra: {'auth': auth})));
 
-  Future<Map<String, dynamic>> get(String path) => _call(() => _dio.get(path));
+  Future<Map<String, dynamic>> get(String path, {Map<String, dynamic>? query}) =>
+      _call(() => _dio.get(path, queryParameters: query));
+
+  /// قائمة: data مصفوفة، وبقية الاستجابة (next_cursor، counts، unread_count) في meta
+  Future<ApiPage> page(String path, {Map<String, dynamic>? query, bool auth = true}) async {
+    final body = await _raw(() => _dio.get(path, queryParameters: query, options: Options(extra: {'auth': auth})));
+    final rows = (body['data'] as List? ?? const []).cast<Map<String, dynamic>>();
+    return ApiPage(rows, Map.of(body)..remove('data'));
+  }
+
+  /// طلب يعيد مصفوفة في data (مثل إرسال رسالة يعيد المحادثة)
+  Future<List<Map<String, dynamic>>> postList(String path, Map<String, dynamic> body) async {
+    final res = await _raw(() => _dio.post(path, data: body));
+    return (res['data'] as List? ?? const []).cast<Map<String, dynamic>>();
+  }
+
+  /// رفع ملف خاص (صورة القطعة، أمر الشراء، مرفق رسالة) إلى /me/uploads (NFR-11)
+  Future<Map<String, dynamic>> upload(String filePath, String fileName) => _call(() async => _dio.post('/me/uploads',
+      data: FormData.fromMap({'file': await MultipartFile.fromFile(filePath, filename: fileName)})));
 
   Future<Map<String, dynamic>> _call(Future<Response> Function() send) async {
+    final data = await _raw(send);
+    return data['data'] is Map<String, dynamic> ? data['data'] as Map<String, dynamic> : data;
+  }
+
+  Future<Map<String, dynamic>> _raw(Future<Response> Function() send) async {
     try {
       final res = await send();
       final data = res.data;
-      return data is Map<String, dynamic> ? (data['data'] as Map<String, dynamic>? ?? data) : <String, dynamic>{};
+      return data is Map<String, dynamic> ? data : <String, dynamic>{};
     } on DioException catch (e) {
       final body = e.response?.data;
       final err = body is Map<String, dynamic> ? body['error'] as Map<String, dynamic>? : null;

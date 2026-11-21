@@ -54,6 +54,20 @@ final class Uploads
         ]);
     }
 
+    /** ملف يولده النظام (PDF العروض والفواتير): لا يحتاج فحصاً، ويُحفظ خاصاً */
+    public function storeGenerated(string $bytes, string $mime, string $name, ?User $by = null): Attachment
+    {
+        $ext = self::DOC_TYPES[$mime] ?? 'bin';
+        $key = sprintf('generated/%s/%s.%s', now()->format('Y/m'), Str::uuid7(), $ext);
+        Storage::disk('local')->put($key, $bytes);
+
+        return Attachment::query()->create([
+            'storage_key' => $key, 'original_name' => substr($name, 0, 255), 'mime_type' => $mime,
+            'size_bytes' => strlen($bytes), 'sha256' => hash('sha256', $bytes), 'visibility' => 'private',
+            'scan_status' => 'clean', 'uploaded_by' => $by?->id, 'created_at' => now(),
+        ]);
+    }
+
     /** @return array{0: string, 1: int, 2: int} */
     private function reencode(string $path, string $mime): array
     {

@@ -11,6 +11,7 @@ import { ButtonLink, Container, Skeleton } from "@/components/ui";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getEquipment } from "@/lib/api";
+import { portalEnabled } from "@/lib/features";
 import { formatMoney, formatNumber, whatsappLink } from "@/lib/format";
 import { alternates, siteUrl } from "@/lib/seo";
 
@@ -128,7 +129,9 @@ async function Detail({ params }: { params: Props["params"] }) {
 
           {item.status !== "sold" && (
             <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href={`/${lang}/contact?topic=equipment&ref=${encodeURIComponent(item.title)}`}>{t.requestQuote}</ButtonLink>
+              <ButtonLink href={portalEnabled() && item.status === "published"
+                ? `/${lang}/account/quotes/new?type=equipment&listing=${encodeURIComponent(item.slug)}`
+                : `/${lang}/contact?topic=equipment&ref=${encodeURIComponent(item.title)}`}>{t.requestQuote}</ButtonLink>
               {wa && (
                 <a href={whatsappLink(wa, `${t.whatsappMessage} ${item.title}\n${url}`)} rel="noopener" target="_blank"
                   className="inline-flex items-center justify-center rounded-sm bg-night px-5 py-3 font-bold text-on-night hover:opacity-90">

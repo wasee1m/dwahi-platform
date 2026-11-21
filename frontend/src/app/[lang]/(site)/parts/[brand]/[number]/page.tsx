@@ -9,6 +9,7 @@ import { ButtonLink, Container, Skeleton } from "@/components/ui";
 import { hasLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getPart } from "@/lib/api";
+import { portalEnabled } from "@/lib/features";
 import { formatMoney } from "@/lib/format";
 import { alternates } from "@/lib/seo";
 
@@ -67,7 +68,9 @@ async function Detail({ params }: { params: Props["params"] }) {
           </ul>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink href={`/${lang}/contact?topic=parts&ref=${encodeURIComponent(part.part_number)}`}>{t.requestQuantity}</ButtonLink>
+            <ButtonLink href={portalEnabled()
+              ? `/${lang}/account/quotes/new?type=parts&part=${part.id}&label=${encodeURIComponent(`${part.brand.name} ${part.part_number} · ${part.name}`)}`
+              : `/${lang}/contact?topic=parts&ref=${encodeURIComponent(part.part_number)}`}>{t.requestQuantity}</ButtonLink>
           </div>
           <p className="mt-3 max-w-md text-xs text-ink-muted">{t.cartSoon}</p>
 

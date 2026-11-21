@@ -2,6 +2,8 @@
 
 use App\Models\User;
 use App\Modules\Identity\Models\StaffProfile;
+use App\Modules\Identity\Sms\LogSmsSender;
+use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Platform\Models\Branch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,34 @@ function adminSignIn($test, string $email = 'admin@dwahi.test', string $password
     $code = (new Google2FA)->getCurrentOtp($secret);
 
     return $test->postJson(api().'/auth/staff/2fa', ['mfa_token' => $step['mfa_token'], 'code' => $code])->assertOk()->json('data');
+}
+
+/** تبديل المستخدم بين الطلبات في نفس الاختبار: الحارس يحفظ المستخدم السابق، فيُنسى أولاً */
+function asUser($test, string $token)
+{
+    app('auth')->forgetGuards();
+
+    return $test->withToken($token);
+}
+
+/**
+ * عميل مسجل الدخول برمز الجوال وأكمل ملفه (US-06)، ويعيد رمز الوصول. مع اسم شركة يصبح مالكها.
+ */
+function customerToken($test, string $phone = '91234567', ?string $company = null): string
+{
+    // نفس المرسل الذي تحمله خدمة الرموز (مفرد في الحاوية)، فتتراكم رسائل كل العملاء فيه
+    $sms = app(SmsSender::class);
+    assert($sms instanceof LogSmsSender);
+    app('auth')->forgetGuards();
+    $test->postJson(api().'/auth/otp/request', ['phone' => $phone])->assertStatus(202);
+    preg_match('/\d{6}/', end($sms->sent)['text'], $m);
+    $token = $test->postJson(api().'/auth/otp/verify', ['phone' => $phone, 'code' => $m[0], 'client' => 'web'])->assertOk()->json('data.access_token');
+    $test->withToken($token)->postJson(api().'/me/onboarding', [
+        'full_name' => "عميل {$phone}", 'account_type' => $company ? 'company' : 'individual', 'company_name' => $company,
+        'governorate' => 'muscat', 'accept_terms' => true, 'accept_privacy' => true,
+    ])->assertOk();
+
+    return $token;
 }
 
 /** موظف بدور واحد مسجل الدخول، ويعيد رمز الوصول */

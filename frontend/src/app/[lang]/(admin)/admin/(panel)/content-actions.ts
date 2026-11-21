@@ -63,6 +63,24 @@ export async function saveBanner(_prev: AdminState, form: FormData): Promise<Adm
 }
 
 // ---------- A-15 الاستفسارات ----------
+/**
+ * "تحويل لطلب عرض سعر" (US-43): العميل برقم الاستفسار (يُنشأ حسابه إن لم يوجد)، وطلب بمصدر الهاتف،
+ * والاستفسار يصبح "فرصة مؤكدة" بملاحظة تحمل رقم الطلب. استفسارات الصيانة تتحول مع وحدة الصيانة (S7).
+ */
+export async function convertLead(_prev: AdminState, form: FormData): Promise<AdminState> {
+  const l = lang(form);
+  const customer = await authed<{ id: string }>("admin", l, "/admin/customers", { method: "POST", body: { phone: str(form, "phone"), full_name: str(form, "name") } });
+  if (!customer.ok) return fail(customer.error);
+  const message = str(form, "message");
+  const rfq = await authed<{ id: string; number: string }>("admin", l, "/admin/rfqs", {
+    method: "POST",
+    body: { customer_id: customer.data.id, source: "phone", type: str(form, "topic") === "equipment" ? "equipment" : "parts", notes: message, items: [{ free_text: message.slice(0, 2000), quantity: 1 }] },
+  });
+  if (!rfq.ok) return fail(rfq.error);
+  await authed("admin", l, `/admin/leads/${id(form)}`, { method: "PATCH", body: { status: "qualified", note: `→ ${rfq.data.number}` } });
+  redirect(`/${l}/admin/rfqs/${rfq.data.id}`);
+}
+
 export async function updateLead(_prev: AdminState, form: FormData): Promise<AdminState> {
   const l = lang(form);
   const r = await authed("admin", l, `/admin/leads/${id(form)}`, {

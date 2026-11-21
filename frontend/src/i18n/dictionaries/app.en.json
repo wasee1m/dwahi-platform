@@ -56,7 +56,7 @@
   "account": {
     "title": "My account",
     "hello": "Hello {name}",
-    "nav": { "dashboard": "Overview", "profile": "Profile and security" },
+    "nav": { "dashboard": "Overview", "profile": "Profile and security", "quotes": "Quotes", "notifications": "Notifications" },
     "quickService": "Request a repair",
     "quickPart": "Find a part",
     "quickQuote": "Request a quote",
@@ -67,6 +67,43 @@
     "company": "Company",
     "owner": "Owner",
     "member": "Member"
+  },
+  "quotes": {
+    "title": "Quotes", "new": "New quote request", "empty": "No requests here.",
+    "tabs": { "awaiting": "Awaiting my reply", "review": "Under review", "done": "Completed", "closed": "Cancelled or declined" },
+    "types": { "equipment": "Equipment", "parts": "Spare parts", "service": "Service" },
+    "rfqStatuses": { "submitted": "Submitted", "in_review": "Under review", "quoted": "Quote received", "won": "Accepted", "lost": "Closed", "cancelled": "Cancelled" },
+    "quoteStatuses": { "draft": "Draft", "sent": "Awaiting your reply", "accepted": "Accepted", "rejected": "Declined", "revision_requested": "Changes requested", "expired": "Expired", "superseded": "Earlier version" },
+    "total": "Total", "validUntil": "Valid until", "daysLeft": "{n} days left", "lastDay": "Last day today", "items": "Items",
+    "form": {
+      "intro": "Add what you need and we will reply with a formal quote. You can add a part that is not in the catalog with its number or a description and a photo.",
+      "type": "Request type", "searchPart": "Search parts by number or name", "searching": "Searching...", "noResults": "No results. Add it as an unlisted part.",
+      "add": "Add", "addUnlisted": "Unlisted part", "unlisted": "Part number or description", "unlistedHint": "Like 207-60-71182 or \"hydraulic filter for a PC200-8 excavator\"",
+      "quantity": "Quantity", "remove": "Remove", "photo": "Photo (name plate or the part)", "upload": "Upload photo", "uploading": "Uploading...",
+      "cylinder": "Hydraulic cylinder: add specifications", "bore": "Bore (mm)", "rod": "Rod diameter (mm)", "stroke": "Stroke (mm)", "mounting": "Mounting type", "pressure": "Working pressure (bar)",
+      "machine": "Machine", "noItems": "Add at least one item.", "notes": "Notes", "notesHint": "The machine the part is for, when you need it, anything that helps us",
+      "delivery": "Delivery", "inOman": "Within Oman", "export": "Export outside Oman", "country": "Destination country (two-letter code like SY)", "address": "Delivery address or wilayat",
+      "attachments": "Extra attachments", "submit": "Send request", "sent": "We received your request. You will get a message when the quote is ready."
+    },
+    "detail": {
+      "request": "Request", "notes": "Your notes", "quote": "Quote", "noQuote": "We are reviewing your request and will send a quote soon. You can message us below.",
+      "description": "Description", "qty": "Qty", "unitPrice": "Price", "discount": "Discount", "vat": "VAT", "lineTotal": "Total",
+      "subtotal": "Subtotal before discount", "vatTotal": "VAT", "grandTotal": "Total (OMR)", "pricesNote": "Prices exclude VAT; VAT is per line.",
+      "terms": { "delivery_terms": "Delivery", "warranty_terms": "Warranty", "payment_terms": "Payment", "estimated_duration": "Expected duration" },
+      "pdf": "Download PDF", "accept": "Accept quote", "lpoNumber": "Purchase order number (optional)", "lpoFile": "LPO file (optional)",
+      "confirmAccept": "Confirm acceptance", "reject": "Decline", "rejectReason": "Reason (optional)", "confirmReject": "Confirm decline",
+      "revise": "Ask for changes", "reviseNote": "What should change?", "sendRevision": "Send change request",
+      "needsApproval": "Quotes are accepted by the company account owner or a member with approval rights.", "requestApproval": "Send for approval", "approvalSent": "We sent the quote to the account owner for approval.",
+      "expired": "This quote has expired.", "renew": "Ask to renew the quote", "renewed": "You asked to renew the quote. A new quote will follow.",
+      "cancel": "Cancel request", "cancelReason": "Reason (optional)", "confirmCancel": "Confirm cancellation", "lostReason": "Reason closed",
+      "accepted": "You accepted this quote. Our team will contact you to complete the purchase and delivery.", "versions": "Earlier versions", "yourNote": "Your note",
+      "messages": "Conversation", "messagePlaceholder": "Write to our team", "send": "Send", "attach": "Attach photo", "noMessages": "No messages yet.",
+      "team": "DWAHI-ALBADIA team", "whatsapp": "Chat on WhatsApp", "waText": "Hello, I am asking about quote request {number}"
+    }
+  },
+  "notifications": {
+    "title": "Notifications", "markAll": "Mark all as read", "empty": "No notifications.", "today": "Today", "yesterday": "Yesterday", "older": "Earlier",
+    "all": "All", "categories": { "quotes": "Quotes", "orders": "Orders", "service": "Service", "messages": "Messages" }
   },
   "profile": {
     "title": "Profile and security",
@@ -120,7 +157,36 @@
     "send": "Send",
     "panel": "Admin panel",
     "forbidden": "You do not have permission for this page.",
-    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock", "content": "Content", "leads": "Enquiries", "settings": "Settings and branches" },
+    "nav": { "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock", "content": "Content", "leads": "Enquiries", "settings": "Settings and branches", "rfqs": "Quote requests", "notifications": "Notifications" },
+    "rfqs": {
+      "title": "Quote requests", "new": "Request for a customer", "assignMe": "Assign to me", "assignTo": "Assign to", "assign": "Assign",
+      "statuses": { "submitted": "New", "in_review": "In review", "quoted": "Quote sent", "won": "Won", "lost": "Lost", "cancelled": "Cancelled" },
+      "types": { "equipment": "Equipment", "parts": "Parts", "service": "Service" },
+      "sources": { "web": "Website", "app": "App", "phone": "Phone", "whatsapp": "WhatsApp", "walk_in": "Walk-in", "system": "System" },
+      "open": "Open", "mine": "Assigned to me", "unassigned": "Unassigned", "age": "Age", "hours": "{n} h", "days": "{n} d",
+      "customer": "Customer", "number": "Number", "type": "Type", "status": "Status", "assigned": "Assigned to", "items": "Items", "total": "Quote",
+      "request": "Request", "notes": "Customer notes", "delivery": "Delivery", "export": "Export to", "attachments": "Attachments", "specs": "Cylinder specs",
+      "quotations": "Quotes", "prepare": "Prepare quote", "continueDraft": "Continue draft", "newVersion": "Issue a new version", "edit": "Open",
+      "lose": "Mark lost", "loseReason": "Reason lost (required)", "confirmLose": "Record as lost", "reopen": "Reopen", "reopenReason": "Reason for reopening",
+      "won": "The customer accepted this quote. The machine was reserved automatically; the invoice and parts order come with the billing and orders modules.",
+      "messages": "Conversation with the customer", "messagePlaceholder": "Write to the customer", "send": "Send", "attach": "Attach", "noMessages": "No messages.",
+      "lookupTitle": "Customer", "phone": "Customer mobile", "find": "Find", "notFound": "No customer with this number. Create their account by number; they complete the profile on first sign-in.",
+      "fullName": "Customer name", "createCustomer": "Create customer account", "source": "Request source", "pickedCustomer": "Selected customer",
+      "itemLine": "One item per line: description or part number | quantity", "create": "Create request", "pendingOnboarding": "Profile not completed yet", "sentNotice": "The quote was sent to the customer, who was notified."
+    },
+    "quote": {
+      "title": "Quote editor", "version": "Version", "lines": "Lines", "type": "Type",
+      "itemTypes": { "equipment": "Machine", "part": "Part", "labor": "Labour", "service_fee": "Fee", "other": "Other" },
+      "descAr": "Description in Arabic", "descEn": "Description in English", "qty": "Qty", "unit": "Unit", "price": "Price", "discount": "Discount (OMR)",
+      "vat": "VAT %", "warranty": "Warranty (months)", "lineTotal": "Total", "addLine": "Free line", "addLabor": "Labour", "searchCatalog": "Add a catalog item",
+      "validUntil": "Valid until (empty = default validity period)", "duration": "Expected duration (service)",
+      "delivery": "Delivery terms", "warranty_terms": "Warranty terms", "payment": "Payment terms", "templates": "Templates",
+      "tpl": { "delivery": "Collection from the Sohar workshop within 7 working days of acceptance.", "warranty": "Manufacturer warranty per line; misuse is not covered.", "payment": "Payment on collection: cash, card or bank transfer." },
+      "subtotal": "Subtotal before discount", "discountTotal": "Discount", "vatTotal": "VAT", "total": "Total",
+      "save": "Save draft", "saved": "Draft saved.", "preview": "Preview PDF", "send": "Send to customer", "sendConfirm": "This version cannot be edited after sending. Send?",
+      "discard": "Delete draft", "locked": "This version was sent and cannot be edited. For any change, issue a new version from the request page.", "back": "Request",
+      "computedHint": "VAT is calculated per line and rounded to the nearest baisa on save (BR-01)."
+    },
     "common": {
       "save": "Save", "saved": "Saved.", "cancel": "Cancel", "new": "New", "edit": "Edit", "search": "Search", "all": "All",
       "back": "Back", "yes": "Yes", "no": "No", "reason": "Reason", "next": "Next", "total": "Total", "none": "None",
@@ -192,7 +258,7 @@
       "name": "Name", "phone": "Mobile", "email": "Email", "company": "Company", "branch": "Branch", "received": "Received",
       "message": "Message", "source": "From page", "note": "Note", "notePlaceholder": "What happened on the call?", "update": "Save",
       "history": "History", "changed": "changed the status from {from} to {to}", "call": "Call", "whatsapp": "WhatsApp",
-      "toRfq": "Converting to a quote request comes with the quote requests module."
+      "toRfq": "Service enquiries convert to service requests with the service module.", "convert": "Convert to quote request"
     },
     "settings": {
       "title": "Settings and branches", "groups": { "general": "General", "branches": "Branches", "pricing": "Pricing and VAT", "quotes": "Quotes", "orders": "Orders and delivery", "service": "Service", "numbering": "Numbering" },

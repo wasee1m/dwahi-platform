@@ -6,12 +6,19 @@ use App\Models\User;
 use App\Modules\Identity\Authorization\Permissions;
 use App\Modules\Identity\Sms\LogSmsSender;
 use App\Modules\Identity\Sms\SmsSender;
+use App\Modules\Messaging\Events\MessagePosted;
+use App\Modules\Notifications\Listeners\MessageNotifications;
+use App\Modules\Notifications\Listeners\QuotingNotifications;
+use App\Modules\Notifications\Push\LogPushSender;
+use App\Modules\Notifications\Push\PushSender;
+use App\Modules\Quoting\Events\QuotingEvent;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SmsSender::class, fn () => match (config('services.sms.driver')) {
             default => new LogSmsSender,
         });
+        // Push (FR-NOT-02): السجل حتى ربط FCM و APNs مع بناء التطبيقات
+        $this->app->singleton(PushSender::class, fn () => new LogPushSender);
     }
 
     public function boot(): void
@@ -45,6 +54,10 @@ class AppServiceProvider extends ServiceProvider
         // قراءة الماركات والفئات والموديلات: موظف القطع يحتاجها للتوافق (A-04) دون صلاحية تعديلها
         Gate::define('catalog.read', fn (User $user) => $user->hasAbility('catalog.manage') || $user->hasAbility('parts.manage'));
 
+        // أحداث المجال بين الوحدات (04 §3)
+        Event::listen(QuotingEvent::class, QuotingNotifications::class);
+        Event::listen(MessagePosted::class, MessageNotifications::class);
+
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));
         RateLimiter::for('leads', fn (Request $r) => [
@@ -57,6 +70,7 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(10)->by('auth:login:'.strtolower((string) ($r->input('email') ?? $r->input('login') ?? $r->input('phone') ?? $r->ip()))),
         ]);
         RateLimiter::for('account', fn (Request $r) => Limit::perMinute(120)->by($r->user()?->id ?? $r->ip()));
+        RateLimiter::for('uploads', fn (Request $r) => [Limit::perMinute(20)->by('up:m:'.($r->user()?->id ?? $r->ip())), Limit::perDay(300)->by('up:d:'.($r->user()?->id ?? $r->ip()))]);
 
         // عقد OpenAPI مولّد من الكود (قرار 2026-11-17)
         Scramble::configure()->routes(fn ($route) => str_starts_with($route->uri, 'api/v1'))

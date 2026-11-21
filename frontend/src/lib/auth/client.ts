@@ -15,7 +15,8 @@ export type ApiErrorBody = {
   trace_id?: string;
 };
 
-export type ApiResult<T> = { ok: true; status: number; data: T } | { ok: false; status: number; error: ApiErrorBody };
+/** meta: بقية الاستجابة خارج data، مثل next_cursor و counts و unread_count */
+export type ApiResult<T> = { ok: true; status: number; data: T; meta: Record<string, unknown> } | { ok: false; status: number; error: ApiErrorBody };
 
 const API_URL = process.env.API_URL ?? "http://localhost:8000/api/v1";
 
@@ -46,12 +47,13 @@ export async function api<T>(path: string, opts: { method?: string; body?: unkno
     body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined,
     cache: "no-store",
   });
-  if (res.status === 204) return { ok: true, status: 204, data: undefined as T };
-  const json = (await res.json().catch(() => ({}))) as { data?: T; error?: ApiErrorBody };
+  if (res.status === 204) return { ok: true, status: 204, data: undefined as T, meta: {} };
+  const json = (await res.json().catch(() => ({}))) as { data?: T; error?: ApiErrorBody } & Record<string, unknown>;
   if (!res.ok) {
     return { ok: false, status: res.status, error: json.error ?? { code: "INTERNAL_ERROR", message: "" } };
   }
-  return { ok: true, status: res.status, data: (json.data ?? json) as T };
+  const { data, ...meta } = json;
+  return { ok: true, status: res.status, data: (data ?? json) as T, meta };
 }
 
 /** رفع ملف (multipart) باسم الموظف. نوع المحتوى يضبطه fetch مع حدود الأجزاء. */
@@ -63,7 +65,7 @@ export async function apiUpload<T>(path: string, form: FormData, opts: { token: 
     cache: "no-store",
   });
   const json = (await res.json().catch(() => ({}))) as { data?: T; error?: ApiErrorBody };
-  return res.ok ? { ok: true, status: res.status, data: json.data as T } : { ok: false, status: res.status, error: json.error ?? { code: "INTERNAL_ERROR", message: "" } };
+  return res.ok ? { ok: true, status: res.status, data: json.data as T, meta: {} } : { ok: false, status: res.status, error: json.error ?? { code: "INTERNAL_ERROR", message: "" } };
 }
 
 /**

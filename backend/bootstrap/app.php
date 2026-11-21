@@ -6,6 +6,7 @@ use App\Modules\Identity\Http\Middleware\EnsureActiveSession;
 use App\Modules\Platform\Http\ApiErrorRenderer;
 use App\Modules\Platform\Http\Middleware\AssignTraceId;
 use App\Modules\Platform\Http\Middleware\SetLocaleFromHeader;
+use App\Modules\Quoting\Console\QuotationJobs;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withCommands([
         CreateAdmin::class,
         ResetTwoFactor::class,
+        QuotationJobs::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->api(prepend: [AssignTraceId::class, SetLocaleFromHeader::class]);

@@ -4,7 +4,24 @@ import { useActionState } from "react";
 import { Field, inputClass, Notice, SubmitButton } from "@/components/forms";
 import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { AdminState } from "../../actions";
-import { updateLead } from "../content-actions";
+import { convertLead, updateLead } from "../content-actions";
+
+/** "تحويل لطلب عرض سعر" (US-43) */
+export function ConvertLead({ lang, label, lead }: { lang: string; label: string; lead: { id: string; name: string; phone: string; topic: string; message: string } }) {
+  const [state, action, pending] = useActionState<AdminState, FormData>(convertLead, {});
+  return (
+    <form action={action} className="space-y-2">
+      <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="id" value={lead.id} />
+      <input type="hidden" name="name" value={lead.name} />
+      <input type="hidden" name="phone" value={lead.phone} />
+      <input type="hidden" name="topic" value={lead.topic} />
+      <input type="hidden" name="message" value={lead.message} />
+      <SubmitButton pending={pending}>{label}</SubmitButton>
+      {state.error && <Notice tone="danger">{state.fieldErrors ? Object.values(state.fieldErrors).flat()[0] : state.error.message}</Notice>}
+    </form>
+  );
+}
 
 // A-15: الحالة والإسناد وملاحظة في حفظ واحد (US-43). الملاحظة تُفرَّغ بعد الحفظ، والسجل يُحدَّث من الخادم.
 type T = AppDictionary["admin"]["leads"];

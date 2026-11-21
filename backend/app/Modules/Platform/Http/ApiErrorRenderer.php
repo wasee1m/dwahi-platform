@@ -50,6 +50,11 @@ final class ApiErrorRenderer
         'STOCK_INSUFFICIENT' => ['ar' => 'الكمية تتجاوز المتاح في المخزن.', 'en' => 'The quantity exceeds what is in stock.'],
         'IMPORT_EXPIRED' => ['ar' => 'انتهت مهلة المعاينة. ارفع الملف من جديد.', 'en' => 'The preview expired. Upload the file again.'],
         'IMPORT_HAS_ERRORS' => ['ar' => 'صحّح أخطاء الملف قبل التطبيق.', 'en' => 'Fix the errors in the file before applying it.'],
+        'ONBOARDING_REQUIRED' => ['ar' => 'أكمل ملفك أولاً.', 'en' => 'Complete your profile first.'],
+        'QUOTATION_LOCKED' => ['ar' => 'لا يمكن تعديل عرض بعد إرساله. أصدر نسخة جديدة.', 'en' => 'A sent quote cannot be edited. Issue a new version.'],
+        'QUOTATION_EXPIRED' => ['ar' => 'انتهت صلاحية العرض. اطلب تجديده.', 'en' => 'The quote has expired. Ask for a renewal.'],
+        'LISTING_UNAVAILABLE' => ['ar' => 'المعدة محجوزة أو مباعة لعميل آخر.', 'en' => 'The machine is reserved or sold to another customer.'],
+        'APPROVAL_REQUIRED' => ['ar' => 'قبول العروض لمالك الحساب أو عضو بصلاحية الاعتماد. أرسله للاعتماد.', 'en' => 'Only the account owner or a member with approval rights can accept. Send it for approval.'],
     ];
 
     public static function render(Throwable $e): JsonResponse

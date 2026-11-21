@@ -32,6 +32,8 @@ class WelcomeScreen extends StatelessWidget {
               Text(s.welcomeText, textAlign: TextAlign.center, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
               const Spacer(),
               FilledButton(onPressed: () => context.go('/login'), child: Text(s.start)),
+              const SizedBox(height: 8),
+              TextButton(onPressed: () => context.go('/home'), child: Text(s.browseAsGuest)), // M-02
             ],
           ),
         ),
