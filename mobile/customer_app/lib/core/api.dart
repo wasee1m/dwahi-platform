@@ -22,6 +22,9 @@ class ApiException implements Exception {
   String toString() => 'ApiException($code, $status)';
 }
 
+/// نتيجة تجديد الجلسة: نجح، أو رفضه الخادم (تنتهي الجلسة)، أو تعذّر الوصول (الجلسة باقية)
+enum _Refresh { ok, rejected, unavailable }
+
 /// صفحة من قائمة: الصفوف وبقية الاستجابة
 class ApiPage {
   ApiPage(this.rows, this.meta);
@@ -56,10 +59,35 @@ final tokenStoreProvider = Provider<TokenStore>((ref) => TokenStore());
 
 /// لغة الواجهة والطلبات: العربية افتراضياً (NFR-14)
 class LocaleCode extends Notifier<String> {
-  @override
-  String build() => 'ar';
+  static const _storage = FlutterSecureStorage();
+  static const _key = 'dw_locale';
+  bool _chosen = false;
 
-  void set(String code) => state = code;
+  @override
+  String build() {
+    _restore();
+    return 'ar';
+  }
+
+  /// الاختيار محفوظ على الجهاز (M-22). إن تعذّرت قراءته تبقى العربية.
+  Future<void> _restore() async {
+    try {
+      final saved = await _storage.read(key: _key);
+      if (ref.mounted && !_chosen && (saved == 'ar' || saved == 'en')) state = saved!;
+    } catch (_) {
+      // لا تخزين: العربية الافتراضية
+    }
+  }
+
+  Future<void> set(String code) async {
+    _chosen = true;
+    state = code;
+    try {
+      await _storage.write(key: _key, value: code);
+    } catch (_) {
+      // لا تخزين: يسري الاختيار حتى إغلاق التطبيق
+    }
+  }
 }
 
 final localeCodeProvider = NotifierProvider<LocaleCode, String>(LocaleCode.new);
@@ -69,8 +97,9 @@ final localeCodeProvider = NotifierProvider<LocaleCode, String>(LocaleCode.new);
 final apiProvider = Provider<Api>((ref) => Api(ref.watch(tokenStoreProvider), () => ref.read(localeCodeProvider)));
 
 class Api {
-  Api(this.tokens, this.locale) {
+  Api(this.tokens, this.locale, {HttpClientAdapter? adapter}) {
     _dio = Dio(BaseOptions(baseUrl: apiUrl, connectTimeout: const Duration(seconds: 15), receiveTimeout: const Duration(seconds: 30)));
+    if (adapter != null) _dio.httpClientAdapter = adapter;
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         options.headers['Accept'] = 'application/json';
@@ -81,7 +110,13 @@ class Api {
       },
       onError: (error, handler) async {
         final retried = error.requestOptions.extra['retried'] == true;
-        if (error.response?.statusCode == 401 && !retried && error.requestOptions.extra['auth'] != false && await _refresh()) {
+        if (error.response?.statusCode == 401 && !retried && error.requestOptions.extra['auth'] != false) {
+          final refreshed = await _refresh();
+          if (refreshed == _Refresh.rejected) return handler.next(error);
+          if (refreshed == _Refresh.unavailable) {
+            // بلا استجابة ← OFFLINE، لا 401: انقطاع الشبكة ليس انتهاء جلسة
+            return handler.next(DioException(requestOptions: error.requestOptions, type: DioExceptionType.connectionError));
+          }
           final options = error.requestOptions..extra['retried'] = true;
           options.headers['Authorization'] = 'Bearer ${tokens.accessToken}';
           try {
@@ -98,28 +133,35 @@ class Api {
   final TokenStore tokens;
   final String Function() locale;
   late final Dio _dio;
-  Completer<bool>? _refreshing;
+  Completer<_Refresh>? _refreshing;
 
   /// تجديد واحد للطلبات المتزامنة: الثاني ينتظر الأول، وإلا عدّه الخادم إعادة استخدام وأنهى الجلسات
-  Future<bool> _refresh() {
+  Future<_Refresh> _refresh() {
     final pending = _refreshing;
     if (pending != null) return pending.future;
-    final done = _refreshing = Completer<bool>();
+    final done = _refreshing = Completer<_Refresh>();
 
     () async {
-      var ok = false;
+      var result = _Refresh.rejected;
       try {
         final refresh = await tokens.readRefresh();
         if (refresh != null) {
           final res = await _dio.post('/auth/token/refresh', data: {'refresh_token': refresh}, options: Options(extra: {'auth': false}));
           await tokens.save((res.data as Map<String, dynamic>)['data'] as Map<String, dynamic>);
-          ok = true;
+          result = _Refresh.ok;
+        }
+      } on DioException catch (e) {
+        // الرفض الصريح وحده ينهي الجلسة. لا شبكة أو مهلة أو 429 أو 5xx: الرمز يبقى
+        if (const [400, 401, 403, 422].contains(e.response?.statusCode)) {
+          await tokens.clear();
+        } else {
+          result = _Refresh.unavailable;
         }
       } catch (_) {
-        await tokens.clear(); // التجديد فشل أو أُلغيت الجلسة: يعود المستخدم لشاشة الدخول
+        await tokens.clear(); // رمز تالف في التخزين الآمن
       }
       _refreshing = null;
-      done.complete(ok);
+      done.complete(result);
     }();
 
     return done.future;

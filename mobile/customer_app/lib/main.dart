@@ -43,28 +43,45 @@ bool isGuestPath(String path) => path == '/home' || path.startsWith('/equipment'
 /// التنقل (07 §1.1) مع حارس الدخول: الجلسة تُستعاد أولاً (M-01)، ثم الترحيب أو الرئيسية
 final routerProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier(0);
-  ref.listen(authProvider, (_, _) => refresh.value++);
+  late final GoRouter router;
+  String? returnTo; // ما طلبه الزائر قبل أن يُطلب منه الدخول
+
+  ref.listen(authProvider, (_, next) {
+    refresh.value++;
+    final me = next.value;
+    final target = returnTo;
+    if (me == null || me.needsOnboarding || target == null) return;
+    returnTo = null;
+    // بعد انتقال شاشة الدخول للرئيسية، فيبقى زر الرجوع يعود إليها
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      router.go('/home');
+      _Tabs._paths.contains(Uri.parse(target).path) ? router.go(target) : router.push(target);
+    });
+    WidgetsBinding.instance.scheduleFrame();
+  });
   ref.onDispose(refresh.dispose);
 
-  return GoRouter(
+  router = GoRouter(
     initialLocation: '/splash',
     refreshListenable: refresh,
     redirect: (context, state) {
       final auth = ref.read(authProvider);
       final path = state.uri.path;
-      if (auth.isLoading) return path == '/splash' ? null : '/splash';
+      if (auth.isLoading || auth.hasError) return path == '/splash' ? null : '/splash';
       final me = auth.value;
       final public = path == '/welcome' || path.startsWith('/login');
       if (me == null) {
         if (public || isGuestPath(path)) return null;
-        return path == '/splash' ? '/welcome' : '/login'; // زائر طلب ما يحتاج دخولاً
+        if (path == '/splash' || path == '/onboarding') return '/welcome';
+        returnTo = state.uri.toString();
+        return '/login'; // زائر طلب ما يحتاج دخولاً
       }
       if (me.needsOnboarding) return path == '/onboarding' ? null : '/onboarding';
       if (public || path == '/splash' || path == '/onboarding') return '/home';
       return null;
     },
     routes: [
-      GoRoute(path: '/splash', builder: (_, _) => const Scaffold(body: Center(child: DwLogo(size: 96)))),
+      GoRoute(path: '/splash', builder: (_, _) => const _Splash()),
       GoRoute(path: '/welcome', builder: (_, _) => const WelcomeScreen()),
       GoRoute(path: '/login', builder: (_, _) => const PhoneScreen()),
       GoRoute(
@@ -100,7 +117,47 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/notifications', builder: (_, _) => const NotificationsScreen()),
     ],
   );
+
+  // التبويب يبقى حياً تحت الشاشات المفتوحة فوقه، فتُحدّث بياناته عند الرجوع إليه
+  String? shown;
+  void onNavigate() {
+    final matches = router.routerDelegate.currentConfiguration;
+    if (matches.isEmpty) return;
+    final path = matches.last.matchedLocation;
+    if (path == shown) return;
+    shown = path;
+    if (path == '/home') {
+      ref.invalidate(awaitingProvider);
+      ref.invalidate(unreadCountProvider);
+    } else if (path == '/requests') {
+      ref.invalidate(rfqListProvider);
+    }
+  }
+
+  router.routerDelegate.addListener(onNavigate);
+  ref.onDispose(() => router.routerDelegate.removeListener(onNavigate));
+  return router;
 });
+
+/// M-01: الشعار أثناء استعادة الجلسة، وعند تعذّر الاتصال رسالة وإعادة محاولة (الجلسة محفوظة)
+class _Splash extends ConsumerWidget {
+  const _Splash();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = S.of(context);
+    final failed = ref.watch(authProvider).hasError;
+    return Scaffold(body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+      const DwLogo(size: 96),
+      if (failed) ...[
+        const SizedBox(height: 24),
+        Text(s.offline),
+        const SizedBox(height: 8),
+        OutlinedButton(onPressed: () => ref.invalidate(authProvider), child: Text(s.retry)),
+      ],
+    ])));
+  }
+}
 
 /// الشريط السفلي بخمسة تبويبات (07 §1.1): الرئيسية · المعدات · القطع · طلباتي · حسابي
 class _Tabs extends StatelessWidget {

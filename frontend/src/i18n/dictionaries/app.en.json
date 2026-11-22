@@ -78,7 +78,7 @@
     "form": {
       "intro": "Add what you need and we will reply with a formal quote. You can add a part that is not in the catalog with its number or a description and a photo.",
       "type": "Request type", "searchPart": "Search parts by number or name", "searching": "Searching...", "noResults": "No results. Add it as an unlisted part.",
-      "add": "Add", "addUnlisted": "Unlisted part", "unlisted": "Part number or description", "unlistedHint": "Like 207-60-71182 or \"hydraulic filter for a PC200-8 excavator\"",
+      "add": "Add", "addUnlistedMachine": "Unlisted machine", "unlistedMachine": "Describe the machine you need", "typeLocked": "Remove the catalog items to change the type.", "addUnlisted": "Unlisted part", "unlisted": "Part number or description", "unlistedHint": "Like 207-60-71182 or \"hydraulic filter for a PC200-8 excavator\"",
       "quantity": "Quantity", "remove": "Remove", "photo": "Photo (name plate or the part)", "upload": "Upload photo", "uploading": "Uploading...",
       "cylinder": "Hydraulic cylinder: add specifications", "bore": "Bore (mm)", "rod": "Rod diameter (mm)", "stroke": "Stroke (mm)", "mounting": "Mounting type", "pressure": "Working pressure (bar)",
       "machine": "Machine", "noItems": "Add at least one item.", "notes": "Notes", "notesHint": "The machine the part is for, when you need it, anything that helps us",

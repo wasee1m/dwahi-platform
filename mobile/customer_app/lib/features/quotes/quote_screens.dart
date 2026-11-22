@@ -96,11 +96,11 @@ class _RfqTile extends StatelessWidget {
     return Card(child: ListTile(
       onTap: () => context.push('/requests/${r['id']}'),
       title: Text('${r['number']} · ${s.typeName(r['type'] as String)}'),
-      subtitle: Text((r['summary'] as List).join('، '), maxLines: 2, overflow: TextOverflow.ellipsis),
+      subtitle: Text((r['summary'] as List).join(_lang(context) == 'ar' ? '، ' : ', '), maxLines: 2, overflow: TextOverflow.ellipsis),
       trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
         Text(s.rfqStatus(r['status'] as String), style: const TextStyle(fontWeight: FontWeight.w700)),
         if (q != null) Text(formatMoney(q['total'] as Map<String, dynamic>, _lang(context))),
-        if (left != null) Text(s.daysLeftText(left), style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+        if (left != null) Text(s.daysLeftText(left), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
       ]),
     ));
   }
@@ -160,7 +160,7 @@ class _QuoteBody extends ConsumerWidget {
           contentPadding: EdgeInsets.zero,
           title: Text(i['title'] as String),
           subtitle: i['specs'] == null ? null : Text(_specs(s, (i['specs'] as Map).cast<String, dynamic>())),
-          trailing: Text('× ${double.parse(i['quantity'] as String).toStringAsFixed(0)}'),
+          trailing: Text('× ${formatQty(i['quantity'] as String)}'),
         ),
       if ((r['notes'] as String?)?.isNotEmpty == true) Text('${s.notes}: ${r['notes']}'),
       if (quotes.length > 1) ...[
@@ -204,15 +204,18 @@ class _QuoteCard extends StatelessWidget {
       shape: RoundedRectangleBorder(side: BorderSide(color: t.colorScheme.primary, width: 2), borderRadius: BorderRadius.circular(3)),
       child: Padding(padding: const EdgeInsets.all(16), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Row(children: [
-          Expanded(child: Text('${q['number']}', style: t.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800), textDirection: TextDirection.ltr, textAlign: TextAlign.start)),
+          Expanded(child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text('${q['number']}', style: t.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800), textDirection: TextDirection.ltr),
+          )),
           Chip(label: Text(s.quoteStatus(q['status'] as String))),
         ]),
-        if (q['valid_until'] != null) Text('${s.validUntil} ${q['valid_until']}${left != null ? ' · ${s.daysLeftText(left)}' : ''}'),
+        if (q['valid_until'] != null) Text('${s.validUntil} ${ltr(q['valid_until'] as String)}${left != null ? ' · ${s.daysLeftText(left)}' : ''}'),
         const Divider(),
         for (final l in lines)
           Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Expanded(child: Text('${lang == 'ar' ? l['description_ar'] : l['description_en']}\n'
-                '${double.parse(l['quantity'] as String).toStringAsFixed(0)} × ${formatAmount(l['unit_price'] as String, lang)}'
+                '${formatQty(l['quantity'] as String)} × ${formatAmount(l['unit_price'] as String, lang)}'
                 '${double.parse(l['discount_amount'] as String) > 0 ? ' − ${formatAmount(l['discount_amount'] as String, lang)}' : ''}', style: t.textTheme.bodyMedium)),
             Text(formatAmount(l['line_total'] as String, lang)),
           ])),
@@ -392,6 +395,9 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
     super.dispose();
   }
 
+  /// صنف الكتالوج يحدد نوع الطلب، فلا يتغير النوع تحته
+  bool get typeLocked => items.any((d) => d.partId != null || d.listingId != null);
+
   Future<void> _searchCatalog() async {
     final picked = await showModalBottomSheet<Map<String, dynamic>>(context: context, isScrollControlled: true, builder: (_) => const _PartPicker());
     if (picked != null) {
@@ -427,7 +433,7 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
             {
               'listing_id': ?d.listingId, 'part_id': ?d.partId, 'free_text': ?d.freeText,
               'quantity': d.qty, 'attachment_ids': d.photos,
-              if (d.cylinder && d.specs.values.any((v) => v.isNotEmpty)) 'specs': {for (final e in d.specs.entries) if (e.value.isNotEmpty) e.key: e.value},
+              if (type == 'parts' && d.cylinder && d.specs.values.any((v) => v.isNotEmpty)) 'specs': {for (final e in d.specs.entries) if (e.value.isNotEmpty) e.key: e.value},
             },
         ],
       });
@@ -436,7 +442,8 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
       _toast(context, s.requestSent);
       context.pushReplacement('/requests/${r['id']}');
     } on ApiException catch (e) {
-      setState(() => errors = e.details.map((k, v) => MapEntry(k, (v as List).cast<String>())));
+      // details رسائل حقول في أخطاء التحقق فقط. في غيرها قيم مفردة (retry_after، from، to)
+      setState(() => errors = {for (final d in e.details.entries) if (d.value is List) d.key: (d.value as List).cast<String>()});
       if (mounted) _toast(context, errors.values.firstOrNull?.first ?? e.message ?? errorText(e, s));
     }
     if (mounted) setState(() => busy = false);
@@ -447,21 +454,25 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
     final s = S.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(s.newRequest)),
-      body: ListView(padding: const EdgeInsets.all(16), children: [
+      body: ListView(padding: screenPadding(context), children: [
         Text(s.rfqIntro),
         const SizedBox(height: 12),
         SegmentedButton<String>(
           segments: [ButtonSegment(value: 'parts', label: Text(s.typeName('parts'))), ButtonSegment(value: 'equipment', label: Text(s.typeName('equipment')))],
           selected: {type},
-          onSelectionChanged: (v) => setState(() => type = v.first),
+          onSelectionChanged: typeLocked ? null : (v) => setState(() { type = v.first; errors = {}; }),
         ),
+        if (typeLocked) Padding(padding: const EdgeInsets.only(top: 4), child: Text(s.typeLocked, style: Theme.of(context).textTheme.bodySmall)),
         const SizedBox(height: 12),
         for (final (i, d) in items.indexed) _itemCard(s, i, d),
-        if (type == 'parts')
-          Wrap(spacing: 8, children: [
-            OutlinedButton.icon(onPressed: _searchCatalog, icon: const Icon(Icons.search), label: Text(s.addFromCatalog)),
-            OutlinedButton.icon(onPressed: () => setState(() => items.add(_Draft(freeText: ''))), icon: const Icon(Icons.add), label: Text(s.addUnlisted)),
-          ]),
+        Wrap(spacing: 8, children: [
+          if (type == 'parts') OutlinedButton.icon(onPressed: _searchCatalog, icon: const Icon(Icons.search), label: Text(s.addFromCatalog)),
+          OutlinedButton.icon(
+            onPressed: () => setState(() => items.add(_Draft(freeText: ''))),
+            icon: const Icon(Icons.add),
+            label: Text(type == 'parts' ? s.addUnlisted : s.addUnlistedMachine),
+          ),
+        ]),
         const SizedBox(height: 16),
         TextField(controller: notes, maxLines: 3, decoration: InputDecoration(labelText: s.notes)),
         const SizedBox(height: 12),
@@ -475,15 +486,16 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
 
   Widget _itemCard(S s, int i, _Draft d) {
     final err = errors['items.$i.free_text']?.first ?? errors['items.$i.listing_id']?.first ?? errors['items.$i.part_id']?.first;
-    return Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    // المفتاح من البند نفسه: بحذف بند لا تنتقل حقوله إلى الذي يليه
+    return Card(key: ObjectKey(d), child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(children: [
         Expanded(child: d.freeText == null
             ? Text(d.label, style: const TextStyle(fontWeight: FontWeight.w700))
-            : TextFormField(initialValue: d.freeText, onChanged: (v) => d.freeText = v, decoration: InputDecoration(labelText: s.unlistedHint, errorText: err))),
+            : TextFormField(initialValue: d.freeText, onChanged: (v) => d.freeText = v, decoration: InputDecoration(labelText: type == 'parts' ? s.unlistedHint : s.unlistedMachineHint, errorText: err))),
         const SizedBox(width: 8),
         SizedBox(width: 72, child: TextFormField(initialValue: d.qty, keyboardType: const TextInputType.numberWithOptions(decimal: true), textDirection: TextDirection.ltr,
             onChanged: (v) => d.qty = v, decoration: InputDecoration(labelText: s.quantity))),
-        IconButton(onPressed: () => setState(() => items.removeAt(i)), icon: const Icon(Icons.delete_outline), tooltip: s.cancel),
+        IconButton(onPressed: () => setState(() { items.removeAt(i); errors = {}; }), icon: const Icon(Icons.delete_outline), tooltip: s.remove),
       ]),
       if (d.freeText == null && err != null) Text(err, style: TextStyle(color: Theme.of(context).colorScheme.error)),
       if (d.freeText != null) ...[
@@ -492,8 +504,8 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
           OutlinedButton.icon(onPressed: () => _photo(d), icon: const Icon(Icons.photo_camera_outlined), label: Text(s.takePhoto)),
           for (final _ in d.photos) const Chip(label: Icon(Icons.image_outlined, size: 18)),
         ]),
-        CheckboxListTile(contentPadding: EdgeInsets.zero, value: d.cylinder, onChanged: (v) => setState(() => d.cylinder = v ?? false), title: Text(s.cylinderSpecs)),
-        if (d.cylinder)
+        if (type == 'parts') CheckboxListTile(contentPadding: EdgeInsets.zero, value: d.cylinder, onChanged: (v) => setState(() => d.cylinder = v ?? false), title: Text(s.cylinderSpecs)),
+        if (type == 'parts' && d.cylinder)
           Wrap(spacing: 8, runSpacing: 8, children: [
             for (final (k, label) in [('bore_mm', s.bore), ('rod_mm', s.rod), ('stroke_mm', s.stroke), ('mounting', s.mounting), ('pressure_bar', s.pressure)])
               SizedBox(width: 150, child: TextFormField(

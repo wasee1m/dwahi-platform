@@ -139,6 +139,8 @@ void main() {
     await tester.enterText(find.widgetWithText(TextFormField, 'القطر الداخلي (مم)'), '90');
     // القائمة تُبنى عند الظهور، والحقول النصية لها تمريرها الخاص، فالمقصود قائمة الصفحة
     await tester.scrollUntilVisible(find.text('أرسل الطلب'), 300, scrollable: find.byType(Scrollable).first);
+    await tester.ensureVisible(find.text('أرسل الطلب'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('أرسل الطلب'));
     await tester.pump();
 
@@ -166,6 +168,6 @@ void main() {
 
     expect(find.text('حفار كوماتسو PC200'), findsOneWidget);
     expect(find.text('18,500.000 ر.ع. قبل الضريبة'), findsOneWidget);
-    expect(find.text('مستعمل · 2015 · 9800 h'), findsOneWidget);
+    expect(find.text('مستعمل · 2015 · 9800 ساعة'), findsOneWidget);
   });
 }

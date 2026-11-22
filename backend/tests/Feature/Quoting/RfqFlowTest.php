@@ -210,3 +210,12 @@ it('creates a request on behalf of a phone customer (A-05, 01 §3.2)', function 
     // الفني لا يصل لطلبات العروض
     asUser($this, staffToken($this, 'technician'))->getJson(api().'/admin/rfqs')->assertForbidden();
 });
+
+it('explains why a part does not belong in an equipment request', function () {
+    $c = customerToken($this);
+    $details = asUser($this, $c)->postJson(api().'/me/rfqs', ['type' => 'equipment', 'items' => [
+        ['part_id' => Part::query()->where('part_number', '1R-0750')->value('id'), 'quantity' => 1],
+    ]])->assertStatus(422)->json('error.details');
+
+    expect($details['items.0.part_id'][0])->toBe(__('quoting.part_in_equipment_request', [], 'ar'));
+});

@@ -54,6 +54,11 @@ class S {
   String get empty => _t('لا توجد نتائج.', 'No results.');
   String get save => _t('حفظ', 'Save');
   String get cancel => _t('إلغاء', 'Cancel');
+  String get remove => _t('حذف', 'Remove');
+  String hoursShort(Object n) => _t('$n ساعة', '$n h');
+  String get addUnlistedMachine => _t('معدة غير مدرجة', 'Unlisted machine');
+  String get unlistedMachineHint => _t('وصف المعدة المطلوبة', 'Describe the machine you need');
+  String get typeLocked => _t('لتغيير النوع احذف أصناف الكتالوج أولاً.', 'Remove the catalog items to change the type.');
 
   // التبويبات (07 §1.1)
   String get tabHome => _t('الرئيسية', 'Home');

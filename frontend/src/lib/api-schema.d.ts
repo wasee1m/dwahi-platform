@@ -6028,6 +6028,8 @@ export interface operations {
                             response_note: string | null;
                             lpo_number: string | null;
                             approval_requested_at: string | null;
+                            /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                            pdf_url: string | null;
                             items: {
                                 id: string;
                                 line_no: number;
@@ -6150,6 +6152,8 @@ export interface operations {
                             response_note: string | null;
                             lpo_number: string | null;
                             approval_requested_at: string | null;
+                            /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                            pdf_url: string | null;
                             items: {
                                 id: string;
                                 line_no: number;
@@ -6272,6 +6276,8 @@ export interface operations {
                             response_note: string | null;
                             lpo_number: string | null;
                             approval_requested_at: string | null;
+                            /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                            pdf_url: string | null;
                             items: {
                                 id: string;
                                 line_no: number;
@@ -6560,6 +6566,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -6717,6 +6725,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -6883,6 +6893,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -7044,6 +7056,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -7363,6 +7377,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -7612,6 +7628,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -7811,6 +7829,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -7985,6 +8005,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -8157,6 +8179,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -8328,6 +8352,8 @@ export interface operations {
                                 response_note: string | null;
                                 lpo_number: string | null;
                                 approval_requested_at: string | null;
+                                /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                                pdf_url: string | null;
                                 items: {
                                     id: string;
                                     line_no: number;
@@ -8419,6 +8445,8 @@ export interface operations {
                             response_note: string | null;
                             lpo_number: string | null;
                             approval_requested_at: string | null;
+                            /** @description رابط موقّع 15 دقيقة لمن يرى الطلب، فيفتحه التطبيق دون رمز الوصول (M-18) */
+                            pdf_url: string | null;
                             items: {
                                 id: string;
                                 line_no: number;

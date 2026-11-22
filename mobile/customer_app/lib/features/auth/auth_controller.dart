@@ -24,7 +24,8 @@ class AuthController extends AsyncNotifier<Me?> {
     if (await store.readRefresh() == null) return null;
     try {
       return Me(await _api.get('/me')); // 401 ← تجديد تلقائي في Api
-    } on ApiException {
+    } on ApiException catch (e) {
+      if (e.status != 401 && e.status != 403) rethrow; // لا اتصال: الجلسة باقية، والبداية تعرض إعادة المحاولة
       await store.clear();
       return null;
     }

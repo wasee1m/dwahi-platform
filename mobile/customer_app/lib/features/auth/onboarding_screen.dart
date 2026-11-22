@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/api.dart';
+import '../../core/media.dart';
 import '../../core/strings.dart';
 import 'auth_controller.dart';
 import 'error_text.dart';
@@ -67,7 +68,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       body: Form(
         key: _form,
         child: ListView(
-          padding: const EdgeInsets.all(24),
+          padding: screenPadding(context, 24),
           children: [
             TextFormField(
               controller: _name,

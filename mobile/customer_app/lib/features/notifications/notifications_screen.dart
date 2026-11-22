@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../core/api.dart';
+import '../../core/format.dart';
 import '../../core/strings.dart';
 import '../auth/auth_controller.dart';
 
@@ -43,9 +43,9 @@ class NotificationsScreen extends ConsumerWidget {
   const NotificationsScreen({super.key});
 
   String _bucket(DateTime d) {
-    final now = DateTime.now();
-    final day = DateTime(d.year, d.month, d.day);
-    final today = DateTime(now.year, now.month, now.day);
+    final now = inMuscat(DateTime.now());
+    final day = DateTime.utc(d.year, d.month, d.day);
+    final today = DateTime.utc(now.year, now.month, now.day);
     if (day == today) return 'today';
     return day == today.subtract(const Duration(days: 1)) ? 'yesterday' : 'older';
   }
@@ -54,7 +54,7 @@ class NotificationsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final s = S.of(context);
     final async = ref.watch(notificationsProvider);
-    final time = DateFormat.yMMMd(Localizations.localeOf(context).languageCode).add_Hm();
+    final lang = Localizations.localeOf(context).languageCode;
     final unread = (async.value?.meta['unread_count'] as int?) ?? 0;
     final labels = {'today': s.today, 'yesterday': s.yesterday, 'older': s.older};
 
@@ -81,7 +81,7 @@ class NotificationsScreen extends ConsumerWidget {
             if (page.rows.isEmpty) return ListView(children: [Padding(padding: const EdgeInsets.all(32), child: Center(child: Text(s.noNotifications)))]);
             final groups = <String, List<Map<String, dynamic>>>{};
             for (final n in page.rows) {
-              groups.putIfAbsent(_bucket(DateTime.parse(n['created_at'] as String).toLocal()), () => []).add(n);
+              groups.putIfAbsent(_bucket(inMuscat(DateTime.parse(n['created_at'] as String))), () => []).add(n);
             }
             return ListView(children: [
               for (final g in ['today', 'yesterday', 'older'])
@@ -91,7 +91,7 @@ class NotificationsScreen extends ConsumerWidget {
                     ListTile(
                       leading: n['read'] == true ? null : Icon(Icons.circle, size: 10, color: Theme.of(context).colorScheme.primary),
                       title: Text(n['title'] as String, style: TextStyle(fontWeight: n['read'] == true ? FontWeight.normal : FontWeight.w700)),
-                      subtitle: Text('${n['body']}\n${time.format(DateTime.parse(n['created_at'] as String).toLocal())}'),
+                      subtitle: Text('${isolateDates(n['body'] as String)}\n${formatDateTime(n['created_at'] as String, lang)}'),
                       isThreeLine: true,
                       onTap: () async {
                         await ref.read(apiProvider).post('/me/notifications/${n['id']}/read', {});

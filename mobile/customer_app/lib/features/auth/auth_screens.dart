@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dwahi_ui/dwahi_ui.dart';
 
+import '../../core/media.dart';
 import '../../core/strings.dart';
 import 'auth_controller.dart';
 import 'error_text.dart';
@@ -77,7 +78,7 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
-        padding: const EdgeInsets.all(24),
+        padding: screenPadding(context, 24),
         children: [
           Text(s.phoneTitle, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
           const SizedBox(height: 8),
@@ -174,7 +175,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
-        padding: const EdgeInsets.all(24),
+        padding: screenPadding(context, 24),
         children: [
           Text(s.codeTitle, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
           const SizedBox(height: 8),

@@ -12,6 +12,10 @@ String mediaUrl(String url) {
   return url;
 }
 
+/// هامش قائمة تملأ الشاشة: يضيف ارتفاع شريط النظام، فلا يختفي آخر زر تحته
+EdgeInsets screenPadding(BuildContext context, [double side = 16]) =>
+    EdgeInsets.fromLTRB(side, side, side, side + MediaQuery.paddingOf(context).bottom);
+
 /// صورة من الشبكة بخلفية رملية أثناء التحميل أو عند الفشل
 class NetImage extends StatelessWidget {
   const NetImage(this.url, {super.key, this.fit = BoxFit.cover, this.height});

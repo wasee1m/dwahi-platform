@@ -55,11 +55,23 @@ ThemeData dwTheme(Brightness brightness) {
         ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
+      floatingLabelStyle: TextStyle(color: scheme.onSurface),
       fillColor: dark ? DwColors.sand200Dark : DwColors.sand100,
       border: OutlineInputBorder(borderRadius: radius, borderSide: BorderSide(color: scheme.outline)),
       enabledBorder: OutlineInputBorder(borderRadius: radius, borderSide: BorderSide(color: scheme.outline)),
       focusedBorder: OutlineInputBorder(borderRadius: radius, borderSide: const BorderSide(color: DwColors.night, width: 2)),
     ),
+    // الكهرماني لون تعبئة ومؤشر، لا لون نص: على الرملي لا يبلغ تباين 4.5:1 (NFR-15)
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: scheme.onSurface,
+        shape: RoundedRectangleBorder(borderRadius: radius),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: dark ? scheme.onSurface : DwColors.night),
+    ),
+    tabBarTheme: TabBarThemeData(labelColor: scheme.onSurface, indicatorColor: scheme.primary),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         minimumSize: const Size.fromHeight(52), // هدف لمس كبير (NFR-15)

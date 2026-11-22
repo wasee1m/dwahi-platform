@@ -30,6 +30,9 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
 
   const update = (k: string, patch: Partial<Line>) => setLines((ls) => ls.map((l) => (l.key === k ? { ...l, ...patch } : l)));
   const err = (path: string) => state.fieldErrors?.[path]?.[0];
+  // صنف الكتالوج يحدد نوع الطلب، فلا يتغير النوع تحته
+  const typeLocked = lines.some((l) => l.part_id || l.listing_id);
+  const addUnlisted = () => setLines((ls) => [...ls, { key: key(), free_text: "", quantity: "1", label: "", photos: [], cylinder: false }]);
 
   function search() {
     startSearch(async () => setHits(await findParts(lang, query)));
@@ -57,7 +60,7 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
         type,
         items: lines.map((l) => ({
           listing_id: l.listing_id, part_id: l.part_id, free_text: l.free_text, quantity: l.quantity,
-          attachment_ids: l.photos.map((p) => p.id), specs: l.cylinder ? l.specs : undefined,
+          attachment_ids: l.photos.map((p) => p.id), specs: type === "parts" && l.cylinder ? l.specs : undefined,
         })),
         notes, delivery_country: exportTo ? exportTo.toUpperCase() : "OM", delivery_address_text: address, attachment_ids: [],
       });
@@ -73,12 +76,17 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
         <legend className="mb-2 text-sm font-semibold">{f.type}</legend>
         <div className="flex gap-2">
           {(["parts", "equipment"] as const).map((x) => (
-            <label key={x} className={`cursor-pointer rounded-sm px-4 py-2 font-semibold ring-1 ${type === x ? "bg-night text-on-night ring-night" : "bg-sand-0 ring-sand-300"}`}>
-              <input type="radio" name="type" value={x} checked={type === x} onChange={() => setType(x)} className="sr-only" /> {t.types[x]}
+            <label key={x} className={`${typeLocked ? (type === x ? "" : "opacity-50") : "cursor-pointer"} rounded-sm px-4 py-2 font-semibold ring-1 ${type === x ? "bg-night text-on-night ring-night" : "bg-sand-0 ring-sand-300"}`}>
+              <input type="radio" name="type" value={x} checked={type === x} disabled={typeLocked} onChange={() => { setType(x); setState({}); }} className="sr-only" /> {t.types[x]}
             </label>
           ))}
         </div>
+        {typeLocked && <p className="mt-1 text-xs text-ink-muted">{f.typeLocked}</p>}
       </fieldset>
+
+      {type === "equipment" && (
+        <button type="button" onClick={addUnlisted} className="rounded-sm border border-ink px-4 py-2 font-semibold">+ {f.addUnlistedMachine}</button>
+      )}
 
       {type === "parts" && (
         <section className="rounded-md border border-sand-300 bg-sand-0 p-4">
@@ -86,7 +94,7 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
             <input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); search(); } }}
               placeholder={f.searchPart} aria-label={f.searchPart} className={`${inputClass} min-w-0 flex-1`} />
             <button type="button" onClick={search} disabled={searching || query.trim().length < 2} className="rounded-sm bg-night px-4 font-bold text-on-night disabled:opacity-50">{searching ? f.searching : "⌕"}</button>
-            <button type="button" onClick={() => setLines((ls) => [...ls, { key: key(), free_text: "", quantity: "1", label: "", photos: [], cylinder: false }])}
+            <button type="button" onClick={addUnlisted}
               className="rounded-sm border border-ink px-4 py-2 font-semibold">+ {f.addUnlisted}</button>
           </div>
           {hits && (
@@ -110,7 +118,7 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
               <span className="num mt-2 font-bold text-ink-muted">{i + 1}.</span>
               <div className="min-w-0 flex-1 space-y-2">
                 {l.free_text !== undefined ? (
-                  <Field label={f.unlisted} hint={f.unlistedHint} error={err(`items.${i}.free_text`)}>
+                  <Field label={type === "parts" ? f.unlisted : f.unlistedMachine} hint={type === "parts" ? f.unlistedHint : undefined} error={err(`items.${i}.free_text`)}>
                     <input value={l.free_text} onChange={(e) => update(l.key, { free_text: e.target.value })} className={inputClass} />
                   </Field>
                 ) : (
@@ -125,8 +133,8 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
                         <input type="file" accept="image/jpeg,image/png" className="sr-only" disabled={uploading !== null} onChange={(e) => { void addPhoto(l.key, e.target.files?.[0]); e.target.value = ""; }} />
                       </label>
                     </div>
-                    <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={l.cylinder} onChange={(e) => update(l.key, { cylinder: e.target.checked })} className="size-4 accent-[var(--sun)]" /> {f.cylinder}</label>
-                    {l.cylinder && (
+                    {type === "parts" && <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={l.cylinder} onChange={(e) => update(l.key, { cylinder: e.target.checked })} className="size-4 accent-[var(--sun)]" /> {f.cylinder}</label>}
+                    {type === "parts" && l.cylinder && (
                       <div className="grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
                         {SPECS.map((s) => (
                           <Field key={s} label={f[SPEC_LABEL[s]]} error={err(`items.${i}.specs.${s}`)}>
@@ -142,7 +150,7 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
               <Field label={f.quantity} error={err(`items.${i}.quantity`)}>
                 <input value={l.quantity} onChange={(e) => update(l.key, { quantity: e.target.value })} inputMode="decimal" dir="ltr" className={`${inputClass} num w-24`} />
               </Field>
-              <button type="button" onClick={() => setLines((ls) => ls.filter((x) => x.key !== l.key))} className="mt-7 rounded-sm px-2 py-1 text-sm text-danger hover:bg-sand-200">{f.remove}</button>
+              <button type="button" onClick={() => { setLines((ls) => ls.filter((x) => x.key !== l.key)); setState({}); }} className="mt-7 rounded-sm px-2 py-1 text-sm text-danger hover:bg-sand-200">{f.remove}</button>
             </div>
           </li>
         ))}

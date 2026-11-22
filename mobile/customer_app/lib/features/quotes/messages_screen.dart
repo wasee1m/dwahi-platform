@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../core/api.dart';
+import '../../core/format.dart';
 import '../../core/media.dart';
 import '../../core/strings.dart';
 import '../auth/error_text.dart';
@@ -84,7 +84,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
     final isParts = rfq != null && rfq['type'] == 'parts';
     final wa = branch == null ? null : (isParts ? branch['whatsapp_parts'] : branch['whatsapp_sales']) as String?;
     final thread = ref.watch(threadProvider(widget.rfqId));
-    final when = DateFormat.yMMMd(Localizations.localeOf(context).languageCode).add_Hm();
+    final lang = Localizations.localeOf(context).languageCode;
 
     return Scaffold(
       appBar: AppBar(
@@ -117,7 +117,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
                           child: DefaultTextStyle.merge(
                             style: TextStyle(color: m['mine'] == true ? t.colorScheme.onSurface : t.colorScheme.onSecondary),
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text('${(m['sender'] as Map)['is_staff'] == true ? s.team : (m['sender'] as Map)['name']} · ${when.format(DateTime.parse(m['at'] as String).toLocal())}',
+                              Text('${(m['sender'] as Map)['is_staff'] == true ? s.team : (m['sender'] as Map)['name']} · ${formatDateTime(m['at'] as String, lang)}',
                                   style: const TextStyle(fontSize: 11)),
                               if ((m['body'] as String?)?.isNotEmpty == true) Padding(padding: const EdgeInsets.only(top: 4), child: Text(m['body'] as String)),
                               for (final a in (m['attachments'] as List).cast<Map<String, dynamic>>())

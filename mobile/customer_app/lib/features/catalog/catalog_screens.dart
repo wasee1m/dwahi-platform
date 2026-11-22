@@ -67,7 +67,7 @@ class EquipmentTile extends StatelessWidget {
               Text([
                 s.conditionName(e['condition'] as String? ?? ''),
                 if (e['year'] != null) '${e['year']}',
-                if (e['hour_meter'] != null) '${e['hour_meter']} h',
+                if (e['hour_meter'] != null) s.hoursShort(e['hour_meter'] as Object),
               ].join(' · '), style: t.textTheme.bodySmall),
               const SizedBox(height: 6),
               Text(price == null ? s.priceOnRequest : '${formatMoney(price, _lang(context))} ${s.exVat}',
@@ -272,7 +272,7 @@ class EquipmentDetailScreen extends ConsumerWidget {
             if (specs.isNotEmpty)
               ExpansionTile(title: Text(s.specs), initiallyExpanded: true, children: [
                 for (final sp in specs)
-                  ListTile(dense: true, title: Text(sp['label'] as String), trailing: Text('${sp['value']} ${sp['unit'] ?? ''}')),
+                  ListTile(dense: true, title: Text(sp['label'] as String), trailing: Text(ltr('${sp['value']} ${sp['unit'] ?? ''}'.trim()))),
               ]),
             const SizedBox(height: 96),
           ]);
@@ -374,7 +374,7 @@ class _PartsScreenState extends ConsumerState<PartsScreen> {
         if (results != null && results!.isEmpty && !loading) Padding(padding: const EdgeInsets.all(24), child: Center(child: Text(s.empty))),
         for (final p in results ?? const <Map<String, dynamic>>[])
           Card(child: ListTile(
-            title: Text('${p['part_number']} · ${p['name']}', textDirection: TextDirection.ltr, textAlign: TextAlign.start),
+            title: Text('${ltr(p['part_number'] as String)} · ${p['name']}'),
             subtitle: Text([
               (p['brand'] as Map)['name'] as String,
               s.availability(p['availability'] as String? ?? ''),
@@ -415,10 +415,13 @@ class _PartDetailScreenState extends ConsumerState<PartDetailScreen> {
           final alts = (p['alternatives'] as List? ?? const []).cast<Map<String, dynamic>>();
           final models = (p['compatible_models'] as List? ?? const []).cast<Map<String, dynamic>>();
           final media = (p['media'] as List? ?? const []).cast<Map<String, dynamic>>();
-          return ListView(padding: const EdgeInsets.all(16), children: [
+          return ListView(padding: screenPadding(context), children: [
             if (media.isNotEmpty) ClipRRect(borderRadius: BorderRadius.circular(3), child: AspectRatio(aspectRatio: 4 / 3, child: NetImage(media.first['url'] as String?))),
             const SizedBox(height: 12),
-            Text(p['part_number'] as String, textDirection: TextDirection.ltr, style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(p['part_number'] as String, textDirection: TextDirection.ltr, style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+            ),
             Text('${(p['brand'] as Map)['name']} · ${p['name']}'),
             const SizedBox(height: 8),
             Text('${formatMoney(p['price'] as Map<String, dynamic>?, _lang(context))} ${s.exVat}', style: t.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),

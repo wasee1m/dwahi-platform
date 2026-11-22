@@ -97,7 +97,7 @@ final class RfqService
                 continue;
             }
             if ($type === 'equipment' && $partId) {
-                $errors["items.{$i}.part_id"] = [__('validation.prohibited', ['attribute' => 'part'])];
+                $errors["items.{$i}.part_id"] = [__('quoting.part_in_equipment_request')];
 
                 continue;
             }

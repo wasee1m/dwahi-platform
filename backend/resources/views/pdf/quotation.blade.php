@@ -25,23 +25,23 @@
             <h1>{{ $company['name_ar'] ?? '' }}</h1>
             <div class="en">{{ $company['name_en'] ?? '' }}</div>
             <div class="muted">{{ $company['address_ar'] ?? '' }}</div>
-            @if(!empty($company['cr_number']))<div class="muted">السجل التجاري / CR: <span class="num">{{ $company['cr_number'] }}</span></div>@endif
-            @if(!empty($company['vat_number']))<div class="muted">الرقم الضريبي / VATIN: <span class="num">{{ $company['vat_number'] }}</span></div>@endif
+            @if(!empty($company['cr_number']))<div class="muted">السجل التجاري / CR: <bdo dir="ltr">{{ $company['cr_number'] }}</bdo></div>@endif
+            @if(!empty($company['vat_number']))<div class="muted">الرقم الضريبي / VATIN: <bdo dir="ltr">{{ $company['vat_number'] }}</bdo></div>@endif
         </td>
         <td style="width:45%; text-align:left">
             <h1>عرض سعر · <span class="en">Quotation</span></h1>
             <div class="num"><b>{{ $q->number ?? 'DRAFT' }}</b></div>
-            <div>طلب / RFQ: <span class="num">{{ $rfq->number }}</span></div>
-            <div>التاريخ / Date: <span class="num">{{ ($q->sent_at ?? now())->timezone('Asia/Muscat')->format('Y-m-d') }}</span></div>
-            <div>صالح حتى / Valid until: <span class="num">{{ $q->valid_until?->format('Y-m-d') ?? '—' }}</span></div>
+            <div>طلب / RFQ: <bdo dir="ltr">{{ $rfq->number }}</bdo></div>
+            <div>التاريخ / Date: <bdo dir="ltr">{{ ($q->sent_at ?? now())->timezone('Asia/Muscat')->format('Y-m-d') }}</bdo></div>
+            <div>صالح حتى / Valid until: <bdo dir="ltr">{{ $q->valid_until?->format('Y-m-d') ?? '—' }}</bdo></div>
         </td>
     </tr>
 </table>
 
 <div class="box" style="margin-top:8px">
     العميل / Customer: <b>{{ $customer }}</b>
-    @if($rfq->customer?->phone_e164) · <span class="num">{{ $rfq->customer->phone_e164 }}</span>@endif
-    @if($rfq->delivery_country !== 'OM') · التصدير إلى / Export to: <span class="num">{{ $rfq->delivery_country }}</span>@endif
+    @if($rfq->customer?->phone_e164) · <bdo dir="ltr">{{ $rfq->customer->phone_e164 }}</bdo>@endif
+    @if($rfq->delivery_country !== 'OM') · التصدير إلى / Export to: <bdo dir="ltr">{{ $rfq->delivery_country }}</bdo>@endif
 </div>
 
 <table class="items" style="margin-top:10px">
@@ -52,7 +52,7 @@
             <th style="width:9%">الكمية<br>Qty</th>
             <th style="width:12%">السعر<br>Unit price</th>
             <th style="width:10%">الخصم<br>Discount</th>
-            <th style="width:8%">الضريبة<br>VAT %</th>
+            <th style="width:8%">الضريبة<br>VAT %&lrm;</th>
             <th style="width:13%">الإجمالي<br>Total</th>
         </tr>
     </thead>
@@ -75,11 +75,11 @@
     </tbody>
 </table>
 
-<table class="totals" style="width:45%; margin-top:8px; margin-right:55%">
+<table class="totals" style="width:62%; margin-top:8px; margin-right:38%">
     <tr><td>المجموع / Subtotal</td><td class="num">{{ $money($q->subtotal) }}</td></tr>
     @if((float) $q->discount_total)<tr><td>الخصم / Discount</td><td class="num">− {{ $money($q->discount_total) }}</td></tr>@endif
     <tr><td>ضريبة القيمة المضافة / VAT</td><td class="num">{{ $money($q->vat_total) }}</td></tr>
-    <tr class="grand"><td>الإجمالي / Total (OMR)</td><td class="num">{{ $money($q->total) }}</td></tr>
+    <tr class="grand"><td>الإجمالي / Total (OMR)&lrm;</td><td class="num">{{ $money($q->total) }}</td></tr>
 </table>
 
 @foreach(['delivery_terms' => 'شروط التسليم / Delivery', 'warranty_terms' => 'الضمان / Warranty', 'payment_terms' => 'الدفع / Payment', 'estimated_duration' => 'المدة المتوقعة / Duration'] as $field => $label)
@@ -88,9 +88,9 @@
     @endif
 @endforeach
 
-<p class="muted" style="margin-top:14px">
-    الأسعار بالريال العُماني قبل الضريبة، والضريبة محسوبة لكل سطر. العرض صالح حتى التاريخ المذكور أعلاه.<br>
-    <span class="en">Prices in Omani rials excluding VAT; VAT is calculated per line. This quote is valid until the date shown above.</span>
-</p>
+<div class="muted" style="margin-top:14px">
+    الأسعار بالريال العُماني قبل الضريبة، والضريبة محسوبة لكل سطر. العرض صالح حتى التاريخ المذكور أعلاه.
+</div>
+<div class="en muted" dir="ltr">Prices in Omani rials excluding VAT; VAT is calculated per line. This quote is valid until the date shown above.</div>
 </body>
 </html>
