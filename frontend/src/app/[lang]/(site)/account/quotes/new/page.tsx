@@ -4,7 +4,10 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui";
 import { hasLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
+import type { Address, FleetItem } from "@/lib/account-types";
 import { getEquipment } from "@/lib/api";
+import { selectedAccount } from "@/lib/auth/account";
+import { authed, currentUser } from "@/lib/auth/client";
 import { RfqForm } from "./RfqForm";
 
 // C-07 طلب عرض سعر جديد. يُفتح من صفحة المعدة (?type=equipment&listing=slug) أو القطعة (?type=parts&part=id&label=)
@@ -40,5 +43,23 @@ async function Form({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
   if (part && /^[0-9a-f-]{36}$/i.test(part)) initial = { part_id: part, label: (one("label") ?? "").slice(0, 200) };
 
   const type = one("type") === "equipment" || initial?.listing_id ? "equipment" : "parts";
-  return <RfqForm lang={lang} t={t.quotes} initialType={type} initial={initial} />;
+  const me = await currentUser("customer", lang);
+  const [selected, addresses, fleet] = await Promise.all([
+    selectedAccount(me),
+    authed<Address[]>("customer", lang, "/me/addresses?kind=delivery"),
+    authed<FleetItem[]>("customer", lang, "/me/fleet"),
+  ]);
+  const machines = fleet.ok ? fleet.data : [];
+  const wanted = one("equipment");
+  // المعدة قد تكون خارج الصفحة الأولى من الأسطول
+  if (wanted && /^[0-9a-f-]{36}$/i.test(wanted) && !machines.some((m) => m.id === wanted)) {
+    const extra = await authed<FleetItem>("customer", lang, `/me/fleet/${wanted}`);
+    if (extra.ok) machines.push(extra.data);
+  }
+  const machine = machines.find((m) => m.id === wanted);
+  return (
+    <RfqForm lang={lang} t={t.quotes} initialType={type} initial={initial}
+      accounts={me.organizations.map((o) => ({ id: o.id, name: o.name }))} addresses={addresses.ok ? addresses.data : []} fleet={machines}
+      initialAccount={machine ? (machine.account?.id ?? "personal") : selected.value} initialEquipment={machine?.id ?? ""} />
+  );
 }

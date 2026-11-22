@@ -54,6 +54,13 @@ final class ApiErrorRenderer
         'QUOTATION_LOCKED' => ['ar' => 'لا يمكن تعديل عرض بعد إرساله. أصدر نسخة جديدة.', 'en' => 'A sent quote cannot be edited. Issue a new version.'],
         'QUOTATION_EXPIRED' => ['ar' => 'انتهت صلاحية العرض. اطلب تجديده.', 'en' => 'The quote has expired. Ask for a renewal.'],
         'LISTING_UNAVAILABLE' => ['ar' => 'المعدة محجوزة أو مباعة لعميل آخر.', 'en' => 'The machine is reserved or sold to another customer.'],
+        // الحسابات والأسطول (S5)
+        'LAST_OWNER' => ['ar' => 'لا يمكن ذلك لآخر مالك. عيّن مالكاً آخر أولاً.', 'en' => 'This is the only owner. Appoint another owner first.'],
+        'INVITATION_CLOSED' => ['ar' => 'الدعوة ملغاة أو منتهية. اطلب دعوة جديدة.', 'en' => 'The invitation was cancelled or has expired. Ask for a new one.'],
+        'COMPANY_LIMIT' => ['ar' => 'بلغت الحد الأقصى للشركات في حساب واحد.', 'en' => 'You reached the limit of companies for one account.'],
+        'DELETION_BLOCKED' => ['ar' => 'انقل ملكية الشركة وأغلق طلباتك المفتوحة قبل حذف الحساب.', 'en' => 'Transfer company ownership and close your open requests before deleting the account.'],
+        'ACCOUNT_DELETED' => ['ar' => 'هذا الحساب محذوف. تواصل معنا إن لم تكن أنت من حذفه.', 'en' => 'This account was deleted. Contact us if you did not delete it.'],
+        'HOUR_METER_LOWER' => ['ar' => 'القراءة أقل من السابقة.', 'en' => 'The reading is lower than the previous one.'],
         'APPROVAL_REQUIRED' => ['ar' => 'قبول العروض لمالك الحساب أو عضو بصلاحية الاعتماد. أرسله للاعتماد.', 'en' => 'Only the account owner or a member with approval rights can accept. Send it for approval.'],
     ];
 

@@ -65,7 +65,17 @@ services:
       - api-vendor:/var/www/backend/vendor
     depends_on:
       - api
-    profiles: ["worker"]
+
+  # المهام المجدولة (02 §9): J-02 و J-03 و J-08. نسخة واحدة فقط (04 §9)
+  scheduler:
+    image: dwahi-api-dev
+    command: php artisan schedule:work
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend:/var/www/backend
+      - api-vendor:/var/www/backend/vendor
+    depends_on:
+      - api
 
 volumes:
   mysql-data:

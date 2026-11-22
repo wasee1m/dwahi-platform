@@ -1,8 +1,15 @@
 <?php
 
+use App\Modules\Accounts\Http\Controllers\AddressController;
+use App\Modules\Accounts\Http\Controllers\Admin\CustomerAdminController;
+use App\Modules\Accounts\Http\Controllers\FleetController;
+use App\Modules\Accounts\Http\Controllers\OrganizationController;
+use App\Modules\Accounts\Http\Controllers\PrivacyController;
+use App\Modules\Accounts\Http\Middleware\EnsureCustomer;
 use App\Modules\Catalog\Http\Controllers\Admin\CatalogSetupController;
 use App\Modules\Catalog\Http\Controllers\Admin\EquipmentAdminController;
 use App\Modules\Catalog\Http\Controllers\EquipmentController;
+use App\Modules\Catalog\Http\Controllers\ModelLookupController;
 use App\Modules\Content\Http\Controllers\Admin\ContentAdminController;
 use App\Modules\Content\Http\Controllers\Admin\LeadAdminController;
 use App\Modules\Content\Http\Controllers\LeadController;
@@ -10,13 +17,16 @@ use App\Modules\Content\Http\Controllers\PublicContentController;
 use App\Modules\Identity\Http\Controllers\Admin\CustomerLookupController;
 use App\Modules\Identity\Http\Controllers\Admin\StaffController;
 use App\Modules\Identity\Http\Controllers\CustomerAuthController;
+use App\Modules\Identity\Http\Controllers\EmailController;
 use App\Modules\Identity\Http\Controllers\MeController;
 use App\Modules\Identity\Http\Controllers\PasswordController;
 use App\Modules\Identity\Http\Controllers\SessionController;
 use App\Modules\Identity\Http\Controllers\StaffAuthController;
 use App\Modules\Notifications\Http\Controllers\NotificationController;
+use App\Modules\Notifications\Http\Controllers\PreferenceController;
 use App\Modules\Parts\Http\Controllers\Admin\PartAdminController;
 use App\Modules\Parts\Http\Controllers\Admin\PartImportController;
+use App\Modules\Parts\Http\Controllers\CompatiblePartsController;
 use App\Modules\Parts\Http\Controllers\PartController;
 use App\Modules\Platform\Http\Controllers\Admin\AuditLogController;
 use App\Modules\Platform\Http\Controllers\Admin\BranchAdminController;
@@ -37,6 +47,7 @@ Route::prefix('v1')->group(function () {
         Route::get('equipment/{slug}', [EquipmentController::class, 'show']);
 
         Route::get('parts/search', [PartController::class, 'search']);
+        Route::get('parts/compatible', [CompatiblePartsController::class, 'index']);
         Route::get('parts/{brand}/{number}', [PartController::class, 'show']);
 
         Route::prefix('public')->group(function () {
@@ -45,6 +56,7 @@ Route::prefix('v1')->group(function () {
             Route::get('banners', [PublicContentController::class, 'banners']);
             Route::get('branches', [PublicContentController::class, 'branches']);
             Route::get('brands', [PublicContentController::class, 'brands']);
+            Route::get('models', [ModelLookupController::class, 'index']);
             Route::post('leads', [LeadController::class, 'store'])->middleware('throttle:leads');
         });
     });
@@ -75,6 +87,8 @@ Route::prefix('v1')->group(function () {
         Route::post('password', [MeController::class, 'setPassword']);
         Route::post('phone/request', [MeController::class, 'requestPhoneChange'])->middleware('throttle:auth');
         Route::post('phone/verify', [MeController::class, 'verifyPhoneChange'])->middleware('throttle:auth');
+        Route::post('email/request', [EmailController::class, 'request'])->middleware('throttle:auth');
+        Route::post('email/verify', [EmailController::class, 'verify'])->middleware('throttle:auth');
         Route::get('sessions', [SessionController::class, 'index']);
         Route::delete('sessions/{id}', [SessionController::class, 'destroy']);
 
@@ -91,6 +105,46 @@ Route::prefix('v1')->group(function () {
         Route::post('rfqs/{id}/messages', [RfqController::class, 'postMessage']);
         Route::get('quotations/{id}/pdf', [RfqController::class, 'pdf']);
         Route::post('quotations/{id}/{action}', [RfqController::class, 'respond'])->whereIn('action', ['accept', 'reject', 'revision', 'request-approval']);
+
+        // الحساب: الشركة (C-03)، والعناوين (C-04)، والأسطول (C-05، C-06)
+        Route::middleware(EnsureCustomer::class)->group(function () {
+            Route::get('organizations', [OrganizationController::class, 'index']);
+            Route::post('organizations', [OrganizationController::class, 'store']);
+            Route::get('organizations/{id}', [OrganizationController::class, 'show']);
+            Route::patch('organizations/{id}', [OrganizationController::class, 'update']);
+            Route::post('organizations/{id}/invitations', [OrganizationController::class, 'invite'])->middleware('throttle:invitations');
+            Route::delete('organizations/{id}/invitations/{invitationId}', [OrganizationController::class, 'revokeInvitation']);
+            Route::patch('organizations/{id}/members/{userId}', [OrganizationController::class, 'updateMember']);
+            Route::delete('organizations/{id}/members/{userId}', [OrganizationController::class, 'removeMember']);
+            Route::get('invitations', [OrganizationController::class, 'myInvitations']);
+            Route::post('invitations/{id}/accept', [OrganizationController::class, 'accept']);
+            Route::post('invitations/{id}/decline', [OrganizationController::class, 'decline']);
+
+            Route::get('addresses', [AddressController::class, 'index']);
+            Route::post('addresses', [AddressController::class, 'store']);
+            Route::patch('addresses/{id}', [AddressController::class, 'update']);
+            Route::delete('addresses/{id}', [AddressController::class, 'archive']);
+
+            Route::get('fleet', [FleetController::class, 'index']);
+            Route::post('fleet', [FleetController::class, 'store']);
+            Route::get('fleet/{id}', [FleetController::class, 'show']);
+            Route::patch('fleet/{id}', [FleetController::class, 'update']);
+            Route::delete('fleet/{id}', [FleetController::class, 'archive']);
+            Route::post('fleet/{id}/hour-readings', [FleetController::class, 'addReading']);
+            Route::get('fleet/{id}/history', [FleetController::class, 'history']);
+        });
+
+        // C-20: حقوق البيانات لا تنتظر إكمال الملف
+        Route::middleware(EnsureCustomer::class.':any')->group(function () {
+            Route::get('notification-preferences', [PreferenceController::class, 'show']);
+            Route::put('notification-preferences', [PreferenceController::class, 'update']);
+            Route::put('marketing-consent', [PreferenceController::class, 'marketing']);
+            Route::get('data-export', [PrivacyController::class, 'exportStatus']);
+            Route::post('data-export', [PrivacyController::class, 'requestExport'])->middleware('throttle:exports');
+            Route::get('deletion', [PrivacyController::class, 'deletion']);
+            Route::post('deletion/request', [PrivacyController::class, 'deletionCode'])->middleware('throttle:auth');
+            Route::post('deletion', [PrivacyController::class, 'delete'])->middleware('throttle:auth');
+        });
 
         // مركز الإشعارات (C-19)
         Route::get('notifications', [NotificationController::class, 'index']);
@@ -143,10 +197,31 @@ Route::prefix('v1')->group(function () {
             Route::get('quotations/{id}/pdf', [QuotationAdminController::class, 'pdf']);
             Route::post('staff-uploads', [FileController::class, 'upload']); // مرفقات خاصة للموظف (رسائل، طلب نيابة)
         });
-        Route::post('rfqs', [RfqAdminController::class, 'store'])->middleware('can:rfq.create_on_behalf');
-        Route::middleware('can:customers.view')->group(function () {
+        // الطلب نيابة عن عميل: العثور عليه أو إنشاء حسابه (مبيعات، منسق، مدير)
+        Route::middleware('can:rfq.create_on_behalf')->group(function () {
+            Route::post('rfqs', [RfqAdminController::class, 'store']);
             Route::get('customers/lookup', [CustomerLookupController::class, 'lookup']);
             Route::post('customers', [CustomerLookupController::class, 'store']);
+        });
+
+        // A-12: العملاء والشركات (مبيعات، منسق، محاسب، مدير)
+        Route::middleware('can:customers.view')->group(function () {
+            Route::get('customers', [CustomerAdminController::class, 'index']);
+            Route::get('customers/{id}', [CustomerAdminController::class, 'show']);
+            Route::post('customers/{id}/notes', [CustomerAdminController::class, 'addNote']);
+            Route::get('organizations', [CustomerAdminController::class, 'organizationIndex']);
+            Route::get('organizations/{id}', [CustomerAdminController::class, 'organization']);
+            Route::post('organizations/{id}/notes', [CustomerAdminController::class, 'addOrganizationNote']);
+        });
+        Route::middleware('can:customers.suspend')->group(function () {
+            Route::post('customers/{id}/suspend', [CustomerAdminController::class, 'suspend']);
+            Route::post('customers/{id}/activate', [CustomerAdminController::class, 'activate']);
+        });
+        Route::middleware('can:customers.members')->group(function () {
+            Route::post('organizations/{id}/invitations', [CustomerAdminController::class, 'invite']);
+            Route::delete('organizations/{id}/invitations/{invitationId}', [CustomerAdminController::class, 'revokeInvitation']);
+            Route::patch('organizations/{id}/members/{userId}', [CustomerAdminController::class, 'updateMember']);
+            Route::delete('organizations/{id}/members/{userId}', [CustomerAdminController::class, 'removeMember']);
         });
 
         // الملفات (صور الكتالوج، شعارات الماركات، ملفات المواصفات)

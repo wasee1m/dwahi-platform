@@ -26,16 +26,16 @@ class QuotingNotifications implements ShouldHandleEventsAfterCommit
 
         match ($e->type) {
             QuotingEvent::RFQ_SUBMITTED => $this->submitted($rfq, $e->actor, $customerLink, $staffLink, $customerName),
-            QuotingEvent::QUOTATION_SENT => $this->notifier->notify($this->customerSide($rfq), 'N-02',
+            QuotingEvent::QUOTATION_SENT => $this->notifier->notify($rfq->customerRecipients(), 'N-02',
                 ['number' => $q->number, 'rfq' => $rfq->number, 'total' => $total, 'valid_until' => $q->valid_until->format('Y-m-d')], $customerLink),
             QuotingEvent::QUOTATION_ACCEPTED => $this->toStaff($rfq, $q?->sent_by, 'accepted', $customerName, $staffLink, $q?->number),
             QuotingEvent::QUOTATION_REJECTED => $this->toStaff($rfq, $q?->sent_by, 'rejected', $customerName, $staffLink, $q?->number, $e->note),
             QuotingEvent::REVISION_REQUESTED => $this->toStaff($rfq, $q?->sent_by, 'revision', $customerName, $staffLink, $q?->number, $e->note),
             QuotingEvent::RENEWAL_REQUESTED => $this->toStaff($rfq, $q?->sent_by, 'renewal', $customerName, $staffLink, $q?->number ?? $rfq->number),
-            QuotingEvent::RFQ_LOST => $this->notifier->notify($this->customerSide($rfq), 'N-25', ['number' => $rfq->number, 'reason' => (string) $e->note], $customerLink),
+            QuotingEvent::RFQ_LOST => $this->notifier->notify($rfq->customerRecipients(), 'N-25', ['number' => $rfq->number, 'reason' => (string) $e->note], $customerLink),
             QuotingEvent::APPROVAL_REQUESTED => $this->notifier->notify($this->approvers($rfq), 'N-31',
                 ['number' => $q->number, 'member' => $e->actor?->full_name ?? '', 'total' => $total], $customerLink),
-            QuotingEvent::QUOTATION_EXPIRING => $this->notifier->notify($this->customerSide($rfq), 'N-04',
+            QuotingEvent::QUOTATION_EXPIRING => $this->notifier->notify($rfq->customerRecipients(), 'N-04',
                 ['number' => $q->number, 'valid_until' => $q->valid_until->format('Y-m-d')], $customerLink),
             default => null,
         };
@@ -65,18 +65,6 @@ class QuotingNotifications implements ShouldHandleEventsAfterCommit
             'number' => (string) $number, 'customer' => $customerName,
             'action' => fn (string $l) => __("notifications.actions.{$action}", ['note' => (string) $note], $l),
         ], $link);
-    }
-
-    /** المالك والطالب (01 §8 لـ N-02): الطالب، ومالكو الشركة إن كان الطلب لها */
-    private function customerSide(Rfq $rfq): Collection
-    {
-        $users = collect([$rfq->customer]);
-        if ($rfq->organization_id) {
-            $users = $users->merge(User::query()->whereIn('id', DB::table('organization_members')->where('organization_id', $rfq->organization_id)
-                ->whereNull('removed_at')->where('role', 'owner')->select('user_id'))->get());
-        }
-
-        return $users->filter();
     }
 
     private function approvers(Rfq $rfq): Collection

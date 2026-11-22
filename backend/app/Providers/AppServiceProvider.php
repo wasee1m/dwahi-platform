@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Modules\Accounts\Console\AccountJobs;
+use App\Modules\Accounts\Events\DataExportReady;
+use App\Modules\Accounts\Events\MemberInvited;
 use App\Modules\Identity\Authorization\Permissions;
 use App\Modules\Identity\Sms\LogSmsSender;
 use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Messaging\Events\MessagePosted;
+use App\Modules\Notifications\Listeners\AccountNotifications;
 use App\Modules\Notifications\Listeners\MessageNotifications;
 use App\Modules\Notifications\Listeners\QuotingNotifications;
 use App\Modules\Notifications\Push\LogPushSender;
@@ -57,6 +61,9 @@ class AppServiceProvider extends ServiceProvider
         // أحداث المجال بين الوحدات (04 §3)
         Event::listen(QuotingEvent::class, QuotingNotifications::class);
         Event::listen(MessagePosted::class, MessageNotifications::class);
+        Event::listen(MemberInvited::class, [AccountNotifications::class, 'invited']);
+        Event::listen(DataExportReady::class, [AccountNotifications::class, 'exportReady']);
+        $this->commands([AccountJobs::class]);
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));
@@ -70,6 +77,9 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(10)->by('auth:login:'.strtolower((string) ($r->input('email') ?? $r->input('login') ?? $r->input('phone') ?? $r->ip()))),
         ]);
         RateLimiter::for('account', fn (Request $r) => Limit::perMinute(120)->by($r->user()?->id ?? $r->ip()));
+        // كل دعوة رسالة SMS على حساب الشركة
+        RateLimiter::for('invitations', fn (Request $r) => [Limit::perHour(10)->by('inv:h:'.$r->user()?->id), Limit::perDay(30)->by('inv:d:'.$r->user()?->id)]);
+        RateLimiter::for('exports', fn (Request $r) => Limit::perDay(3)->by('export:'.$r->user()?->id));
         RateLimiter::for('uploads', fn (Request $r) => [Limit::perMinute(20)->by('up:m:'.($r->user()?->id ?? $r->ip())), Limit::perDay(300)->by('up:d:'.($r->user()?->id ?? $r->ip()))]);
 
         // عقد OpenAPI مولّد من الكود (قرار 2026-11-17)

@@ -8,6 +8,7 @@ use App\Modules\Identity\Http\Resources\MeResource;
 use App\Modules\Identity\Models\Consent;
 use App\Modules\Identity\Models\Organization;
 use App\Modules\Identity\Services\OtpService;
+use App\Modules\Identity\Services\TokenService;
 use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Identity\Support\Phone;
 use App\Modules\Platform\Support\Audit;
@@ -15,8 +16,10 @@ use App\Support\Governorates;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password as PasswordRule;
+use Illuminate\Validation\ValidationException;
 
 /** الملف الشخصي (FR-ACC-01، US-06، US-08) */
 class MeController
@@ -41,7 +44,7 @@ class MeController
             unset($data['email']); // بريد الموظف يغيره المدير
         }
         if (array_key_exists('email', $data) && $data['email'] !== $user->email) {
-            $data['email_verified_at'] = null; // التوثيق برابط يأتي مع خدمة البريد
+            $data += $this->emailChanged($user);
         }
         $user->forceFill($data)->save();
 
@@ -67,7 +70,11 @@ class MeController
         abort_if($user->isStaff(), 403);
 
         DB::transaction(function () use ($user, $data, $request) {
-            $user->forceFill(['full_name' => $data['full_name'], 'email' => $data['email'] ?? $user->email])->save();
+            $email = $data['email'] ?? $user->email;
+            $user->forceFill([
+                'full_name' => $data['full_name'], 'email' => $email,
+                ...($email !== $user->email ? $this->emailChanged($user) : []),
+            ])->save();
 
             $versions = DB::table('pages')->whereIn('slug', ['terms', 'privacy'])->pluck('updated_at', 'slug');
             foreach (['terms' => true, 'privacy' => true, 'marketing' => (bool) ($data['marketing'] ?? false)] as $kind => $granted) {
@@ -90,17 +97,22 @@ class MeController
     }
 
     /** POST /me/password: كلمة مرور اختيارية للعميل (FR-AUTH-02) */
-    public function setPassword(Request $request): JsonResponse
+    public function setPassword(Request $request, TokenService $tokens): JsonResponse
     {
         $user = $request->user();
         $request->validate([
             'password' => ['required', 'confirmed', PasswordRule::defaults()],
-            'current_password' => ['nullable', 'string', 'current_password:sanctum'],
+            'current_password' => ['nullable', 'string'],
         ]);
         // تغيير كلمة مرور موجودة يتطلب الحالية
-        abort_if($user->password_hash && ! $request->filled('current_password'), 422, 'current_password required');
-        abort_if(! $user->email, 422, 'email required');
+        if ($user->password_hash && ! Hash::check((string) $request->input('current_password'), $user->password_hash)) {
+            throw ValidationException::withMessages(['current_password' => [__('accounts.current_password')]]);
+        }
+        if (! $user->email) {
+            throw ValidationException::withMessages(['email' => [__('accounts.email_required')]]);
+        }
         $user->forceFill(['password_hash' => $request->input('password')])->save();
+        $tokens->revokeAll($user, 'password_changed', $request->attributes->get('auth_session')?->id);
         Audit::record('auth.password_set', 'user', $user->id);
 
         return response()->json(null, 204);
@@ -137,6 +149,20 @@ class MeController
         }
 
         return $this->show($request);
+    }
+
+    /**
+     * البريد الجديد غير موثق، وروابط الاستعادة المرسلة للقديم تبطل.
+     *
+     * @return array{email_verified_at: null}
+     */
+    private function emailChanged(User $user): array
+    {
+        if ($user->email) {
+            DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+        }
+
+        return ['email_verified_at' => null];
     }
 
     private function newPhone(Request $request): string

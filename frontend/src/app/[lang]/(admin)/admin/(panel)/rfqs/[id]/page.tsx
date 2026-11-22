@@ -23,6 +23,7 @@ type Detail = AdminRfqRow & {
   attachments: Attachment[];
   quotations: { id: string; number: string | null; version: number; status: string; total: { amount: string; currency: string }; valid_until: string | null; response_note: string | null; lpo_number: string | null }[];
   unread_messages: number; can_reopen: boolean;
+  equipment: { id: string; name: string; serial_number: string | null } | null;
 };
 
 export default function AdminRfqPage({ params, searchParams }: Props) {
@@ -66,7 +67,7 @@ async function View({ params, searchParams }: { params: Props["params"]; searchP
             <span className="font-semibold" style={{ color: STATUS_COLOR[r.status] }}>{a.statuses[r.status]}</span></p>
         </div>
         <div className="rounded-md border border-sand-300 bg-sand-0 p-3 text-sm">
-          <p className="font-semibold">{r.customer.name}{r.customer.organization && <span className="text-ink-muted"> · {r.customer.organization}</span>}</p>
+          <p className="font-semibold"><Link href={`/${lang}/admin/customers/${r.customer.id}`} className="underline">{r.customer.name}</Link>{r.customer.organization && <span className="text-ink-muted"> · {r.customer.organization}</span>}</p>
           {r.customer.phone && <a href={`tel:${r.customer.phone}`} className="num block" dir="ltr">{formatPhone(r.customer.phone)}</a>}
           <p className="text-ink-muted">{a.assigned}: {r.assigned_to?.name ?? "—"}</p>
         </div>
@@ -94,6 +95,10 @@ async function View({ params, searchParams }: { params: Props["params"]; searchP
             </li>
           ))}
         </ol>
+        {r.equipment && (
+          <p className="mt-3 text-sm"><span className="font-semibold">{t.quotes.form.equipment}:</span> {r.equipment.name}
+            {r.equipment.serial_number && <> · <span className="num" dir="ltr">{r.equipment.serial_number}</span></>}</p>
+        )}
         {r.notes && <p className="mt-3 whitespace-pre-line text-sm"><span className="font-semibold">{a.notes}:</span> {r.notes}</p>}
         <p className="mt-2 text-sm text-ink-muted">{a.delivery}: {r.delivery_address_text ?? "—"}{r.delivery_country !== "OM" && <> · {a.export} <span className="num">{r.delivery_country}</span></>}</p>
       </section>

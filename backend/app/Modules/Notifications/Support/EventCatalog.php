@@ -11,6 +11,33 @@ final class EventCatalog
 {
     public const CHANNELS = ['push', 'email', 'sms'];
 
+    /** فئات التفضيلات (03 §11). فئة account إلزامية كلها فلا تظهر في المصفوفة. */
+    public const CATEGORIES = ['quotes', 'orders', 'service', 'messages', 'marketing'];
+
+    /** أحداث للموظف وحده، فلا تدخل مصفوفة العميل */
+    private const STAFF_ONLY = ['N-03'];
+
+    /**
+     * أحداث العميل في الوحدات القادمة كما في 01 §8، لتعرض C-20 الإلزامي صحيحاً من الآن.
+     * ينتقل كل حدث إلى EVENTS مع وحدته.
+     */
+    private const UPCOMING = [
+        'N-05' => ['category' => 'orders', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],
+        'N-06' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-07' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-16' => ['category' => 'orders', 'channels' => ['email'], 'mandatory' => true],
+        'N-26' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-27' => ['category' => 'orders', 'channels' => ['push'], 'mandatory' => true],
+        'N-10' => ['category' => 'service', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],
+        'N-11' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-12' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-14' => ['category' => 'service', 'channels' => ['push', 'email'], 'mandatory' => true],
+        'N-15' => ['category' => 'service', 'channels' => ['push'], 'mandatory' => false],
+        'N-24' => ['category' => 'service', 'channels' => ['push', 'email'], 'mandatory' => true],
+        'N-29' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
+        'N-32' => ['category' => 'service', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],
+    ];
+
     /** @var array<string, array{category: string, channels: list<string>, mandatory: bool}> */
     public const EVENTS = [
         'N-01' => ['category' => 'quotes', 'channels' => ['email'], 'mandatory' => true],            // استلام طلب عرض سعر
@@ -18,13 +45,38 @@ final class EventCatalog
         'N-03' => ['category' => 'quotes', 'channels' => ['email'], 'mandatory' => true],            // رد العميل
         'N-04' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => false],   // ينتهي خلال 48 ساعة
         'N-17' => ['category' => 'messages', 'channels' => ['push'], 'mandatory' => false],          // رسالة جديدة (+بريد J-10)
+        'N-19' => ['category' => 'account', 'channels' => ['sms', 'email'], 'mandatory' => true],     // دعوة لحساب شركة
         'N-25' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => true],    // خسارة الطلب مع السبب
         'N-31' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => true],    // طلب اعتماد من عضو
+        'N-33' => ['category' => 'account', 'channels' => ['email'], 'mandatory' => true],           // نسخة البيانات جاهزة
     ];
 
-    /** التسويق مطفأ افتراضياً (US-23)، والبقية مفعلة حتى يطفئها المستخدم */
-    public static function defaultEnabled(string $category): bool
+    /** @return 'editable'|'locked'|'unused' هل لمفتاح الفئة والقناة أثر؟ */
+    public static function state(string $category, string $channel): string
     {
-        return $category !== 'marketing';
+        if ($category === 'marketing') {
+            return 'editable';
+        }
+        $events = self::customerEvents($category, $channel);
+
+        return match (true) {
+            $events === [] => 'unused',
+            array_filter($events, fn ($e) => ! $e['mandatory']) === [] => 'locked',
+            default => 'editable',
+        };
+    }
+
+    public static function hasMandatory(string $category, string $channel): bool
+    {
+        return array_filter(self::customerEvents($category, $channel), fn ($e) => $e['mandatory']) !== [];
+    }
+
+    /** @return array<string, array{category: string, channels: list<string>, mandatory: bool}> */
+    private static function customerEvents(string $category, string $channel): array
+    {
+        return array_filter(
+            array_diff_key(self::EVENTS + self::UPCOMING, array_flip(self::STAFF_ONLY)),
+            fn ($e) => $e['category'] === $category && in_array($channel, $e['channels'], true),
+        );
     }
 }

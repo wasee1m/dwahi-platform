@@ -7,7 +7,8 @@ use App\Modules\Notifications\Jobs\DeliverNotification;
 use App\Modules\Notifications\Models\NotificationDelivery;
 use App\Modules\Notifications\Models\UserNotification;
 use App\Modules\Notifications\Support\EventCatalog;
-use Illuminate\Support\Facades\DB;
+use App\Modules\Notifications\Support\Preferences;
+use App\Modules\Notifications\Support\QuietHours;
 
 /**
  * إنشاء الإشعار بلغة المستلم في مركز الإشعارات، ثم إرساله على قنواته في الطابور (FR-NOT-01، FR-NOT-02).
@@ -45,19 +46,13 @@ final class Notifier
             ]);
 
             foreach ($def['channels'] as $channel) {
-                if (! $def['mandatory'] && ! $this->enabled($user->id, $def['category'], $channel)) {
+                if (! $def['mandatory'] && ! Preferences::enabled($user->id, $def['category'], $channel)) {
                     continue;
                 }
                 $d = NotificationDelivery::query()->create(['notification_id' => $n->id, 'channel' => $channel, 'status' => 'queued', 'created_at' => now()]);
-                DeliverNotification::dispatch($d->id)->afterCommit();
+                DeliverNotification::dispatch($d->id)->afterCommit()
+                    ->delay($channel === 'sms' ? QuietHours::sendAt() : null);
             }
         }
-    }
-
-    private function enabled(string $userId, string $category, string $channel): bool
-    {
-        $pref = DB::table('notification_preferences')->where(['user_id' => $userId, 'category' => $category, 'channel' => $channel])->value('enabled');
-
-        return $pref === null ? EventCatalog::defaultEnabled($category) : (bool) $pref;
     }
 }

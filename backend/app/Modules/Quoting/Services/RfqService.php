@@ -3,6 +3,8 @@
 namespace App\Modules\Quoting\Services;
 
 use App\Models\User;
+use App\Modules\Accounts\Models\Address;
+use App\Modules\Accounts\Models\CustomerEquipment;
 use App\Modules\Billing\Support\DocumentNumber;
 use App\Modules\Catalog\Models\EquipmentListing;
 use App\Modules\Parts\Models\Part;
@@ -23,13 +25,15 @@ final class RfqService
     /**
      * 1.1: إنشاء الطلب من العميل أو نيابة عنه.
      *
-     * @param  array{type: string, items: list<array<string, mixed>>, notes?: string|null, delivery_country?: string, delivery_address_text?: string|null, attachment_ids?: list<string>}  $data
+     * @param  array{type: string, items: list<array<string, mixed>>, organization_id?: string|null, delivery_address_id?: string|null, customer_equipment_id?: string|null, notes?: string|null, delivery_country?: string, delivery_address_text?: string|null, attachment_ids?: list<string>}  $data
      */
     public function create(User $customer, User $creator, string $source, array $data): Rfq
     {
-        $orgId = DB::table('organization_members')->where('user_id', $customer->id)->whereNull('removed_at')->orderBy('joined_at')->value('organization_id');
+        $orgId = $this->account($customer, $data);
+        $address = $this->address($customer, $orgId, $data['delivery_address_id'] ?? null);
+        $equipmentId = $this->equipment($customer, $orgId, $data['customer_equipment_id'] ?? null);
 
-        $rfq = DB::transaction(function () use ($customer, $creator, $source, $data, $orgId) {
+        $rfq = DB::transaction(function () use ($customer, $creator, $source, $data, $orgId, $address, $equipmentId) {
             $items = $this->resolveItems($data['type'], $data['items']);
             $rfq = Rfq::query()->create([
                 'number' => DocumentNumber::next('RFQ'),
@@ -41,7 +45,10 @@ final class RfqService
                 'created_by' => $creator->id,
                 'branch_id' => $items['branch_id'] ?? Branch::query()->where('is_active', true)->orderBy('code')->value('id'),
                 'delivery_country' => strtoupper($data['delivery_country'] ?? 'OM'),
-                'delivery_address_text' => $data['delivery_address_text'] ?? null,
+                'delivery_address_id' => $address?->id,
+                // نص العنوان يُنسخ لحظة الإنشاء (BR-17)
+                'delivery_address_text' => $address?->snapshot($customer->preferred_locale) ?? $data['delivery_address_text'] ?? null,
+                'customer_equipment_id' => $equipmentId,
                 'notes' => $data['notes'] ?? null,
             ]);
             foreach ($items['rows'] as $i => $row) {
@@ -61,6 +68,48 @@ final class RfqService
         QuotingEvent::dispatch(QuotingEvent::RFQ_SUBMITTED, $rfq, null, $creator);
 
         return $rfq;
+    }
+
+    /**
+     * حساب الطلب (06 §2 "شخصي / الشركة"): null شخصي، أو شركة العميل عضو نشط فيها.
+     * غياب الحقل يأخذ أقدم شركة له، وهو سلوك نسخ التطبيق السابقة.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    private function account(User $customer, array $data): ?string
+    {
+        $orgs = DB::table('organization_members')->where('user_id', $customer->id)->whereNull('removed_at')
+            ->orderBy('joined_at')->pluck('organization_id');
+        if (! array_key_exists('organization_id', $data)) {
+            return $orgs->first();
+        }
+        if ($data['organization_id'] !== null && ! $orgs->contains($data['organization_id'])) {
+            throw ValidationException::withMessages(['organization_id' => [__('quoting.not_a_member')]]);
+        }
+
+        return $data['organization_id'];
+    }
+
+    private function address(User $customer, ?string $orgId, ?string $id): ?Address
+    {
+        if (! $id) {
+            return null;
+        }
+        $address = Address::query()->ownedBy($customer, $orgId)->whereNull('archived_at')->whereKey($id)->first();
+        if (! $address) {
+            throw ValidationException::withMessages(['delivery_address_id' => [__('accounts.address_not_in_account')]]);
+        }
+
+        return $address;
+    }
+
+    private function equipment(User $customer, ?string $orgId, ?string $id): ?string
+    {
+        if ($id && ! CustomerEquipment::query()->ownedBy($customer, $orgId)->whereNull('archived_at')->whereKey($id)->exists()) {
+            throw ValidationException::withMessages(['customer_equipment_id' => [__('accounts.equipment_not_in_account')]]);
+        }
+
+        return $id;
     }
 
     /**

@@ -3,23 +3,37 @@
 namespace App\Modules\Quoting\Models;
 
 use App\Models\User;
+use App\Modules\Accounts\Models\CustomerEquipment;
+use App\Modules\Accounts\Support\BelongsToAccount;
 use App\Modules\Identity\Models\Organization;
 use App\Modules\Platform\Models\Attachment;
 use App\Modules\Platform\Models\Branch;
 use App\Support\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /** طلب عرض السعر (SM-1، FR-RFQ-01) */
 class Rfq extends Model
 {
+    use BelongsToAccount;
+
     public const STATUSES = ['submitted', 'in_review', 'quoted', 'won', 'lost', 'cancelled'];
 
     protected $casts = ['is_additional' => 'boolean', 'closed_at' => 'datetime'];
+
+    public function personalColumn(): string
+    {
+        return 'customer_user_id';
+    }
+
+    public function customerEquipment(): BelongsTo
+    {
+        return $this->belongsTo(CustomerEquipment::class);
+    }
 
     public function customer(): BelongsTo
     {
@@ -68,14 +82,19 @@ class Rfq extends Model
     }
 
     /**
-     * رؤية العميل (03 §13.1): طلباته الفردية، أو طلبات شركة هو عضو نشط فيها.
-     * كل استعلام للعميل على هذا الجدول يمر من هنا (والاختبارات تتحقق أن عميلاً لا يرى طلب غيره).
+     * جهة العميل للإشعارات (01 §8 "المالك والطالب"): الطالب، ومالكو الشركة إن كان الطلب لها.
+     * الطالب الذي أُزيل من الشركة لم يعد يرى الطلب، فلا يُبلَّغ بشيء عنه (02 §10).
+     *
+     * @return Collection<int, User>
      */
-    public function scopeVisibleTo(Builder $q, User $user): Builder
+    public function customerRecipients(): Collection
     {
-        $orgs = DB::table('organization_members')->where('user_id', $user->id)->whereNull('removed_at')->pluck('organization_id');
+        if (! $this->organization_id) {
+            return User::query()->whereKey($this->customer_user_id)->get();
+        }
+        $ids = DB::table('organization_members')->where('organization_id', $this->organization_id)->whereNull('removed_at')
+            ->where(fn ($w) => $w->where('role', 'owner')->orWhere('user_id', $this->customer_user_id))->select('user_id');
 
-        return $q->where(fn ($w) => $w->where(fn ($x) => $x->whereNull('organization_id')->where('customer_user_id', $user->id))
-            ->orWhereIn('organization_id', $orgs));
+        return User::query()->whereIn('id', $ids)->get();
     }
 }

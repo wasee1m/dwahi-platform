@@ -53,8 +53,8 @@ class CustomerAuthController
         if ($user && $user->isStaff()) {
             throw new AuthFlowException('INVALID_CREDENTIALS', 401); // الموظفون يدخلون من لوحة الإدارة
         }
-        if ($user && $user->status !== 'active') {
-            throw new AuthFlowException('ACCOUNT_SUSPENDED', 403);
+        if ($user) {
+            $this->assertActive($user);
         }
         $user ??= User::query()->create([
             'user_type' => 'customer', 'full_name' => '', 'phone_e164' => $phone,
@@ -83,14 +83,23 @@ class CustomerAuthController
             Hash::check($data['password'], '$argon2id$v=19$m=65536,t=4,p=1$c29tZXNhbHQ$Zm9vYmFyYmF6');
             throw new AuthFlowException('INVALID_CREDENTIALS', 401);
         }
-        if ($user->status !== 'active') {
-            throw new AuthFlowException('ACCOUNT_SUSPENDED', 403);
-        }
+        $this->assertActive($user);
 
         return response()->json(['data' => [
             ...$this->tokens->issue($user, $data['client'], (bool) ($data['remember'] ?? false), $request),
             'user' => new MeResource($user),
         ]]);
+    }
+
+    /** يُقال سبب المنع بعد إثبات الهوية فقط، فلا يُكشف التسجيل (US-07) */
+    private function assertActive(User $user): void
+    {
+        if ($user->status === 'deleted') {
+            throw new AuthFlowException('ACCOUNT_DELETED', 403);
+        }
+        if ($user->status !== 'active') {
+            throw new AuthFlowException('ACCOUNT_SUSPENDED', 403);
+        }
     }
 
     private function phone(Request $request): string

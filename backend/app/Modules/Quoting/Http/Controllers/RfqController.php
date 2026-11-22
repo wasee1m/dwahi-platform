@@ -38,12 +38,16 @@ class RfqController
     public function index(Request $request): JsonResponse
     {
         $user = $this->customer($request);
-        $f = $request->validate(['tab' => ['nullable', Rule::in(array_keys(self::TABS))], 'cursor' => ['nullable', 'string', 'max:50']]);
+        $f = $request->validate([
+            'tab' => ['nullable', Rule::in(array_keys(self::TABS))],
+            'account' => ['nullable', 'string', 'max:36'],
+            'cursor' => ['nullable', 'string', 'max:50'],
+        ]);
         $offset = OffsetCursor::decode($f['cursor'] ?? null);
-        $base = Rfq::query()->visibleTo($user);
+        $base = Rfq::query()->visibleTo($user)->forAccount($f['account'] ?? null);
         $counts = collect(self::TABS)->map(fn ($s) => (clone $base)->whereIn('status', $s)->count());
         $rows = (clone $base)->whereIn('status', self::TABS[$f['tab'] ?? 'awaiting'])
-            ->with(['items.listing', 'items.part', 'quotations' => fn ($q) => $q->where('status', '!=', 'draft')])
+            ->with(['items.listing', 'items.part', 'organization', 'quotations' => fn ($q) => $q->where('status', '!=', 'draft')])
             ->orderByDesc('updated_at')->offset($offset)->limit(21)->get();
 
         return response()->json([
@@ -72,10 +76,13 @@ class RfqController
 
         return [
             'type' => ['required', Rule::in(['equipment', 'parts'])],
+            'organization_id' => ['sometimes', 'nullable', 'uuid'],
             'source' => ['sometimes', Rule::in(['web', 'app'])],
             'notes' => ['nullable', 'string', 'max:5000'],
             'delivery_country' => ['nullable', 'string', 'size:2', 'alpha'],
             'delivery_address_text' => ['nullable', 'string', 'max:1000'],
+            'delivery_address_id' => ['nullable', 'uuid'],
+            'customer_equipment_id' => ['nullable', 'uuid'],
             'attachment_ids' => ['sometimes', 'array', 'max:10'],
             'attachment_ids.*' => ['uuid', 'distinct', $own],
             'items' => ['required', 'array', 'min:1', 'max:50'],

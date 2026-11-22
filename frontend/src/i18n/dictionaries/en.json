@@ -91,6 +91,7 @@
     "noImage": "No photo yet"
   },
   "parts": {
+    "byEquipment": {"tab": "By machine", "byNumber": "By number or name", "model": "Brand and model", "show": "Show parts", "fromFleet": "From my fleet", "notLinked": "This machine is not linked to a catalog model, so we cannot show compatible parts.", "none": "No parts are linked to this model yet.", "requestFor": "Request a part for this machine", "request": "Request it", "other": "Other"},
     "title": "Spare parts search",
     "placeholder": "Part number or name",
     "hint": "Type the number as it is, with or without dashes. We search original and alternative numbers.",

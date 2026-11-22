@@ -9,8 +9,9 @@ import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
 import { searchParts } from "@/lib/api";
 import { formatMoney } from "@/lib/format";
 import { alternates } from "@/lib/seo";
+import { ByEquipment } from "./ByEquipment";
 
-// W-04 بحث القطع (FR-PRT-01، FR-PRT-05، US-03). البحث حسب المعدة ومن أسطولي يأتي مع الحسابات (S5).
+// W-04 بحث القطع (FR-PRT-01، FR-PRT-05، US-03). وتبويب "حسب المعدة" (FR-PRT-02، US-04).
 type Props = PageProps<"/[lang]/parts">;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -41,10 +42,23 @@ async function Results({ lang, dict, searchParams }: { lang: Locale; dict: Dicti
   const sp = await searchParams;
   const q = (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim() ?? "";
   const t = dict.parts;
+  const param = (k: string) => (typeof sp[k] === "string" && /^[0-9a-f-]{36}$/i.test(sp[k] as string) ? (sp[k] as string) : undefined);
+  const model = param("model");
+  const byEquipment = !q && (Boolean(model) || sp.by === "equipment");
+
+  const tab = (active: boolean) => `-mb-px border-b-2 px-4 py-2 font-semibold ${active ? "border-sun" : "border-transparent text-ink-muted hover:text-ink"}`;
+  const tabs = (
+    <nav className="mb-6 flex flex-wrap gap-1 border-b border-sand-300" aria-label={t.title}>
+      <Link href={`/${lang}/parts`} aria-current={byEquipment ? undefined : "page"} className={tab(!byEquipment)}>{t.byEquipment.byNumber}</Link>
+      <Link href={`/${lang}/parts?by=equipment`} aria-current={byEquipment ? "page" : undefined} className={tab(byEquipment)}>{t.byEquipment.tab}</Link>
+    </nav>
+  );
+  if (byEquipment) return <>{tabs}<ByEquipment lang={lang} dict={dict} model={model} equipment={param("equipment")} /></>;
   const results = q ? await searchParts(lang, q) : [];
 
   return (
     <>
+      {tabs}
       <form method="get" role="search" className="flex max-w-2xl gap-2">
         <label htmlFor="q" className="sr-only">{t.placeholder}</label>
         <input id="q" name="q" type="search" defaultValue={q} placeholder={t.placeholder} autoComplete="off"

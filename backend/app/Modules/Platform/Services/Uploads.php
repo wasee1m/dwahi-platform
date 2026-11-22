@@ -22,6 +22,9 @@ final class Uploads
 
     public const DOC_TYPES = ['application/pdf' => 'pdf'];
 
+    /** أنواع يولدها النظام ولا يقبلها الرفع */
+    private const GENERATED_TYPES = ['application/json' => 'json'];
+
     private const MAX_SIDE = 2400;
 
     public function store(UploadedFile $file, string $visibility, ?User $by): Attachment
@@ -57,7 +60,7 @@ final class Uploads
     /** ملف يولده النظام (PDF العروض والفواتير): لا يحتاج فحصاً، ويُحفظ خاصاً */
     public function storeGenerated(string $bytes, string $mime, string $name, ?User $by = null): Attachment
     {
-        $ext = self::DOC_TYPES[$mime] ?? 'bin';
+        $ext = self::DOC_TYPES[$mime] ?? self::GENERATED_TYPES[$mime] ?? 'bin';
         $key = sprintf('generated/%s/%s.%s', now()->format('Y/m'), Str::uuid7(), $ext);
         Storage::disk('local')->put($key, $bytes);
 

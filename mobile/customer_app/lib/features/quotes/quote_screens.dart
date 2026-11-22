@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/account_strings.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/media.dart';
 import '../../core/strings.dart';
+import '../account/account_common.dart' hide toast;
+import '../auth/auth_controller.dart';
 import '../auth/error_text.dart';
 import '../catalog/catalog_screens.dart';
 import 'pickers.dart';
@@ -96,7 +99,10 @@ class _RfqTile extends StatelessWidget {
     return Card(child: ListTile(
       onTap: () => context.push('/requests/${r['id']}'),
       title: Text('${r['number']} · ${s.typeName(r['type'] as String)}'),
-      subtitle: Text((r['summary'] as List).join(_lang(context) == 'ar' ? '، ' : ', '), maxLines: 2, overflow: TextOverflow.ellipsis),
+      subtitle: Text([
+        (r['summary'] as List).join(s.listSeparator),
+        if (r['account'] != null) '${(r['account'] as Map)['name']}',
+      ].join(' · '), maxLines: 2, overflow: TextOverflow.ellipsis),
       trailing: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [
         Text(s.rfqStatus(r['status'] as String), style: const TextStyle(fontWeight: FontWeight.w700)),
         if (q != null) Text(formatMoney(q['total'] as Map<String, dynamic>, _lang(context))),
@@ -150,6 +156,8 @@ class _QuoteBody extends ConsumerWidget {
       Text('${s.typeName(r['type'] as String)} · ${s.rfqStatus(r['status'] as String)}', style: t.textTheme.titleMedium),
       if (r['status'] == 'lost' && r['lost_reason'] != null && r['lost_reason'] != 'expired')
         Padding(padding: const EdgeInsets.only(top: 8), child: Text('${r['lost_reason']}'.replaceFirst(RegExp(r'^rejected:?\s*'), ''), style: TextStyle(color: t.colorScheme.error))),
+      if (r['account'] != null) Text('${s.account}: ${(r['account'] as Map)['name']}'),
+      if (r['equipment'] != null) Text('${s.relatedEquipment}: ${(r['equipment'] as Map)['name']}'),
       const SizedBox(height: 12),
       if (q == null && r['status'] != 'cancelled' && r['status'] != 'lost') Card(child: Padding(padding: const EdgeInsets.all(16), child: Text(s.noQuoteYet))),
       if (q != null) _QuoteCard(q: q, lang: lang),
@@ -366,7 +374,8 @@ class _Draft {
 
 /// M-24: نفس C-07 مع صورة القطعة أو لوحتها من الكاميرا
 class NewRfqScreen extends ConsumerStatefulWidget {
-  const NewRfqScreen({super.key, this.type = 'parts', this.listingId, this.partId, this.label, this.qty});
+  const NewRfqScreen({super.key, this.type = 'parts', this.listingId, this.partId, this.label, this.qty, this.equipmentId});
+  final String? equipmentId;
   final String type;
   final String? listingId;
   final String? partId;
@@ -387,6 +396,61 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
   bool busy = false;
   String? uploading;
   Map<String, List<String>> errors = {};
+  String? account; // null = المحدد في التطبيق، أو حساب المعدة المرتبطة
+  late String? equipmentId = widget.equipmentId;
+  String? addressId;
+
+  String get _account {
+    if (account != null) return account!;
+    final fleet = ref.read(fleetProvider).value ?? const <Map<String, dynamic>>[];
+    final machine = fleet.where((e) => e['id'] == equipmentId).firstOrNull;
+    return machine == null ? ref.read(selectedAccountProvider) : accountOf(machine);
+  }
+
+  /// الحساب والمعدة والعنوان، وكلها من الحساب نفسه (06 §2، C-07)
+  List<Widget> _context(S s) {
+    final me = ref.watch(authProvider).value;
+    if (me == null) return const [];
+    ref.watch(selectedAccountProvider);
+    final fleet = ref.watch(fleetProvider).value ?? const <Map<String, dynamic>>[];
+    final addresses = ref.watch(addressesProvider).value ?? const <Map<String, dynamic>>[];
+    final current = _account;
+    final machines = fleet.where((e) => accountOf(e) == current).toList();
+    final places = addresses.where((a) => accountOf(a) == current && a['kind'] != 'site').toList();
+    return [
+      if (me.organizations.isNotEmpty)
+        Choice(
+          label: s.account,
+          value: current,
+          error: errors['organization_id']?.first,
+          options: {for (final o in me.organizations) o['id'] as String: o['name'] as String, personalAccount: s.personal},
+          onChanged: (v) => setState(() {
+            account = v;
+            equipmentId = null;
+            addressId = null;
+          }),
+        ),
+      if (type == 'parts' && machines.isNotEmpty)
+        Choice(
+          label: s.relatedEquipment,
+          value: equipmentId ?? '',
+          error: errors['customer_equipment_id']?.first,
+          options: {'': s.none, for (final e in machines) e['id'] as String: e['name'] as String},
+          onChanged: (v) => setState(() {
+            account = current;
+            equipmentId = v == '' ? null : v;
+          }),
+        ),
+      if (places.isNotEmpty)
+        Choice(
+          label: s.deliveryAddress,
+          value: addressId ?? '',
+          error: errors['delivery_address_id']?.first,
+          options: {'': s.none, for (final a in places) a['id'] as String: a['label'] as String},
+          onChanged: (v) => setState(() => addressId = v == '' ? null : v),
+        ),
+    ];
+  }
 
   @override
   void dispose() {
@@ -423,7 +487,12 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
     if (items.isEmpty) return _toast(context, s.addItemFirst);
     setState(() { busy = true; errors = {}; });
     try {
+      // الحساب يتبع المعدة، فلا يُرسل قبل معرفته
+      if (equipmentId != null && account == null) await ref.read(fleetProvider.future);
       final r = await ref.read(apiProvider).post('/me/rfqs', {
+        'organization_id': organizationOf(_account),
+        'customer_equipment_id': type == 'parts' ? equipmentId : null,
+        'delivery_address_id': addressId,
         'type': type,
         'source': 'app',
         'notes': notes.text.trim().isEmpty ? null : notes.text.trim(),
@@ -464,6 +533,7 @@ class _NewRfqScreenState extends ConsumerState<NewRfqScreen> {
         ),
         if (typeLocked) Padding(padding: const EdgeInsets.only(top: 4), child: Text(s.typeLocked, style: Theme.of(context).textTheme.bodySmall)),
         const SizedBox(height: 12),
+        ..._context(s),
         for (final (i, d) in items.indexed) _itemCard(s, i, d),
         Wrap(spacing: 8, children: [
           if (type == 'parts') OutlinedButton.icon(onPressed: _searchCatalog, icon: const Icon(Icons.search), label: Text(s.addFromCatalog)),

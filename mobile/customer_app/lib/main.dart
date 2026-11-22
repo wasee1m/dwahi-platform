@@ -5,10 +5,18 @@ import 'package:go_router/go_router.dart';
 import 'package:dwahi_ui/dwahi_ui.dart';
 
 import 'core/api.dart';
+import 'features/account/account_screen.dart';
+import 'features/account/addresses_screen.dart';
+import 'features/account/company_screen.dart';
+import 'features/account/fleet_screens.dart';
+import 'features/account/help_screens.dart';
+import 'features/account/profile_screen.dart';
+import 'features/account/settings_screens.dart';
 import 'features/auth/auth_controller.dart';
 import 'features/auth/auth_screens.dart';
 import 'features/auth/onboarding_screen.dart';
 import 'core/strings.dart';
+import 'features/catalog/by_machine.dart';
 import 'features/catalog/catalog_screens.dart';
 import 'features/home/home_screens.dart';
 import 'features/notifications/notifications_screen.dart';
@@ -113,12 +121,27 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       // شاشات فوق التبويبات (تُفتح بـ push، وبالرابط العميق من الإشعار 07 §3)
       GoRoute(path: '/equipment/:slug', builder: (_, state) => EquipmentDetailScreen(slug: state.pathParameters['slug']!)),
+      GoRoute(
+        path: '/parts/for-machine',
+        builder: (_, state) => ByMachineScreen(modelId: state.uri.queryParameters['model'], equipmentId: state.uri.queryParameters['equipment']),
+      ),
+      GoRoute(path: '/account/fleet', builder: (_, _) => const FleetScreen()),
+      GoRoute(path: '/account/fleet/:id', builder: (_, state) => EquipmentScreenDetail(id: state.pathParameters['id']!)),
+      GoRoute(path: '/account/company', builder: (_, _) => const CompanyScreen()),
+      GoRoute(path: '/account/addresses', builder: (_, _) => const AddressesScreen()),
+      GoRoute(path: '/account/profile', builder: (_, _) => const ProfileScreen()),
+      GoRoute(path: '/account/preferences', builder: (_, _) => const PreferencesScreen()),
+      GoRoute(path: '/account/sessions', builder: (_, _) => const SessionsScreen()),
+      GoRoute(path: '/account/privacy', builder: (_, _) => const PrivacyScreen()),
+      GoRoute(path: '/account/help', builder: (_, _) => const HelpScreen()),
+      GoRoute(path: '/account/policies', builder: (_, _) => const PoliciesScreen()),
+      GoRoute(path: '/account/policies/:slug', builder: (_, state) => PolicyScreen(slug: state.pathParameters['slug']!)),
       GoRoute(path: '/parts/:brand/:number', builder: (_, state) => PartDetailScreen(brand: state.pathParameters['brand']!, number: state.pathParameters['number']!)),
       GoRoute(
         path: '/requests/new',
         builder: (_, state) {
           final q = state.uri.queryParameters;
-          return NewRfqScreen(type: q['type'] ?? 'parts', listingId: q['listing'], partId: q['part'], label: q['label'], qty: q['qty']);
+          return NewRfqScreen(type: q['type'] ?? 'parts', listingId: q['listing'], partId: q['part'], label: q['label'], qty: q['qty'], equipmentId: q['equipment']);
         },
       ),
       GoRoute(path: '/requests/:id', builder: (_, state) => QuoteDetailScreen(id: state.pathParameters['id']!)),

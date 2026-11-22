@@ -5,6 +5,7 @@ import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { endSession, logoutEverywhere } from "../actions";
+import { EmailVerifyForm } from "./EmailVerifyForm";
 import { PasswordForm, PersonalForm, PhoneForm } from "./ProfileForms";
 
 // C-02 الملف الشخصي والأمان (FR-ACC-01، FR-AUTH-04، US-07، US-08). الصورة الشخصية تأتي مع رفع الملفات.
@@ -34,6 +35,7 @@ async function Forms({ lang, t }: { lang: Locale; t: AppDictionary }) {
   return (
     <>
       <PersonalForm lang={lang} t={p} me={me} />
+      <EmailVerifyForm key={`${me.email}-${me.email_verified}`} lang={lang} t={p} me={me} codeLabel={t.auth.devCode} />
       <PhoneForm lang={lang} t={p} me={me} codeLabel={t.auth.devCode} />
       <PasswordForm lang={lang} t={p} me={me} />
 

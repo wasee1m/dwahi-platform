@@ -23,7 +23,9 @@ class PasswordController
     public function forgot(Request $request): JsonResponse
     {
         $data = $request->validate(['email' => ['required', 'email']]);
-        $user = User::query()->where('email', $data['email'])->where('status', 'active')->first();
+        // بريد العميل غير الموثق قد يكون لغيره (خطأ كتابة)، فلا يُرسل له ما يفتح الحساب
+        $user = User::query()->where('email', $data['email'])->where('status', 'active')
+            ->where(fn ($w) => $w->where('user_type', 'staff')->orWhereNotNull('email_verified_at'))->first();
         if ($user) {
             $user->notify(new SetPasswordLink(Password::broker()->createToken($user), $user->isStaff(), false));
         }

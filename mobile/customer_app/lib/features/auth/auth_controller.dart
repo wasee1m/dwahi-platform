@@ -63,6 +63,27 @@ class AuthController extends AsyncNotifier<Me?> {
     state = AsyncData(Me(await _api.post('/me/onboarding', body)));
   }
 
+  /// بعد تعديل الملف: الاستجابة هي المستخدم الجديد
+  void apply(Map<String, dynamic> user) {
+    if (state.value != null) state = AsyncData(Me(user));
+  }
+
+  /// بعد تغيير العضوية أو كلمة المرور. لا تمر بحالة التحميل، فلا تظهر شاشة البداية.
+  Future<void> reload() async {
+    try {
+      apply(await _api.get('/me'));
+    } on ApiException {
+      // التغيير نجح في الخادم، ويظهر عند أول تحديث
+    }
+  }
+
+  /// الخادم أنهى الجلسات (حذف الحساب، أو الخروج من كل الأجهزة)
+  Future<void> endLocally() async {
+    _expired = false;
+    await ref.read(tokenStoreProvider).clear();
+    state = const AsyncData(null);
+  }
+
   Future<void> logout() async {
     _signingOut = true;
     _expired = false;

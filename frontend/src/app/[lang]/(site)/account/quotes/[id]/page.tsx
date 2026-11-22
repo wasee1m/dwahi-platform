@@ -57,6 +57,13 @@ async function Detail({ params, searchParams }: { params: Props["params"]; searc
             className="rounded-sm bg-success px-4 py-2 font-semibold text-white">{d.whatsapp}</a>
         )}
       </div>
+      {(r.account || r.equipment) && (
+        <p className="text-sm text-ink-muted">
+          {r.account && <>{q.form.account}: <span className="font-semibold text-ink">{r.account.name}</span></>}
+          {r.account && r.equipment && " · "}
+          {r.equipment && <>{q.form.equipment}: <Link href={`/${lang}/account/fleet/${r.equipment.id}`} className="font-semibold text-ink underline">{r.equipment.name}</Link></>}
+        </p>
+      )}
       {sp.sent && <Notice tone="success">{q.form.sent}</Notice>}
 
       {current ? <QuoteView lang={lang} r={r} quote={current} t={t} /> : (

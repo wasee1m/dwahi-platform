@@ -5,6 +5,7 @@ export type RfqStatus = "submitted" | "in_review" | "quoted" | "won" | "lost" | 
 export type QuoteStatus = "draft" | "sent" | "accepted" | "rejected" | "revision_requested" | "expired" | "superseded";
 
 export type RfqRow = {
+  account: { id: string; name: string } | null;
   id: string; number: string; type: "equipment" | "parts" | "service"; status: RfqStatus; summary: string[];
   quotation: { id: string; number: string | null; status: QuoteStatus; version: number; total: Money; valid_until: string | null } | null;
   lost_reason: string | null; created_at: string;
@@ -26,6 +27,7 @@ export type Quotation = {
 };
 
 export type RfqDetail = RfqRow & {
+  equipment: { id: string; name: string; serial_number: string | null } | null;
   notes: string | null; cancel_reason: string | null; delivery_country: string; delivery_address_text: string | null;
   branch: { code: string; name: string; whatsapp_sales: string | null; whatsapp_parts: string | null } | null;
   items: { id: string; line_no: number; title: string; quantity: string; specs: Record<string, string | number> | null; free_text: string | null;

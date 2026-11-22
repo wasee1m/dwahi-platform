@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/account_strings.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/media.dart';
@@ -368,6 +369,12 @@ class _PartsScreenState extends ConsumerState<PartsScreen> {
         ),
         const SizedBox(height: 6),
         Text(s.partSearchIntro, style: Theme.of(context).textTheme.bodySmall),
+        const SizedBox(height: 12),
+        OutlinedButton.icon(
+          icon: const Icon(Icons.agriculture_outlined),
+          label: Text(s.byMachine),
+          onPressed: () => context.push('/parts/for-machine'),
+        ),
         const SizedBox(height: 12),
         if (loading) const Center(child: CircularProgressIndicator()),
         if (failed) LoadError(onRetry: _search),

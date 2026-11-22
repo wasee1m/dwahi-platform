@@ -25,7 +25,7 @@ class FileController
             'Content-Type' => $a->mime_type,
             'Cache-Control' => 'private, max-age=900',
             'X-Content-Type-Options' => 'nosniff',
-        ], 'inline');
+        ], $a->mime_type === 'application/json' ? 'attachment' : 'inline');
     }
 
     /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11). */

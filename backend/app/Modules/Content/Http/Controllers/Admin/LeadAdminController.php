@@ -8,6 +8,7 @@ use App\Modules\Content\Models\LeadNote;
 use App\Modules\Identity\Authorization\Permissions;
 use App\Modules\Platform\Support\Audit;
 use App\Support\OffsetCursor;
+use App\Support\Search;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class LeadAdminController
             ->when(($f['assigned'] ?? null) === 'me', fn ($w) => $w->where('assigned_to', $request->user()->id))
             ->when(($f['assigned'] ?? null) === 'none', fn ($w) => $w->whereNull('assigned_to'))
             ->when($f['q'] ?? null, fn ($w, $v) => $w->where(fn ($x) => $x->where('name', 'like', "%{$v}%")
-                ->orWhere('company', 'like', "%{$v}%")->orWhere('phone', 'like', '%'.preg_replace('/\D/', '', $v).'%')));
+                ->orWhere('company', 'like', "%{$v}%")->when(Search::phone($v), fn ($x, $p) => $x->orWhere('phone', 'like', $p))));
         $total = (clone $q)->count();
         $rows = $q->with(['branch', 'assignee'])->orderByRaw("status = 'new' DESC")->orderByDesc('created_at')
             ->offset($offset)->limit(51)->get();

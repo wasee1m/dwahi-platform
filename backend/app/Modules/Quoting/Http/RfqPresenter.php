@@ -12,7 +12,7 @@ use App\Support\Money;
 /** شكل الطلب والعرض في الـ API للعميل والموظف. الموظف يرى المسودات وبيانات الاتصال، والعميل لا. */
 final class RfqPresenter
 {
-    public const WITH = ['items.listing.media', 'items.part.brand', 'attachments', 'customer', 'organization', 'assignee', 'branch'];
+    public const WITH = ['items.listing.media', 'items.part.brand', 'attachments', 'customer', 'organization', 'assignee', 'branch', 'customerEquipment.equipmentModel.brand'];
 
     public static function row(Rfq $r, bool $staff = false): array
     {
@@ -34,6 +34,8 @@ final class RfqPresenter
             ] : null,
             'customer' => $staff ? ['id' => $r->customer?->id, 'name' => $r->customer?->full_name, 'phone' => $r->customer?->phone_e164, 'organization' => $r->organization?->name] : null,
             'assigned_to' => $staff && $r->assignee ? ['id' => $r->assignee->id, 'name' => $r->assignee->full_name] : null,
+            /** @var array{id: string, name: string}|null */
+            'account' => $r->relationLoaded('organization') && $r->organization ? ['id' => $r->organization->id, 'name' => $r->organization->name] : null,
             'lost_reason' => $r->lost_reason,
             'created_at' => $r->created_at?->toIso8601ZuluString(),
             'closed_at' => $r->closed_at?->toIso8601ZuluString(),
@@ -50,6 +52,10 @@ final class RfqPresenter
             'cancel_reason' => $r->cancel_reason,
             'delivery_country' => $r->delivery_country,
             'delivery_address_text' => $r->delivery_address_text,
+            /** @var array{id: string, name: string, serial_number: string|null}|null */
+            'equipment' => $r->customerEquipment ? [
+                'id' => $r->customerEquipment->id, 'name' => $r->customerEquipment->displayName(), 'serial_number' => $r->customerEquipment->serial_number,
+            ] : null,
             'branch' => $r->branch ? ['code' => $r->branch->code, 'name' => $r->branch->localized('name'), 'whatsapp_sales' => $r->branch->whatsapp_sales, 'whatsapp_parts' => $r->branch->whatsapp_parts] : null,
             'items' => $r->items->map(fn (RfqItem $i) => [
                 'id' => $i->id, 'line_no' => $i->line_no, 'title' => self::itemTitle($i), 'quantity' => $i->quantity, 'specs' => $i->specs,

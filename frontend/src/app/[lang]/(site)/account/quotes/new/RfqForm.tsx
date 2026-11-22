@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Field, inputClass, Notice } from "@/components/forms";
 import type { AppDictionary } from "@/i18n/get-dictionary";
+import type { Address, FleetItem } from "@/lib/account-types";
 import { createRfq, findParts, uploadPrivate, type DraftItem, type PartHit, type QuoteState } from "../actions";
 
 // C-07 طلب عرض سعر (FR-RFQ-01، FR-PRT-05، US-12): بنود من الكتالوج أو غير مدرجة بصورتها، ومواصفات السلندر
@@ -14,7 +15,10 @@ const SPEC_LABEL = { bore_mm: "bore", rod_mm: "rod", stroke_mm: "stroke", mounti
 let seq = 0;
 const key = () => `l${++seq}`;
 
-export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T; initialType: "equipment" | "parts"; initial?: { listing_id?: string; part_id?: string; label: string } }) {
+export function RfqForm({ lang, t, initialType, initial, accounts, addresses, fleet, initialAccount, initialEquipment }: {
+  lang: string; t: T; initialType: "equipment" | "parts"; initial?: { listing_id?: string; part_id?: string; label: string };
+  accounts: { id: string; name: string }[]; addresses: Address[]; fleet: FleetItem[]; initialAccount: string; initialEquipment: string;
+}) {
   const f = t.form;
   const [type, setType] = useState(initialType);
   const [lines, setLines] = useState<Line[]>(initial ? [{ key: key(), quantity: "1", label: initial.label, photos: [], cylinder: false, listing_id: initial.listing_id, part_id: initial.part_id }] : []);
@@ -24,6 +28,13 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
   const [notes, setNotes] = useState("");
   const [exportTo, setExportTo] = useState("");
   const [address, setAddress] = useState("");
+  const [account, setAccount] = useState(initialAccount);
+  const [addressId, setAddressId] = useState("");
+  const [equipmentId, setEquipmentId] = useState(initialEquipment);
+  // العنوان والمعدة من الحساب نفسه
+  const ofAccount = (x: { account: { id: string } | null }) => (x.account?.id ?? "personal") === account;
+  const myAddresses = addresses.filter(ofAccount);
+  const myFleet = fleet.filter(ofAccount);
   const [state, setState] = useState<QuoteState>({});
   const [sending, startSend] = useTransition();
   const [uploading, setUploading] = useState<string | null>(null);
@@ -63,6 +74,9 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
           attachment_ids: l.photos.map((p) => p.id), specs: type === "parts" && l.cylinder ? l.specs : undefined,
         })),
         notes, delivery_country: exportTo ? exportTo.toUpperCase() : "OM", delivery_address_text: address, attachment_ids: [],
+        organization_id: account === "personal" ? null : account,
+        delivery_address_id: addressId || null,
+        customer_equipment_id: type === "parts" ? equipmentId || null : null,
       });
       setState(r ?? {});
     });
@@ -72,6 +86,14 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
     <div className="space-y-6">
       <p className="text-ink-muted">{f.intro}</p>
 
+      {accounts.length > 0 && (
+        <Field label={f.account} error={err("organization_id")}>
+          <select value={account} onChange={(e) => { setAccount(e.target.value); setAddressId(""); setEquipmentId(""); }} className={`${inputClass} max-w-md`}>
+            {accounts.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+            <option value="personal">{f.personal}</option>
+          </select>
+        </Field>
+      )}
       <fieldset>
         <legend className="mb-2 text-sm font-semibold">{f.type}</legend>
         <div className="flex gap-2">
@@ -83,6 +105,15 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
         </div>
         {typeLocked && <p className="mt-1 text-xs text-ink-muted">{f.typeLocked}</p>}
       </fieldset>
+
+      {type === "parts" && myFleet.length > 0 && (
+        <Field label={f.equipment} error={err("customer_equipment_id")}>
+          <select value={equipmentId} onChange={(e) => setEquipmentId(e.target.value)} className={`${inputClass} max-w-md`}>
+            <option value="">—</option>
+            {myFleet.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+          </select>
+        </Field>
+      )}
 
       {type === "equipment" && (
         <button type="button" onClick={addUnlisted} className="rounded-sm border border-ink px-4 py-2 font-semibold">+ {f.addUnlistedMachine}</button>
@@ -160,7 +191,15 @@ export function RfqForm({ lang, t, initialType, initial }: { lang: string; t: T;
         <div className="md:col-span-2">
           <Field label={f.notes} hint={f.notesHint} error={err("notes")}><textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className={inputClass} /></Field>
         </div>
-        <Field label={f.address} error={err("delivery_address_text")}><input value={address} onChange={(e) => setAddress(e.target.value)} className={inputClass} /></Field>
+        {myAddresses.length > 0 && (
+          <Field label={f.savedAddress} error={err("delivery_address_id")}>
+            <select value={addressId} onChange={(e) => setAddressId(e.target.value)} className={inputClass}>
+              <option value="">{f.otherAddress}</option>
+              {myAddresses.map((a) => <option key={a.id} value={a.id}>{a.label} · {a.wilayat}</option>)}
+            </select>
+          </Field>
+        )}
+        {!addressId && <Field label={f.address} error={err("delivery_address_text")}><input value={address} onChange={(e) => setAddress(e.target.value)} className={inputClass} /></Field>}
         <Field label={`${f.export}: ${f.country}`} error={err("delivery_country")}>
           <input value={exportTo} onChange={(e) => setExportTo(e.target.value.replace(/[^a-z]/gi, "").slice(0, 2))} dir="ltr" placeholder={f.inOman} className={`${inputClass} uppercase`} />
         </Field>

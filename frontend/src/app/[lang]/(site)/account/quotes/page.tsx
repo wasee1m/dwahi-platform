@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui";
 import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { fill, getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
-import { authed } from "@/lib/auth/client";
+import { selectedAccount } from "@/lib/auth/account";
+import { authed, currentUser } from "@/lib/auth/client";
 import { formatMoney } from "@/lib/format";
 import { daysLeft, RFQ_COLOR, type RfqRow } from "./shared";
 
@@ -34,7 +35,8 @@ export default async function QuotesPage({ params, searchParams }: Props) {
 async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary; searchParams: Props["searchParams"] }) {
   const sp = await searchParams;
   const tab: Tab = TABS.includes(sp.tab as Tab) ? (sp.tab as Tab) : "awaiting";
-  const res = await authed<RfqRow[]>("customer", lang, `/me/rfqs?tab=${tab}`);
+  const account = await selectedAccount(await currentUser("customer", lang));
+  const res = await authed<RfqRow[]>("customer", lang, `/me/rfqs?tab=${tab}&${account.query}`);
   const rows = res.ok ? res.data : [];
   const counts = (res.ok ? res.meta.counts : {}) as Partial<Record<Tab, number>>;
   const q = t.quotes;

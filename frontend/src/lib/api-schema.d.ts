@@ -4,6 +4,39 @@
  */
 
 export interface paths {
+    "/v1/me/addresses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["address.index"];
+        put?: never;
+        post: operations["address.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/addresses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["address.archive"];
+        options?: never;
+        head?: never;
+        /** الحساب لا يتغير بالتعديل */
+        patch: operations["address.update"];
+        trace?: never;
+    };
     "/v1/admin/audit-logs": {
         parameters: {
             query?: never;
@@ -29,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_121"];
+        post: operations["modules.platform.admin.branchAdmin.save_167"];
         delete?: never;
         options?: never;
         head?: never;
@@ -44,7 +77,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_122"];
+        put: operations["modules.platform.admin.branchAdmin.save_168"];
         post?: never;
         delete?: never;
         options?: never;
@@ -61,7 +94,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_87"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_133"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +110,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_89"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_135"];
         delete?: never;
         options?: never;
         head?: never;
@@ -93,7 +126,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_91"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_137"];
         delete?: never;
         options?: never;
         head?: never;
@@ -108,7 +141,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_88"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_134"];
         post?: never;
         delete?: never;
         options?: never;
@@ -124,7 +157,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_90"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_136"];
         post?: never;
         delete?: never;
         options?: never;
@@ -140,7 +173,23 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_92"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_138"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/parts/compatible": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["compatibleParts.index"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -157,7 +206,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_104"];
+        post: operations["modules.content.admin.contentAdmin.savePage_150"];
         delete?: never;
         options?: never;
         head?: never;
@@ -172,7 +221,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_106"];
+        put: operations["modules.content.admin.contentAdmin.savePage_152"];
         post?: never;
         delete?: never;
         options?: never;
@@ -189,7 +238,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_108"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_154"];
         delete?: never;
         options?: never;
         head?: never;
@@ -221,7 +270,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_110"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_156"];
         post?: never;
         delete?: never;
         options?: never;
@@ -238,7 +287,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_112"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_158"];
         delete?: never;
         options?: never;
         head?: never;
@@ -253,12 +302,192 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_113"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_159"];
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** البحث بالجوال أو الاسم أو البريد أو اسم الشركة أو السجل التجاري */
+        get: operations["customerAdmin.index"];
+        put?: never;
+        post: operations["customerLookup.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ملف 360° */
+        get: operations["customerAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers/{id}/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["customerAdmin.addNote"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** الشركات: بالاسم أو السجل التجاري أو جوال أحد الأعضاء */
+        get: operations["customerAdmin.organizationIndex"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["customerAdmin.organization"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations/{id}/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["customerAdmin.addOrganizationNote"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers/{id}/suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** SM-7: للمدير، بسبب إلزامي، وتُنهى الجلسات */
+        post: operations["customerAdmin.suspend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/customers/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["customerAdmin.activate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations/{id}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["customerAdmin.invite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations/{id}/invitations/{invitationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["customerAdmin.revokeInvitation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/organizations/{id}/members/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["customerAdmin.removeMember"];
+        options?: never;
+        head?: never;
+        patch: operations["customerAdmin.updateMember"];
         trace?: never;
     };
     "/v1/auth/otp/request": {
@@ -328,7 +557,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/admin/customers": {
+    "/v1/me/email/request": {
         parameters: {
             query?: never;
             header?: never;
@@ -337,7 +566,23 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["customerLookup.store"];
+        post: operations["email.request"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/email/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["email.verify"];
         delete?: never;
         options?: never;
         head?: never;
@@ -472,7 +717,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_30"];
+        post: operations["modules.platform.file.upload_34"];
         delete?: never;
         options?: never;
         head?: never;
@@ -506,7 +751,74 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_73"];
+        post: operations["modules.platform.file.upload_107"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/fleet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["fleet.index"];
+        put?: never;
+        post: operations["fleet.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/fleet/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["fleet.show"];
+        put?: never;
+        post?: never;
+        delete: operations["fleet.archive"];
+        options?: never;
+        head?: never;
+        /** الحساب والعداد لا يتغيران من هنا: العداد بقراءة مسجلة */
+        patch: operations["fleet.update"];
+        trace?: never;
+    };
+    "/v1/me/fleet/{id}/hour-readings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** القراءة الأقل من السابقة: 409 للتحذير، ثم تُقبل بتأكيد وملاحظة وتُعلَّم للمراجعة */
+        post: operations["fleet.addReading"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/fleet/{id}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** السجل الزمني: القراءات والطلبات المرتبطة. الصيانة والتقارير تنضم في S7 و S9 */
+        get: operations["fleet.history"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -665,6 +977,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["modelLookup.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/notifications": {
         parameters: {
             query?: never;
@@ -672,7 +1000,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_40"];
+        get: operations["modules.notifications.notification.index_74"];
         put?: never;
         post?: never;
         delete?: never;
@@ -689,7 +1017,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_41"];
+        get: operations["modules.notifications.notification.count_75"];
         put?: never;
         post?: never;
         delete?: never;
@@ -707,7 +1035,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_42"];
+        post: operations["modules.notifications.notification.readAll_76"];
         delete?: never;
         options?: never;
         head?: never;
@@ -723,7 +1051,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_43"];
+        post: operations["modules.notifications.notification.read_77"];
         delete?: never;
         options?: never;
         head?: never;
@@ -737,7 +1065,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_54"];
+        get: operations["modules.notifications.notification.index_88"];
         put?: never;
         post?: never;
         delete?: never;
@@ -754,7 +1082,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_55"];
+        get: operations["modules.notifications.notification.count_89"];
         put?: never;
         post?: never;
         delete?: never;
@@ -772,7 +1100,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_56"];
+        post: operations["modules.notifications.notification.readAll_90"];
         delete?: never;
         options?: never;
         head?: never;
@@ -788,7 +1116,137 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_57"];
+        post: operations["modules.notifications.notification.read_91"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/organizations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organization.index"];
+        put?: never;
+        post: operations["organization.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/organizations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["organization.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["organization.update"];
+        trace?: never;
+    };
+    "/v1/me/organizations/{id}/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["organization.invite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/organizations/{id}/invitations/{invitationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["organization.revokeInvitation"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/organizations/{id}/members/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** إزالة عضو، أو مغادرة الشركة بمعرّف المستخدم نفسه */
+        delete: operations["organization.removeMember"];
+        options?: never;
+        head?: never;
+        patch: operations["organization.updateMember"];
+        trace?: never;
+    };
+    "/v1/me/invitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** الدعوات الموجهة إلى رقمي */
+        get: operations["organization.myInvitations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/invitations/{id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["organization.accept"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/invitations/{id}/decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["organization.decline"];
         delete?: never;
         options?: never;
         head?: never;
@@ -991,6 +1449,87 @@ export interface paths {
         put?: never;
         /** POST /auth/password/reset */
         post: operations["password.reset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/notification-preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["preference.show"];
+        put: operations["preference.update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/marketing-consent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** سجل الموافقات إلحاقي: كل تغيير صف جديد (NFR-13) */
+        put: operations["preference.marketing"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/data-export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["privacy.exportStatus"];
+        put?: never;
+        post: operations["privacy.requestExport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/deletion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["privacy.deletion"];
+        put?: never;
+        post: operations["privacy.delete"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/deletion/request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["privacy.deletionCode"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1813,6 +2352,25 @@ export interface components {
             permissions: string[];
             two_factor_enabled: boolean | null;
         };
+        /** PartCardResource */
+        PartCardResource: {
+            id: string;
+            brand: {
+                name: string;
+                slug: string;
+            };
+            part_number: string;
+            part_number_normalized: string;
+            name: string | null;
+            price: {
+                amount: string;
+                currency: string;
+            } | null;
+            availability: string | "on_request";
+            warranty_months: string;
+            matched_alternative: string | null;
+            cover_image_url: string | null;
+        };
         /** StockLocation */
         StockLocation: {
             id: string;
@@ -1931,6 +2489,231 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "address.index": {
+        parameters: {
+            query?: {
+                account?: string | null;
+                kind?: "delivery" | "site" | "both" | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            label: string;
+                            /** @enum {string} */
+                            kind: "delivery" | "site" | "both";
+                            governorate: string;
+                            wilayat: string;
+                            description: string | null;
+                            latitude: number | null;
+                            longitude: number | null;
+                            contact_name: string | null;
+                            contact_phone: string | null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "address.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    organization_id?: string | null;
+                    label: string;
+                    /** @enum {string} */
+                    kind: "delivery" | "site" | "both";
+                    /** @enum {string} */
+                    governorate: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    wilayat: string;
+                    description?: string | null;
+                    latitude?: number | null;
+                    longitude?: number | null;
+                    contact_name?: string | null;
+                    contact_phone?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            label: string;
+                            /** @enum {string} */
+                            kind: "delivery" | "site" | "both";
+                            governorate: string;
+                            wilayat: string;
+                            description: string | null;
+                            latitude: number | null;
+                            longitude: number | null;
+                            contact_name: string | null;
+                            contact_phone: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "address.archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "address.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    label?: string;
+                    /** @enum {string} */
+                    kind?: "delivery" | "site" | "both";
+                    /** @enum {string} */
+                    governorate?: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    wilayat?: string;
+                    description?: string | null;
+                    latitude?: number | null;
+                    longitude?: number | null;
+                    contact_name?: string | null;
+                    contact_phone?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            label: string;
+                            /** @enum {string} */
+                            kind: "delivery" | "site" | "both";
+                            governorate: string;
+                            wilayat: string;
+                            description: string | null;
+                            latitude: number | null;
+                            longitude: number | null;
+                            contact_name: string | null;
+                            contact_phone: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "auditLog.index": {
         parameters: {
             query?: {
@@ -2046,7 +2829,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_121": {
+    "modules.platform.admin.branchAdmin.save_167": {
         parameters: {
             query?: never;
             header?: never;
@@ -2102,7 +2885,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_122": {
+    "modules.platform.admin.branchAdmin.save_168": {
         parameters: {
             query?: never;
             header?: never;
@@ -2204,7 +2987,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_87": {
+    "modules.catalog.admin.catalogSetup.saveBrand_133": {
         parameters: {
             query?: never;
             header?: never;
@@ -2286,7 +3069,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_89": {
+    "modules.catalog.admin.catalogSetup.saveCategory_135": {
         parameters: {
             query?: never;
             header?: never;
@@ -2383,7 +3166,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_91": {
+    "modules.catalog.admin.catalogSetup.saveModel_137": {
         parameters: {
             query?: never;
             header?: never;
@@ -2441,7 +3224,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_88": {
+    "modules.catalog.admin.catalogSetup.saveBrand_134": {
         parameters: {
             query?: never;
             header?: never;
@@ -2490,7 +3273,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_90": {
+    "modules.catalog.admin.catalogSetup.saveCategory_136": {
         parameters: {
             query?: never;
             header?: never;
@@ -2538,7 +3321,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_92": {
+    "modules.catalog.admin.catalogSetup.saveModel_138": {
         parameters: {
             query?: never;
             header?: never;
@@ -2583,6 +3366,52 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "compatibleParts.index": {
+        parameters: {
+            query: {
+                model_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            model: {
+                                id: string;
+                                model_name: string;
+                                brand: string;
+                            };
+                            groups: {
+                                category: string | null;
+                                parts: components["schemas"]["PartCardResource"][];
+                            }[];
+                        };
+                    };
+                };
+            };
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -2641,7 +3470,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_104": {
+    "modules.content.admin.contentAdmin.savePage_150": {
         parameters: {
             query?: never;
             header?: never;
@@ -2742,7 +3571,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_106": {
+    "modules.content.admin.contentAdmin.savePage_152": {
         parameters: {
             query?: never;
             header?: never;
@@ -2830,7 +3659,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_108": {
+    "modules.content.admin.contentAdmin.saveFaq_154": {
         parameters: {
             query?: never;
             header?: never;
@@ -2919,7 +3748,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_110": {
+    "modules.content.admin.contentAdmin.saveFaq_156": {
         parameters: {
             query?: never;
             header?: never;
@@ -3020,7 +3849,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_112": {
+    "modules.content.admin.contentAdmin.saveBanner_158": {
         parameters: {
             query?: never;
             header?: never;
@@ -3074,7 +3903,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_113": {
+    "modules.content.admin.contentAdmin.saveBanner_159": {
         parameters: {
             query?: never;
             header?: never;
@@ -3115,6 +3944,1568 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.index": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: "active" | "suspended" | "deleted" | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            /** @enum {string} */
+                            status: "active" | "suspended" | "deleted";
+                            flagged: boolean;
+                            organizations: {
+                                id: string;
+                                name: string;
+                            }[];
+                            created_at: string | null;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerLookup.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    phone: string;
+                    full_name: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            status: string;
+                            needs_onboarding: boolean;
+                        };
+                    };
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            status: string;
+                            needs_onboarding: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            email: string | null;
+                            email_verified: boolean;
+                            preferred_locale: string;
+                            /** @enum {string} */
+                            status: "active" | "suspended" | "deleted";
+                            suspended_reason: string | null;
+                            pickup_no_show_count: number;
+                            flagged: boolean;
+                            created_at: string | null;
+                            last_login_at: string | null;
+                            deleted_at: string | null;
+                            anonymized_at: string | null;
+                            active_sessions: number;
+                            organizations: {
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.addNote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            author: string | null;
+                            body: string;
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.organizationIndex": {
+        parameters: {
+            query?: {
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            governorate: string;
+                            members_count: number;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.addOrganizationNote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            author: string | null;
+                            body: string;
+                            at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            email: string | null;
+                            email_verified: boolean;
+                            preferred_locale: string;
+                            /** @enum {string} */
+                            status: "active" | "suspended" | "deleted";
+                            suspended_reason: string | null;
+                            pickup_no_show_count: number;
+                            flagged: boolean;
+                            created_at: string | null;
+                            last_login_at: string | null;
+                            deleted_at: string | null;
+                            anonymized_at: string | null;
+                            active_sessions: number;
+                            organizations: {
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            phone: string | null;
+                            email: string | null;
+                            email_verified: boolean;
+                            preferred_locale: string;
+                            /** @enum {string} */
+                            status: "active" | "suspended" | "deleted";
+                            suspended_reason: string | null;
+                            pickup_no_show_count: number;
+                            flagged: boolean;
+                            created_at: string | null;
+                            last_login_at: string | null;
+                            deleted_at: string | null;
+                            anonymized_at: string | null;
+                            active_sessions: number;
+                            organizations: {
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.revokeInvitation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                invitationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.removeMember": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "customerAdmin.updateMember": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    role: "owner" | "member";
+                    can_approve_quotes: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                            addresses: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                label: string;
+                                /** @enum {string} */
+                                kind: "delivery" | "site" | "both";
+                                governorate: string;
+                                wilayat: string;
+                                description: string | null;
+                                latitude: number | null;
+                                longitude: number | null;
+                                contact_name: string | null;
+                                contact_phone: string | null;
+                            }[];
+                            fleet: {
+                                id: string;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                name: string;
+                                machine: string;
+                                nickname: string | null;
+                                model_id: string | null;
+                                brand: string | null;
+                                model: string | null;
+                                serial_number: string | null;
+                                year: number | null;
+                                hour_meter: number | null;
+                                hour_meter_at: string | null;
+                                site: {
+                                    id: string;
+                                    label: string;
+                                } | null;
+                                nameplate: {
+                                    id: string;
+                                    name: string | null;
+                                    mime_type: string;
+                                    url: string | null;
+                                } | null;
+                                archived: boolean;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                source: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                quotation: {
+                                    id: string;
+                                    number: string | null;
+                                    status: string;
+                                    version: number;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    valid_until: string | null;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                assigned_to: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                lost_reason: string | null;
+                                created_at: string | null;
+                                closed_at: string | null;
+                            }[];
+                            conversations: {
+                                rfq_id: string;
+                                number: string;
+                                messages: number;
+                                last_message_at: string | null;
+                            }[];
+                            notes: {
+                                id: string;
+                                author: string | null;
+                                body: string;
+                                at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -3328,7 +5719,45 @@ export interface operations {
             };
         };
     };
-    "customerLookup.store": {
+    "email.request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @constant */
+                            status: "sent";
+                            debug_code: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "email.verify": {
         parameters: {
             query?: never;
             header?: never;
@@ -3338,46 +5767,23 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    phone: string;
-                    full_name: string;
+                    code: string;
                 };
             };
         };
         responses: {
+            /** @description `MeResource` */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": {
-                        data: {
-                            id: string;
-                            full_name: string;
-                            phone: string | null;
-                            status: string;
-                            needs_onboarding: boolean;
-                        };
-                    };
-                };
-            };
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        data: {
-                            id: string;
-                            full_name: string;
-                            phone: string | null;
-                            status: string;
-                            needs_onboarding: boolean;
-                        };
+                        data: components["schemas"]["MeResource"];
                     };
                 };
             };
             401: components["responses"]["AuthenticationException"];
-            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -3936,7 +6342,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_30": {
+    "modules.platform.file.upload_34": {
         parameters: {
             query?: never;
             header?: never;
@@ -4023,7 +6429,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_73": {
+    "modules.platform.file.upload_107": {
         parameters: {
             query?: never;
             header?: never;
@@ -4062,6 +6468,452 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.index": {
+        parameters: {
+            query?: {
+                account?: string | null;
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            name: string;
+                            machine: string;
+                            nickname: string | null;
+                            model_id: string | null;
+                            brand: string | null;
+                            model: string | null;
+                            serial_number: string | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            hour_meter_at: string | null;
+                            site: {
+                                id: string;
+                                label: string;
+                            } | null;
+                            nameplate: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            } | null;
+                            archived: boolean;
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    organization_id?: string | null;
+                    /** Format: uuid */
+                    model_id?: string | null;
+                    brand_text?: string | null;
+                    model_text?: string | null;
+                    serial_number?: string | null;
+                    year?: number | null;
+                    nickname?: string | null;
+                    hour_meter?: number | null;
+                    /** Format: uuid */
+                    site_address_id?: string | null;
+                    /** Format: uuid */
+                    nameplate_photo_id?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            name: string;
+                            machine: string;
+                            nickname: string | null;
+                            model_id: string | null;
+                            brand: string | null;
+                            model: string | null;
+                            serial_number: string | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            hour_meter_at: string | null;
+                            site: {
+                                id: string;
+                                label: string;
+                            } | null;
+                            nameplate: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            } | null;
+                            archived: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            name: string;
+                            machine: string;
+                            nickname: string | null;
+                            model_id: string | null;
+                            brand: string | null;
+                            model: string | null;
+                            serial_number: string | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            hour_meter_at: string | null;
+                            site: {
+                                id: string;
+                                label: string;
+                            } | null;
+                            nameplate: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            } | null;
+                            archived: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    model_id?: string | null;
+                    brand_text?: string | null;
+                    model_text?: string | null;
+                    serial_number?: string | null;
+                    year?: number | null;
+                    nickname?: string | null;
+                    /** Format: uuid */
+                    site_address_id?: string | null;
+                    /** Format: uuid */
+                    nameplate_photo_id?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            name: string;
+                            machine: string;
+                            nickname: string | null;
+                            model_id: string | null;
+                            brand: string | null;
+                            model: string | null;
+                            serial_number: string | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            hour_meter_at: string | null;
+                            site: {
+                                id: string;
+                                label: string;
+                            } | null;
+                            nameplate: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            } | null;
+                            archived: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.addReading": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reading: number;
+                    confirm_lower?: boolean;
+                    note?: string | null;
+                    /** Format: uuid */
+                    photo_id?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            name: string;
+                            machine: string;
+                            nickname: string | null;
+                            model_id: string | null;
+                            brand: string | null;
+                            model: string | null;
+                            serial_number: string | null;
+                            year: number | null;
+                            hour_meter: number | null;
+                            hour_meter_at: string | null;
+                            site: {
+                                id: string;
+                                label: string;
+                            } | null;
+                            nameplate: {
+                                id: string;
+                                name: string | null;
+                                mime_type: string;
+                                url: string | null;
+                            } | null;
+                            archived: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "fleet.history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @enum {string} */
+                            type: "reading" | "rfq";
+                            id: string;
+                            at: string;
+                            reading: number | null;
+                            note: string | null;
+                            needs_review: boolean;
+                            by: string | null;
+                            photo_url: string | null;
+                            number: string | null;
+                            status: string | null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -4619,7 +7471,48 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_40": {
+    "modelLookup.index": {
+        parameters: {
+            query?: {
+                brand?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            model_name: string;
+                            brand: string;
+                            brand_slug: string;
+                        }[];
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.notifications.notification.index_74": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -4669,7 +7562,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_41": {
+    "modules.notifications.notification.count_75": {
         parameters: {
             query?: never;
             header?: never;
@@ -4705,7 +7598,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_42": {
+    "modules.notifications.notification.readAll_76": {
         parameters: {
             query?: never;
             header?: never;
@@ -4741,7 +7634,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_43": {
+    "modules.notifications.notification.read_77": {
         parameters: {
             query?: never;
             header?: never;
@@ -4780,7 +7673,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_54": {
+    "modules.notifications.notification.index_88": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -4830,7 +7723,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_55": {
+    "modules.notifications.notification.count_89": {
         parameters: {
             query?: never;
             header?: never;
@@ -4866,7 +7759,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_56": {
+    "modules.notifications.notification.readAll_90": {
         parameters: {
             query?: never;
             header?: never;
@@ -4902,7 +7795,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_57": {
+    "modules.notifications.notification.read_91": {
         parameters: {
             query?: never;
             header?: never;
@@ -4924,6 +7817,692 @@ export interface operations {
                         };
                     };
                 };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    name: string;
+                    /** @enum {string} */
+                    governorate: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    cr_number?: string | null;
+                    vat_number?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    name?: string;
+                    /** @enum {string} */
+                    governorate?: "muscat" | "dhofar" | "musandam" | "buraimi" | "dakhiliyah" | "north_batinah" | "south_batinah" | "south_sharqiyah" | "north_sharqiyah" | "dhahirah" | "wusta";
+                    cr_number?: string | null;
+                    vat_number?: string | null;
+                    preapproval_limit?: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.revokeInvitation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                invitationId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.removeMember": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.updateMember": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    role: "owner" | "member";
+                    can_approve_quotes: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.myInvitations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            company: string;
+                            invited_by: string;
+                            /** @enum {string} */
+                            role: "owner" | "member";
+                            can_approve_quotes: boolean;
+                            expires_at: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            cr_number: string | null;
+                            vat_number: string | null;
+                            governorate: string;
+                            /** @enum {string} */
+                            verification_status: "unverified" | "pending" | "verified" | "rejected";
+                            preapproval_limit: {
+                                amount: string;
+                                currency: string;
+                            };
+                            /** @enum {string|null} */
+                            my_role: "owner" | "member" | null;
+                            can_manage: boolean;
+                            members: {
+                                user_id: string;
+                                name: string;
+                                phone: string | null;
+                                status: string;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                            }[];
+                            invitations: {
+                                id: string;
+                                phone: string | null;
+                                /** @enum {string} */
+                                role: "owner" | "member";
+                                can_approve_quotes: boolean;
+                                expires_at: string;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "organization.decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             401: components["responses"]["AuthenticationException"];
             404: components["responses"]["ModelNotFoundException"];
@@ -5724,6 +9303,368 @@ export interface operations {
             };
         };
     };
+    "preference.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            marketing_consent: boolean;
+                            preferences: {
+                                /** @enum {string} */
+                                category: "quotes" | "orders" | "service" | "messages" | "marketing";
+                                /** @enum {string} */
+                                channel: "push" | "email" | "sms";
+                                /** @enum {string} */
+                                state: "editable" | "locked" | "unused";
+                                has_mandatory: boolean;
+                                enabled: boolean;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "preference.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    preferences: {
+                        /** @enum {string} */
+                        category: "quotes" | "orders" | "service" | "messages" | "marketing";
+                        /** @enum {string} */
+                        channel: "push" | "email" | "sms";
+                        enabled: boolean;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            marketing_consent: boolean;
+                            preferences: {
+                                /** @enum {string} */
+                                category: "quotes" | "orders" | "service" | "messages" | "marketing";
+                                /** @enum {string} */
+                                channel: "push" | "email" | "sms";
+                                /** @enum {string} */
+                                state: "editable" | "locked" | "unused";
+                                has_mandatory: boolean;
+                                enabled: boolean;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "preference.marketing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    granted: boolean;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            marketing_consent: boolean;
+                            preferences: {
+                                /** @enum {string} */
+                                category: "quotes" | "orders" | "service" | "messages" | "marketing";
+                                /** @enum {string} */
+                                channel: "push" | "email" | "sms";
+                                /** @enum {string} */
+                                state: "editable" | "locked" | "unused";
+                                has_mandatory: boolean;
+                                enabled: boolean;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "privacy.exportStatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            /** @enum {string} */
+                            status: "pending" | "ready" | "failed" | "expired";
+                            requested_at: string;
+                            expires_at: string | null;
+                            url: string | null;
+                        } | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "privacy.requestExport": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            /** @enum {string} */
+                            status: "pending" | "ready" | "failed" | "expired";
+                            requested_at: string;
+                            expires_at: string | null;
+                            url: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "privacy.deletion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            can_delete: boolean;
+                            companies: {
+                                id: string;
+                                name: string;
+                            }[];
+                            requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            }[];
+                            grace_days: number;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "privacy.delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    code: string;
+                };
+            };
+        };
+        responses: {
+            /** @description No content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "privacy.deletionCode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            /** @constant */
+                            status: "sent";
+                            debug_code: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "publicContent.page": {
         parameters: {
             query?: never;
@@ -6358,6 +10299,7 @@ export interface operations {
         parameters: {
             query?: {
                 tab?: string | null;
+                account?: string | null;
                 cursor?: string | null;
             };
             header?: never;
@@ -6393,6 +10335,10 @@ export interface operations {
                             } | null;
                             customer: null;
                             assigned_to: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            account: {
                                 id: string;
                                 name: string;
                             } | null;
@@ -6433,11 +10379,17 @@ export interface operations {
                 "application/json": {
                     /** @enum {string} */
                     type: "equipment" | "parts";
+                    /** Format: uuid */
+                    organization_id?: string | null;
                     /** @enum {string} */
                     source?: "web" | "app";
                     notes?: string | null;
                     delivery_country?: string | null;
                     delivery_address_text?: string | null;
+                    /** Format: uuid */
+                    delivery_address_id?: string | null;
+                    /** Format: uuid */
+                    customer_equipment_id?: string | null;
                     attachment_ids?: string[];
                     items: {
                         /** Format: uuid */
@@ -6489,6 +10441,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -6496,6 +10452,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -6648,6 +10609,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -6655,6 +10620,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -6816,6 +10786,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -6823,6 +10797,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -6979,6 +10958,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -6986,6 +10969,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -7300,6 +11288,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -7307,6 +11299,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -7472,6 +11469,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -7551,6 +11552,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -7558,6 +11563,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -7752,6 +11762,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -7759,6 +11773,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -7925,6 +11944,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -7932,6 +11955,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -8099,6 +12127,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -8106,6 +12138,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;
@@ -8272,6 +12309,10 @@ export interface operations {
                                 id: string;
                                 name: string;
                             } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
                             lost_reason: string | null;
                             created_at: string | null;
                             closed_at: string | null;
@@ -8279,6 +12320,11 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
                             branch: {
                                 code: string;
                                 name: string | null;

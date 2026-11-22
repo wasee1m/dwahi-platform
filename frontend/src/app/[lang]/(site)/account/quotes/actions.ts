@@ -35,7 +35,7 @@ export async function uploadPrivate(form: FormData): Promise<{ ok: true; id: str
 
 export type DraftItem = { listing_id?: string; part_id?: string; free_text?: string; quantity: string; attachment_ids?: string[]; specs?: Record<string, string> };
 
-export async function createRfq(locale: string, payload: { type: string; items: DraftItem[]; notes: string; delivery_country: string; delivery_address_text: string; attachment_ids: string[] }): Promise<QuoteState> {
+export async function createRfq(locale: string, payload: { type: string; items: DraftItem[]; notes: string; delivery_country: string; delivery_address_text: string; attachment_ids: string[]; organization_id: string | null; delivery_address_id: string | null; customer_equipment_id: string | null }): Promise<QuoteState> {
   const l = toLocale(locale);
   const items = payload.items.map((i) => ({
     ...i,
@@ -43,7 +43,7 @@ export async function createRfq(locale: string, payload: { type: string; items: 
   }));
   const r = await authed<{ id: string }>("customer", l, "/me/rfqs", {
     method: "POST",
-    body: { type: payload.type, items, notes: payload.notes || null, delivery_country: payload.delivery_country || "OM", delivery_address_text: payload.delivery_address_text || null, attachment_ids: payload.attachment_ids },
+    body: { type: payload.type, items, notes: payload.notes || null, delivery_country: payload.delivery_country || "OM", delivery_address_text: payload.delivery_address_text || null, attachment_ids: payload.attachment_ids, organization_id: payload.organization_id, delivery_address_id: payload.delivery_address_id, customer_equipment_id: payload.customer_equipment_id },
   });
   if (!r.ok) return fail(r.error);
   revalidatePath(`/${l}/account`, "layout");

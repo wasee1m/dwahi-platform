@@ -19,6 +19,7 @@ export default async function EmailLoginPage({ params, searchParams }: PageProps
       <Suspense fallback={<Skeleton className="h-48" />}>
         <Inner lang={lang} t={t} searchParams={searchParams} />
       </Suspense>
+      <Link href={`/${lang}/login/forgot`} className="mt-5 block text-center text-sm font-semibold text-sun-text hover:underline">{t.forgot}</Link>
       <Link href={`/${lang}/login`} className="mt-5 block text-center text-sm font-semibold text-sun-text hover:underline">{t.phoneInstead}</Link>
     </AuthCard>
   );

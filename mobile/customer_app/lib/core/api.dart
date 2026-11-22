@@ -175,6 +175,12 @@ class Api {
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool auth = true}) =>
       _call(() => _dio.post(path, data: body, options: Options(extra: {'auth': auth})));
 
+  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) => _call(() => _dio.patch(path, data: body));
+
+  Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body) => _call(() => _dio.put(path, data: body));
+
+  Future<Map<String, dynamic>> delete(String path) => _call(() => _dio.delete(path));
+
   Future<Map<String, dynamic>> get(String path, {Map<String, dynamic>? query}) =>
       _call(() => _dio.get(path, queryParameters: query));
 

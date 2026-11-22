@@ -115,37 +115,3 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 }
-
-/// M-22 حسابي: البيانات، والإشعارات، واللغة، والخروج
-class AccountScreen extends ConsumerWidget {
-  const AccountScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final s = S.of(context);
-    final me = ref.watch(authProvider).value;
-    final locale = ref.watch(localeCodeProvider);
-    return Scaffold(
-      appBar: AppBar(title: Text(s.myAccount)),
-      body: ListView(
-        children: [
-          ListTile(title: Text(me?.fullName ?? ''), subtitle: Directionality(textDirection: TextDirection.ltr, child: Text(me?.phone ?? '', textAlign: TextAlign.start))),
-          for (final org in me?.organizations ?? const <Map<String, dynamic>>[])
-            ListTile(leading: const Icon(Icons.business), title: Text(org['name'] as String)),
-          const Divider(),
-          ListTile(leading: const Icon(Icons.notifications_outlined), title: Text(s.notifications), onTap: () => context.push('/notifications')),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: Text(s.language),
-            trailing: SegmentedButton<String>(
-              segments: const [ButtonSegment(value: 'ar', label: Text('ع')), ButtonSegment(value: 'en', label: Text('EN'))],
-              selected: {locale},
-              onSelectionChanged: (v) => ref.read(localeCodeProvider.notifier).set(v.first),
-            ),
-          ),
-          ListTile(leading: const Icon(Icons.logout), title: Text(s.logout), onTap: () => ref.read(authProvider.notifier).logout()),
-        ],
-      ),
-    );
-  }
-}

@@ -25,7 +25,7 @@ class MessageNotifications implements ShouldHandleEventsAfterCommit
         ];
 
         if ($sender?->isStaff()) {
-            $this->notifier->notify(User::query()->findOrFail($rfq->customer_user_id), 'N-17', $params, "/account/quotes/{$rfq->id}#messages");
+            $this->notifier->notify($rfq->customerRecipients(), 'N-17', $params, "/account/quotes/{$rfq->id}#messages");
 
             return;
         }

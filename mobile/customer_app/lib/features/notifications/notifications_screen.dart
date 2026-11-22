@@ -20,6 +20,8 @@ final unreadCountProvider = FutureProvider.autoDispose<int>((ref) async {
 
 /// رابط الإشعار من الويب ← مسار التطبيق: /account/quotes/{id} ← /requests/{id}
 String? appRoute(String link) {
+  if (link.startsWith('/account/company')) return '/account/company'; // N-19
+  if (link.startsWith('/account/settings')) return '/account/privacy'; // N-33
   final m = RegExp(r'^/account/quotes/([0-9a-f-]{36})(#messages)?').firstMatch(link);
   if (m == null) return null;
   return m[2] != null ? '/requests/${m[1]}/messages' : '/requests/${m[1]}';

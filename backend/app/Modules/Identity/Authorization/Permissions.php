@@ -17,12 +17,12 @@ final class Permissions
         ],
         'technician' => ['workorder.execute'],
         'parts_staff' => ['parts.manage', 'orders.deliver', 'reports.own'],
-        'accountant' => ['invoices.manage', 'refunds.manage', 'reports.view'],
+        'accountant' => ['customers.view', 'invoices.manage', 'refunds.manage', 'reports.view'],
         'content_editor' => ['content.manage'],
     ];
 
     /** صلاحيات للمدير فقط في 01 §3.2 */
-    public const ADMIN_ONLY = ['staff.manage', 'settings.manage', 'audit.view', 'customers.suspend'];
+    public const ADMIN_ONLY = ['staff.manage', 'settings.manage', 'audit.view', 'customers.suspend', 'customers.members'];
 
     /** @param list<string> $roles */
     public static function allows(array $roles, string $ability): bool

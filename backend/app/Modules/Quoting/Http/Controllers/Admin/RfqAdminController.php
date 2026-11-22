@@ -10,6 +10,7 @@ use App\Modules\Quoting\Models\Rfq;
 use App\Modules\Quoting\Services\QuotationService;
 use App\Modules\Quoting\Services\RfqService;
 use App\Support\OffsetCursor;
+use App\Support\Search;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,8 @@ class RfqAdminController
             ->when(($f['assigned'] ?? null) === 'me', fn ($w) => $w->where('assigned_to', $request->user()->id))
             ->when(($f['assigned'] ?? null) === 'none', fn ($w) => $w->whereNull('assigned_to'))
             ->when($f['q'] ?? null, fn ($w, $v) => $w->where(fn ($x) => $x->where('number', 'like', "%{$v}%")
-                ->orWhereIn('customer_user_id', User::query()->where('full_name', 'like', "%{$v}%")->orWhere('phone_e164', 'like', '%'.preg_replace('/\D/', '', $v).'%')->select('id'))));
+                ->orWhereIn('customer_user_id', User::query()->where('full_name', 'like', Search::contains($v))
+                    ->when(Search::phone($v), fn ($u, $p) => $u->orWhere('phone_e164', 'like', $p))->select('id'))));
         $counts = (clone $base)->groupBy('status')->selectRaw('status, COUNT(*) AS n')->pluck('n', 'status');
         $rows = (clone $base)->when($f['status'] ?? null, fn ($w, $v) => $w->where('status', $v), fn ($w) => $w->whereIn('status', ['submitted', 'in_review', 'quoted']))
             ->with(['items.listing', 'items.part', 'customer', 'organization', 'assignee', 'quotations'])
@@ -65,7 +67,7 @@ class RfqAdminController
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'customer_id' => ['required', 'uuid', Rule::exists('users', 'id')->where('user_type', 'customer')],
+            'customer_id' => ['required', 'uuid', Rule::exists('users', 'id')->where('user_type', 'customer')->where('status', 'active')],
             'source' => ['required', Rule::in(['phone', 'whatsapp', 'walk_in'])],
             ...collect(RfqController::rules($request->user()))->except(['source'])->all(),
         ]);

@@ -21,7 +21,7 @@ class SetPasswordLink extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $en = ($notifiable->preferred_locale ?? 'ar') === 'en';
-        $path = $this->staff ? 'admin/set-password' : 'account/set-password';
+        $path = $this->staff ? 'admin/set-password' : 'login/reset'; // خارج /account: صاحب الرابط غير مسجل الدخول
         $url = rtrim((string) config('app.web_url'), '/').'/'.($en ? 'en' : 'ar').'/'.$path
             .'?'.http_build_query(['token' => $this->token, 'email' => $notifiable->email]);
 

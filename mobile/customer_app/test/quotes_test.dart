@@ -27,7 +27,31 @@ class FakeApi extends Api {
   @override
   Future<Map<String, dynamic>> post(String path, Map<String, dynamic> body, {bool auth = true}) async {
     posts.add((path, body));
-    return (responses['POST $path'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+    final reply = responses['POST $path'] ?? <String, dynamic>{};
+    if (reply is ApiException) throw reply;
+    return reply as Map<String, dynamic>;
+  }
+
+  final writes = <(String, String, Map<String, dynamic>)>[];
+
+  @override
+  Future<Map<String, dynamic>> patch(String path, Map<String, dynamic> body) async {
+    writes.add(('PATCH', path, body));
+    final reply = responses['PATCH $path'] ?? <String, dynamic>{};
+    if (reply is ApiException) throw reply;
+    return reply as Map<String, dynamic>;
+  }
+
+  @override
+  Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body) async {
+    writes.add(('PUT', path, body));
+    return (responses['PUT $path'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+  }
+
+  @override
+  Future<Map<String, dynamic>> delete(String path) async {
+    writes.add(('DELETE', path, const {}));
+    return <String, dynamic>{};
   }
 }
 
