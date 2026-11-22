@@ -17883,11 +17883,7 @@
                                             "string",
                                             "null"
                                         ],
-                                        "format": "uuid",
-                                        "enum": [
-                                            "01a1e9cd-736e-7560-90a6-be7af06ea353",
-                                            null
-                                        ]
+                                        "format": "uuid"
                                     }
                                 }
                             }

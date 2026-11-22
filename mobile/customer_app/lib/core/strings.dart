@@ -18,6 +18,7 @@ class S {
   String get phoneTitle => _t('رقم جوالك', 'Your mobile number');
   String get phoneIntro => _t('نرسل لك رمز تحقق. لا تحتاج كلمة مرور.', 'We will text you a code. No password needed.');
   String get phoneHint => _t('9XXX XXXX', '9XXX XXXX');
+  String get sessionExpired => _t('انتهت جلستك. سجّل الدخول للمتابعة.', 'Your session ended. Sign in to continue.');
   String get sendCode => _t('أرسل الرمز', 'Send code');
   String get codeTitle => _t('رمز التحقق', 'Verification code');
   String codeSentTo(String phone) => _t('أرسلنا رمزاً من 6 أرقام إلى $phone', 'We sent a 6-digit code to $phone');

@@ -82,6 +82,10 @@ class _PhoneScreenState extends ConsumerState<PhoneScreen> {
         children: [
           Text(s.phoneTitle, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
           const SizedBox(height: 8),
+          if (ref.read(authProvider.notifier).sessionExpired) ...[
+            Semantics(liveRegion: true, child: Text(s.sessionExpired, style: TextStyle(color: Theme.of(context).colorScheme.error, fontWeight: FontWeight.w700))),
+            const SizedBox(height: 8),
+          ],
           Text(s.phoneIntro),
           const SizedBox(height: 24),
           Directionality(

@@ -46,7 +46,16 @@ final routerProvider = Provider<GoRouter>((ref) {
   late final GoRouter router;
   String? returnTo; // ما طلبه الزائر قبل أن يُطلب منه الدخول
 
-  ref.listen(authProvider, (_, next) {
+  ref.listen(authProvider, (previous, next) {
+    if (previous?.value != null && next.value == null && !next.isLoading && ref.read(authProvider.notifier).sessionExpired) {
+      // انتهت الجلسة: الدخول فوق الرئيسية، فالرجوع يبقيه زائراً والدخول يعيده إلى مكانه
+      final shown = _shownUri(router.routerDelegate.currentConfiguration);
+      returnTo = shown.path == '/onboarding' ? null : shown.toString();
+      router.go('/home');
+      WidgetsBinding.instance.addPostFrameCallback((_) => router.push('/login'));
+      WidgetsBinding.instance.scheduleFrame();
+      return;
+    }
     refresh.value++;
     final me = next.value;
     final target = returnTo;
@@ -138,6 +147,12 @@ final routerProvider = Provider<GoRouter>((ref) {
   ref.onDispose(() => router.routerDelegate.removeListener(onNavigate));
   return router;
 });
+
+/// عنوان الشاشة الظاهرة، وهو غير عنوان التبويب إن فُتحت فوقه بـ push
+Uri _shownUri(RouteMatchList matches) {
+  final top = matches.isEmpty ? null : matches.last;
+  return top is ImperativeRouteMatch ? top.matches.uri : matches.uri;
+}
 
 /// M-01: الشعار أثناء استعادة الجلسة، وعند تعذّر الاتصال رسالة وإعادة محاولة (الجلسة محفوظة)
 class _Splash extends ConsumerWidget {

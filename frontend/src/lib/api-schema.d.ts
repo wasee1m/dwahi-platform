@@ -7884,11 +7884,8 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": {
-                    /**
-                     * Format: uuid
-                     * @enum {string|null}
-                     */
-                    user_id?: "01a1e9cd-736e-7560-90a6-be7af06ea353" | null;
+                    /** Format: uuid */
+                    user_id?: string | null;
                 };
             };
         };

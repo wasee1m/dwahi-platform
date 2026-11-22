@@ -134,6 +134,10 @@ class Api {
   final String Function() locale;
   late final Dio _dio;
   Completer<_Refresh>? _refreshing;
+  final _sessionEnded = StreamController<void>.broadcast();
+
+  /// الخادم رفض التجديد: الجلسة انتهت أثناء الاستخدام
+  Stream<void> get sessionEnded => _sessionEnded.stream;
 
   /// تجديد واحد للطلبات المتزامنة: الثاني ينتظر الأول، وإلا عدّه الخادم إعادة استخدام وأنهى الجلسات
   Future<_Refresh> _refresh() {
@@ -161,6 +165,7 @@ class Api {
         await tokens.clear(); // رمز تالف في التخزين الآمن
       }
       _refreshing = null;
+      if (result == _Refresh.rejected) _sessionEnded.add(null);
       done.complete(result);
     }();
 

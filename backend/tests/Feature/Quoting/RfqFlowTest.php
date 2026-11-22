@@ -219,3 +219,39 @@ it('explains why a part does not belong in an equipment request', function () {
 
     expect($details['items.0.part_id'][0])->toBe(__('quoting.part_in_equipment_request', [], 'ar'));
 });
+
+it('assigns a request only to staff who follow quote requests', function () {
+    $c = customerToken($this);
+    $rfq = partsRfq($this, $c);
+    $technician = staffUser(['technician'], 'tech@dwahi.test');
+    $coordinator = staffUser(['service_coordinator'], 'coordinator@dwahi.test');
+    $s = staffToken($this, 'sales');
+    $url = api()."/admin/rfqs/{$rfq['id']}/assign";
+
+    foreach ([$technician->id, DB::table('users')->where('user_type', 'customer')->value('id')] as $id) {
+        asUser($this, $s)->postJson($url, ['user_id' => $id])->assertStatus(422)
+            ->assertJsonStructure(['error' => ['details' => ['user_id']]]);
+    }
+    asUser($this, $s)->postJson($url, ['user_id' => $coordinator->id])->assertOk();
+    expect(DB::table('rfqs')->where('id', $rfq['id'])->value('assigned_to'))->toBe($coordinator->id);
+});
+
+it('lists new requests first, then in review, then quoted, oldest first in each', function () {
+    $c = customerToken($this);
+    $create = function (string $status, int $daysAgo) use ($c) {
+        $id = asUser($this, $c)->postJson(api().'/me/rfqs', ['type' => 'parts', 'items' => [['free_text' => 'فلتر', 'quantity' => 1]]])
+            ->assertCreated()->json('data.id');
+        DB::table('rfqs')->where('id', $id)->update(['status' => $status, 'created_at' => now()->subDays($daysAgo)]);
+
+        return $id;
+    };
+    $quoted = $create('quoted', 9);
+    $newer = $create('submitted', 1);
+    $inReview = $create('in_review', 5);
+    $older = $create('submitted', 2);
+
+    $listed = collect(asUser($this, staffToken($this, 'sales'))->getJson(api().'/admin/rfqs')->assertOk()->json('data'))
+        ->pluck('id')->intersect([$quoted, $newer, $inReview, $older])->values()->all();
+
+    expect($listed)->toBe([$older, $newer, $inReview, $quoted]);
+});

@@ -18,8 +18,19 @@ class Me {
 class AuthController extends AsyncNotifier<Me?> {
   Api get _api => ref.read(apiProvider);
 
+  /// انتهت الجلسة دون أن يطلب العميل الخروج. يبقى حتى الدخول التالي.
+  bool get sessionExpired => _expired;
+  bool _expired = false;
+  bool _signingOut = false;
+
   @override
   Future<Me?> build() async {
+    final ended = _api.sessionEnded.listen((_) {
+      if (_signingOut || state.value == null) return; // خروج مطلوب، أو زائر، أو عند التشغيل
+      _expired = true;
+      state = const AsyncData(null);
+    });
+    ref.onDispose(ended.cancel);
     final store = ref.read(tokenStoreProvider);
     if (await store.readRefresh() == null) return null;
     try {
@@ -42,6 +53,7 @@ class AuthController extends AsyncNotifier<Me?> {
     final data = await _api.post('/auth/otp/verify', {'phone': phone, 'code': code, 'client': 'customer_app'}, auth: false);
     await ref.read(tokenStoreProvider).save(data);
     final me = Me(data['user'] as Map<String, dynamic>);
+    _expired = false;
     state = AsyncData(me);
     return me;
   }
@@ -52,6 +64,8 @@ class AuthController extends AsyncNotifier<Me?> {
   }
 
   Future<void> logout() async {
+    _signingOut = true;
+    _expired = false;
     try {
       await _api.post('/auth/logout', {});
     } on ApiException {
@@ -59,6 +73,7 @@ class AuthController extends AsyncNotifier<Me?> {
     }
     await ref.read(tokenStoreProvider).clear();
     state = const AsyncData(null);
+    _signingOut = false;
   }
 }
 

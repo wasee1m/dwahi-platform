@@ -40,7 +40,7 @@ class RfqAdminController
         $counts = (clone $base)->groupBy('status')->selectRaw('status, COUNT(*) AS n')->pluck('n', 'status');
         $rows = (clone $base)->when($f['status'] ?? null, fn ($w, $v) => $w->where('status', $v), fn ($w) => $w->whereIn('status', ['submitted', 'in_review', 'quoted']))
             ->with(['items.listing', 'items.part', 'customer', 'organization', 'assignee', 'quotations'])
-            ->orderByRaw("FIELD(status, 'submitted', 'in_review', 'quoted') DESC")->orderBy('created_at')
+            ->orderByRaw("FIELD(status, 'submitted', 'in_review', 'quoted')")->orderBy('created_at')->orderBy('id')
             ->offset($offset)->limit(51)->get();
 
         return response()->json([
@@ -78,8 +78,9 @@ class RfqAdminController
 
     public function assign(Request $request, string $id): JsonResponse
     {
-        $staffIds = DB::table('user_roles')->whereIn('role', ['sales', 'service_coordinator', 'admin'])->pluck('user_id')->all();
-        $userId = $request->validate(['user_id' => ['nullable', 'uuid', Rule::in($staffIds)]])['user_id'] ?? $request->user()->id;
+        // exists لا in: قيم in تُنسخ إلى عقد OpenAPI، فلا تؤخذ من قاعدة البيانات
+        $staff = Rule::exists('user_roles', 'user_id')->whereIn('role', ['sales', 'service_coordinator', 'admin']);
+        $userId = $request->validate(['user_id' => ['nullable', 'uuid', $staff]])['user_id'] ?? $request->user()->id;
         $this->rfqs->assign($this->find($id), User::query()->findOrFail($userId), $request->user());
 
         return $this->show($request, $id);
