@@ -6,7 +6,7 @@ import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { fill, getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { selectedAccount } from "@/lib/auth/account";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, listSep } from "@/lib/format";
 import { ORDER_COLOR, type OrderRow } from "@/lib/order-types";
 
 // C-13 طلبات القطع (FR-ORD-03، US-15)
@@ -60,7 +60,7 @@ async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="font-bold"><span className="num" dir="ltr">{r.number}</span> · {o.fulfillment[r.fulfillment]}</p>
-                    <p className="mt-1 truncate text-sm text-ink-muted">{r.summary.join("، ")}</p>
+                    <p className="mt-1 truncate text-sm text-ink-muted">{r.summary.join(listSep(lang))}</p>
                     <p className="mt-1 text-xs text-ink-muted">
                       {r.created_at && date.format(new Date(r.created_at))} · {fill(o.itemsCount, { n: String(r.items_count ?? 0) })}
                       {r.account && <> · {r.account.name}</>}

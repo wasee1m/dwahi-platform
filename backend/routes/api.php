@@ -41,6 +41,7 @@ use App\Modules\Platform\Http\Controllers\FileController;
 use App\Modules\Quoting\Http\Controllers\Admin\QuotationAdminController;
 use App\Modules\Quoting\Http\Controllers\Admin\RfqAdminController;
 use App\Modules\Quoting\Http\Controllers\RfqController;
+use App\Modules\Reports\Http\Controllers\ReportController;
 use App\Modules\Service\Http\Controllers\Admin\CompletionAdminController;
 use App\Modules\Service\Http\Controllers\Admin\ServiceAdminController;
 use App\Modules\Service\Http\Controllers\Admin\WorkOrderAdminController;
@@ -202,6 +203,10 @@ Route::prefix('v1')->group(function () {
 
     // ---------- لوحة الإدارة: جلسة إدارة (بعد TOTP) + صلاحية (01 §3.2) ----------
     Route::middleware(['auth:sanctum', 'ensure.session:admin', 'throttle:account'])->prefix('admin')->group(function () {
+        // A-01 و A-16: المؤشرات والتقارير حسب الدور (FR-RPT-01، FR-RPT-03)
+        Route::get('dashboard', [ReportController::class, 'dashboard']);
+        Route::get('reports/{key}', [ReportController::class, 'show']);
+        Route::get('reports/{key}/export', [ReportController::class, 'export']);
         Route::middleware('can:staff.manage')->group(function () {
             Route::get('staff', [StaffController::class, 'index']);
             Route::post('staff', [StaffController::class, 'store']);

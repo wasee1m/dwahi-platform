@@ -5,6 +5,7 @@ import { Field, inputClass, keepValues, Notice, SubmitButton } from "@/component
 import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { AdminState } from "../../actions";
 import { adjustStock, importStep, receiveStock, savePart, type ImportState } from "../catalog-actions";
+import { listSep } from "@/lib/format";
 
 // A-04: القطعة وأرقامها البديلة وتوافقها، وتسوية المخزون، والاستلام، والاستيراد (FR-PRT-04، US-37)
 type T = AppDictionary["admin"]["parts"];
@@ -135,7 +136,7 @@ export function ImportFlow({ lang, t, c }: { lang: string; t: T; c: C }) {
       </form>
 
       {state.error && <Notice tone="danger">{Object.values(state.fieldErrors ?? {}).flat()[0] ?? state.error.message}</Notice>}
-      {state.applied && <Notice tone="success">{t.applied} {state.applied.created} {t.created}، {state.applied.updated} {t.updated}</Notice>}
+      {state.applied && <Notice tone="success">{t.applied} {state.applied.created} {t.created}{listSep(lang)}{state.applied.updated} {t.updated}</Notice>}
 
       {p && (
         <section className="space-y-4">

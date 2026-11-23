@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, intlLocale } from "@/i18n/config";
 import { getAppDictionary } from "@/i18n/get-dictionary";
 import { authed } from "@/lib/auth/client";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, listSep } from "@/lib/format";
 import type { Money } from "@/lib/types";
 import { SERVICE_COLOR, type ServiceRow, type WorkOrderCompletion, type WorkOrderRow } from "@/lib/service-types";
 import { AdditionalActions, VerifyActions } from "../CompletionForms";
@@ -88,7 +88,7 @@ async function View({ params }: { params: Props["params"] }) {
             {w.instructions && <p className="mt-2"><b>{a.instructions}:</b> {w.instructions}</p>}
             <p className="mt-2">{a.intake}: {w.intake ? <span className="num" dir="ltr">{w.intake.number}</span> : a.notReceived}</p>
             {w.quotation && <p>{a.approvedEstimate}: <span className="num" dir="ltr">{w.quotation.number}</span> · {w.quotation.total && formatMoney(w.quotation.total, lang)}</p>}
-            {w.technicians.length > 0 && <p className="mt-2">{a.technicians}: {w.technicians.map((x) => `${x.name}${x.role === "lead" ? ` (${a.lead})` : ""}`).join("، ")}</p>}
+            {w.technicians.length > 0 && <p className="mt-2">{a.technicians}: {w.technicians.map((x) => `${x.name}${x.role === "lead" ? ` (${a.lead})` : ""}`).join(listSep(lang))}</p>}
           </section>
           <Execution w={w} a={a} time={time} lang={lang} />
           <Completion w={w} a={a} time={time} lang={lang} />

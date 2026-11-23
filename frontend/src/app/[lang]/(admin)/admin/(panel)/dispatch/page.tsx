@@ -7,6 +7,7 @@ import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { SERVICE_COLOR, type ServiceRow, type WorkOrderRow } from "@/lib/service-types";
+import { listSep } from "@/lib/format";
 
 // A-10 لوحة التوزيع (FR-WO-02، US-33): صف لكل فني بمهامه كمربعات زمنية، وغير المسندة مع حالة الاستلام،
 // وفلترة بالمهارة. الإسناد من صفحة أمر العمل (السحب والإفلات لاحقاً).
@@ -89,7 +90,7 @@ async function BoardView({ lang, t, searchParams }: { lang: Locale; t: AppDictio
                   <div key={tech.id} className="flex items-stretch border-b border-sand-100 last:border-0" dir="ltr">
                     <div className="w-40 shrink-0 px-3 py-2 text-sm" dir={lang === "ar" ? "rtl" : "ltr"}>
                       <p className="font-semibold">{tech.name}</p>
-                      {tech.skills.length > 0 && <p className="truncate text-xs text-ink-muted">{tech.skills.join("، ")}</p>}
+                      {tech.skills.length > 0 && <p className="truncate text-xs text-ink-muted">{tech.skills.join(listSep(lang))}</p>}
                     </div>
                     <div className="relative h-14 flex-1 bg-sand-100">
                       {tech.tasks.filter((x) => x.start && Date.parse(x.start) < start + 86_400_000 && Date.parse(x.end ?? x.start) > start).map((x) => {

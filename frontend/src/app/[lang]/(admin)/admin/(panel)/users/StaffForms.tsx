@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { Field, inputClass, Notice, SubmitButton } from "@/components/forms";
 import type { AppDictionary } from "@/i18n/get-dictionary";
 import { createStaff, staffAction, updateStaffRoles, type AdminState } from "../../actions";
+import { listSep } from "@/lib/format";
 
 export type Staff = {
   id: string; full_name: string; email: string | null; phone: string | null; status: "active" | "suspended";
@@ -80,7 +81,7 @@ export function StaffRow({ lang, t, staff, roles, branches, self }: { lang: stri
           <p className="num text-xs text-ink-muted" dir="ltr">{staff.email}</p>
           {!staff.activated && <p className="text-xs font-semibold text-[var(--status-waiting)]">{t.notActivated}</p>}
         </td>
-        <td className="px-4 py-3">{staff.roles.map((r) => t.roleNames[r as keyof T["roleNames"]] ?? r).join("، ")}</td>
+        <td className="px-4 py-3">{staff.roles.map((r) => t.roleNames[r as keyof T["roleNames"]] ?? r).join(listSep(lang))}</td>
         <td className="px-4 py-3">{staff.branch?.name}</td>
         <td className="px-4 py-3">
           <span style={{ color: staff.status === "active" ? "var(--status-success)" : "var(--status-hold)" }} className="font-semibold">
@@ -128,7 +129,7 @@ export function StaffRow({ lang, t, staff, roles, branches, self }: { lang: stri
                   <input type="checkbox" name="restrict_to_branch" defaultChecked={staff.restrict_to_branch} className="size-4 accent-[var(--sun)]" /> {t.restrict}
                 </label>
                 {staff.roles.includes("technician") && (
-                  <input name="skills" defaultValue={staff.skills.join("، ")} placeholder={t.skills} aria-label={t.skills}
+                  <input name="skills" defaultValue={staff.skills.join(listSep(lang))} placeholder={t.skills} aria-label={t.skills}
                     className="min-w-60 rounded-sm border border-sand-300 px-2 py-1.5 text-sm" />
                 )}
                 <SubmitButton pending={saving}>{t.saveRoles}</SubmitButton>

@@ -246,7 +246,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               value: accepted,
               onChanged: (v) => setState(() => accepted = v == true),
               title: Text(s.acceptReturns),
-              secondary: IconButton(icon: const Icon(Icons.open_in_new), onPressed: () => context.push('/account/policies/returns')),
+              secondary: IconButton(tooltip: S.of(context).openPolicy, icon: const Icon(Icons.open_in_new), onPressed: () => context.push('/account/policies/returns')),
             ),
             const SizedBox(height: 8),
             FilledButton(
@@ -503,9 +503,9 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
       Checkbox(value: qty != null, onChanged: (v) => setState(() => v == true ? picked[id] = 1 : picked.remove(id))),
       Expanded(child: Text('${ltr(i['part_number'] as String)} · ${i['name']}')),
       if (qty != null) ...[
-        IconButton(onPressed: qty > 1 ? () => setState(() => picked[id] = qty - 1) : null, icon: const Icon(Icons.remove)),
+        IconButton(tooltip: S.of(context).decrease, onPressed: qty > 1 ? () => setState(() => picked[id] = qty - 1) : null, icon: const Icon(Icons.remove)),
         Text('$qty'),
-        IconButton(onPressed: qty < max ? () => setState(() => picked[id] = qty + 1) : null, icon: const Icon(Icons.add)),
+        IconButton(tooltip: S.of(context).increase, onPressed: qty < max ? () => setState(() => picked[id] = qty + 1) : null, icon: const Icon(Icons.add)),
       ],
     ])));
   }

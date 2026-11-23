@@ -828,7 +828,7 @@ class _PartSheetState extends ConsumerState<PartSheet> {
               contentPadding: EdgeInsets.zero,
               title: Text('${_picked!['part_number']} · ${_picked!['name']}'),
               subtitle: Text(s.available('${_picked!['available']}')),
-              trailing: IconButton(icon: const Icon(Icons.close), onPressed: () => setState(() => _picked = null)),
+              trailing: IconButton(tooltip: s.cancel, icon: const Icon(Icons.close), onPressed: () => setState(() => _picked = null)),
             ),
         ] else
           TextField(key: const Key('part-desc'), controller: _desc, decoration: InputDecoration(labelText: s.description), maxLength: 300),

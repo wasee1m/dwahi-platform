@@ -11,6 +11,7 @@ use App\Modules\Identity\Authorization\Permissions;
 use App\Modules\Identity\Sms\LogSmsSender;
 use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Messaging\Events\MessagePosted;
+use App\Modules\Notifications\Console\MessageDigest;
 use App\Modules\Notifications\Listeners\AccountNotifications;
 use App\Modules\Notifications\Listeners\MessageNotifications;
 use App\Modules\Notifications\Listeners\OrderNotifications;
@@ -83,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(OrderEvent::class, OrderNotifications::class);
         Event::listen(InvoiceIssued::class, [OrderNotifications::class, 'invoiceIssued']);
         Event::listen(InvoiceIssued::class, ServiceInvoices::class);
-        $this->commands([AccountJobs::class, OrderJobs::class, ServiceJobs::class]);
+        $this->commands([AccountJobs::class, OrderJobs::class, ServiceJobs::class, MessageDigest::class]);
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));

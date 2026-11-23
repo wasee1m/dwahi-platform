@@ -152,6 +152,8 @@
     "clients": { "web": "متصفح", "customer_app": "تطبيق العملاء", "technician_app": "تطبيق الفنيين", "admin": "لوحة الإدارة" }
   },
   "admin": {
+    "dashboard": {"title": "لوحة المؤشرات", "from": "من", "to": "إلى", "branch": "الفرع", "allBranches": "كل الفروع", "apply": "عرض", "thisMonth": "هذا الشهر", "quotes": "عروض الأسعار", "service": "الصيانة", "parts": "قطع الغيار", "revenue": "الإيرادات", "ratings": "التقييم", "rfqs": "طلبات العروض", "medianResponse": "وسيط زمن الرد", "hours": "ساعة", "acceptance": "نسبة القبول", "awaitingQuote": "بانتظار عرض", "open": "طلبات صيانة مفتوحة", "slaBreached": "متجاوزة مهلة الفرز", "platformShare": "عبر المنصة", "workOrdersToday": "أوامر عمل اليوم", "inProgress": "جارية", "onHold": "متوقفة", "readyForPickup": "جاهزة للاستلام", "documented": "موثقة بالكامل", "ordersDelivered": "طلبات قطع مسلّمة", "sales": "مبيعات القطع", "openOrders": "طلبات قيد التجهيز", "stockouts": "قطع نفدت", "invoiced": "المفوتر", "collected": "المحصّل", "average": "متوسط التقييم", "reviews": "تقييمات", "lines": {"parts": "قطع الغيار", "service": "الصيانة", "equipment": "المعدات", "other": "أخرى"}, "rfqsChart": "طلبات العروض يومياً", "revenueChart": "الإيرادات المفوترة يومياً (ر.ع.)", "showTable": "عرض الجدول", "day": "اليوم", "attention": "تحتاج انتباهاً", "attSla": "تجاوزت مهلة الفرز", "attHold": "أوامر عمل متوقفة", "attExpiring": "عروض تنتهي اليوم", "nothing": "لا شيء.", "noSections": "لا مؤشرات لدورك. استخدم الأقسام من القائمة.", "reports": "التقارير", "since": "منذ"},
+    "reports": {"title": "التقارير", "quotes": "العروض", "service": "الصيانة", "parts": "الأكثر مبيعاً", "stockouts": "ما نفد", "revenue": "الإيرادات", "exportXlsx": "تصدير Excel", "exportCsv": "تصدير CSV", "empty": "لا بيانات للفترة.", "rows": "صفاً", "summary": "الملخص", "medianResponse": "وسيط زمن الرد (ساعات)", "acceptance": "نسبة القبول", "lostReasons": "أسباب الخسارة", "slaBreached": "متجاوزة المهلة", "openByAge": "المفتوح حسب العمر (أيام)", "total": "الإجمالي", "collected": "المحصّل", "yes": "نعم", "no": "لا", "shown": "يعرض أول 200 صف، والملف كامل."},
     "service": {
       "title": "طلبات الصيانة",
       "desk": "مكتب الاستلام",
@@ -537,9 +539,9 @@
     "send": "إرسال",
     "panel": "لوحة الإدارة",
     "forbidden": "لا تملك صلاحية لهذه الصفحة.",
-    "nav": { "serviceRequests": "فرز الصيانة", "workOrders": "أوامر العمل", "dispatch": "لوحة التوزيع", "desk": "مكتب الاستلام", "orders": "طلبات القطع", "finance": "المالية", "customers": "العملاء", "home": "الرئيسية", "users": "الموظفون والأدوار", "audit": "سجل التدقيق", "logout": "خروج", "equipment": "المعدات المعروضة", "catalogSetup": "الماركات والفئات والموديلات", "parts": "القطع والمخزون", "content": "المحتوى", "leads": "الاستفسارات", "settings": "الإعدادات والفروع", "rfqs": "طلبات العروض", "notifications": "الإشعارات" },
+    "nav": { "serviceRequests": "فرز الصيانة", "reports": "التقارير", "workOrders": "أوامر العمل", "dispatch": "لوحة التوزيع", "desk": "مكتب الاستلام", "orders": "طلبات القطع", "finance": "المالية", "customers": "العملاء", "home": "الرئيسية", "users": "الموظفون والأدوار", "audit": "سجل التدقيق", "logout": "خروج", "equipment": "المعدات المعروضة", "catalogSetup": "الماركات والفئات والموديلات", "parts": "القطع والمخزون", "content": "المحتوى", "leads": "الاستفسارات", "settings": "الإعدادات والفروع", "rfqs": "طلبات العروض", "notifications": "الإشعارات" },
     "rfqs": {
-      "title": "طلبات العروض", "new": "طلب نيابة عن عميل", "assignMe": "إسناد لي", "assignTo": "إسناد إلى", "assign": "إسناد",
+      "itemsPlaceholder": "فلتر زيت 1R-0750 | 10\nطقم جوانات مضخة | 1", "title": "طلبات العروض", "new": "طلب نيابة عن عميل", "assignMe": "إسناد لي", "assignTo": "إسناد إلى", "assign": "إسناد",
       "statuses": { "submitted": "جديد", "in_review": "قيد المراجعة", "quoted": "أُرسل العرض", "won": "مقبول", "lost": "خاسر", "cancelled": "ملغى" },
       "types": { "equipment": "معدات", "parts": "قطع", "service": "صيانة" },
       "sources": { "web": "الموقع", "app": "التطبيق", "phone": "هاتف", "whatsapp": "واتساب", "walk_in": "حضور", "system": "النظام" },
@@ -590,7 +592,7 @@
       "cols": { "photo": "الصورة", "title": "العنوان", "model": "الموديل", "condition": "الحالة", "price": "السعر", "status": "النشر" }
     },
     "catalogSetup": {
-      "title": "الماركات والفئات والموديلات", "brands": "الماركات", "categories": "الفئات", "models": "الموديلات",
+      "specsPlaceholder": "سعة الخزان | Fuel tank | 410 | L", "title": "الماركات والفئات والموديلات", "brands": "الماركات", "categories": "الفئات", "models": "الموديلات",
       "name": "الاسم", "slug": "المعرّف في الرابط (اختياري)", "represented": "وكيل معتمد", "active": "ظاهرة", "sort": "الترتيب",
       "nameAr": "الاسم بالعربية", "nameEn": "الاسم بالإنجليزية", "parent": "الفئة الأم", "noParent": "بلا فئة أم",
       "brand": "الماركة", "category": "الفئة", "modelName": "اسم الموديل", "weight": "الوزن التشغيلي (كغ)", "power": "قدرة المحرك (كيلوواط)",

@@ -62,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_232"];
+        post: operations["modules.platform.admin.branchAdmin.save_235"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +77,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_233"];
+        put: operations["modules.platform.admin.branchAdmin.save_236"];
         post?: never;
         delete?: never;
         options?: never;
@@ -178,7 +178,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_198"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_201"];
         delete?: never;
         options?: never;
         head?: never;
@@ -194,7 +194,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_200"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_203"];
         delete?: never;
         options?: never;
         head?: never;
@@ -210,7 +210,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_202"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_205"];
         delete?: never;
         options?: never;
         head?: never;
@@ -225,7 +225,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_199"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_202"];
         post?: never;
         delete?: never;
         options?: never;
@@ -241,7 +241,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_201"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_204"];
         post?: never;
         delete?: never;
         options?: never;
@@ -257,7 +257,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_203"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_206"];
         post?: never;
         delete?: never;
         options?: never;
@@ -425,7 +425,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_215"];
+        post: operations["modules.content.admin.contentAdmin.savePage_218"];
         delete?: never;
         options?: never;
         head?: never;
@@ -440,7 +440,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_217"];
+        put: operations["modules.content.admin.contentAdmin.savePage_220"];
         post?: never;
         delete?: never;
         options?: never;
@@ -457,7 +457,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_219"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_222"];
         delete?: never;
         options?: never;
         head?: never;
@@ -489,7 +489,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_221"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_224"];
         post?: never;
         delete?: never;
         options?: never;
@@ -506,7 +506,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_223"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_226"];
         delete?: never;
         options?: never;
         head?: never;
@@ -521,7 +521,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_224"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_227"];
         post?: never;
         delete?: never;
         options?: never;
@@ -987,7 +987,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_133"];
+        post: operations["modules.platform.file.upload_136"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1519,7 +1519,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_114"];
+        get: operations["modules.notifications.notification.index_117"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1536,7 +1536,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_115"];
+        get: operations["modules.notifications.notification.count_118"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1554,7 +1554,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_116"];
+        post: operations["modules.notifications.notification.readAll_119"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1570,7 +1570,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_117"];
+        post: operations["modules.notifications.notification.read_120"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2294,6 +2294,55 @@ export interface paths {
         };
         /** المسودة تُولَّد للمعاينة بعلامة DRAFT، والمرسل نسخته المحفوظة */
         get: operations["quotationAdmin.pdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["report.dashboard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/reports/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["report.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/reports/{key}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** FR-RPT-03: Excel أو CSV بالفلاتر الحالية، والعملية في سجل التدقيق */
+        get: operations["report.export"];
         put?: never;
         post?: never;
         delete?: never;
@@ -3904,7 +3953,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_232": {
+    "modules.platform.admin.branchAdmin.save_235": {
         parameters: {
             query?: never;
             header?: never;
@@ -3960,7 +4009,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_233": {
+    "modules.platform.admin.branchAdmin.save_236": {
         parameters: {
             query?: never;
             header?: never;
@@ -4635,7 +4684,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_198": {
+    "modules.catalog.admin.catalogSetup.saveBrand_201": {
         parameters: {
             query?: never;
             header?: never;
@@ -4717,7 +4766,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_200": {
+    "modules.catalog.admin.catalogSetup.saveCategory_203": {
         parameters: {
             query?: never;
             header?: never;
@@ -4814,7 +4863,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_202": {
+    "modules.catalog.admin.catalogSetup.saveModel_205": {
         parameters: {
             query?: never;
             header?: never;
@@ -4872,7 +4921,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_199": {
+    "modules.catalog.admin.catalogSetup.saveBrand_202": {
         parameters: {
             query?: never;
             header?: never;
@@ -4921,7 +4970,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_201": {
+    "modules.catalog.admin.catalogSetup.saveCategory_204": {
         parameters: {
             query?: never;
             header?: never;
@@ -4969,7 +5018,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_203": {
+    "modules.catalog.admin.catalogSetup.saveModel_206": {
         parameters: {
             query?: never;
             header?: never;
@@ -5508,7 +5557,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_215": {
+    "modules.content.admin.contentAdmin.savePage_218": {
         parameters: {
             query?: never;
             header?: never;
@@ -5609,7 +5658,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_217": {
+    "modules.content.admin.contentAdmin.savePage_220": {
         parameters: {
             query?: never;
             header?: never;
@@ -5697,7 +5746,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_219": {
+    "modules.content.admin.contentAdmin.saveFaq_222": {
         parameters: {
             query?: never;
             header?: never;
@@ -5786,7 +5835,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_221": {
+    "modules.content.admin.contentAdmin.saveFaq_224": {
         parameters: {
             query?: never;
             header?: never;
@@ -5887,7 +5936,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_223": {
+    "modules.content.admin.contentAdmin.saveBanner_226": {
         parameters: {
             query?: never;
             header?: never;
@@ -5941,7 +5990,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_224": {
+    "modules.content.admin.contentAdmin.saveBanner_227": {
         parameters: {
             query?: never;
             header?: never;
@@ -9464,7 +9513,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_133": {
+    "modules.platform.file.upload_136": {
         parameters: {
             query?: never;
             header?: never;
@@ -11439,7 +11488,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_114": {
+    "modules.notifications.notification.index_117": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -11489,7 +11538,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_115": {
+    "modules.notifications.notification.count_118": {
         parameters: {
             query?: never;
             header?: never;
@@ -11525,7 +11574,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_116": {
+    "modules.notifications.notification.readAll_119": {
         parameters: {
             query?: never;
             header?: never;
@@ -11561,7 +11610,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_117": {
+    "modules.notifications.notification.read_120": {
         parameters: {
             query?: never;
             header?: never;
@@ -14494,6 +14543,114 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "report.dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "report.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "report.export": {
+        parameters: {
+            query?: {
+                format?: "csv" | "xlsx" | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {

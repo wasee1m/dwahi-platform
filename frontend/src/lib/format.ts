@@ -29,3 +29,6 @@ export function formatPhone(e164: string): string {
   const m = e164.match(/^\+968(\d{4})(\d{4})$/);
   return m ? `+968 ${m[1]} ${m[2]}` : e164;
 }
+
+/** فاصل القوائم بلغة الواجهة (NFR-14): "، " بالعربية و ", " بالإنجليزية */
+export const listSep = (locale: string): string => (locale === "ar" ? "، " : ", ");

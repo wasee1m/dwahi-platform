@@ -57,9 +57,12 @@ final class EventCatalog
     ];
 
     /** @return 'editable'|'locked'|'unused' هل لمفتاح الفئة والقناة أثر؟ */
+    /** قنوات تُرسل ملخصاً دورياً لا حدثاً فورياً: بريد الرسائل غير المقروءة (J-10) */
+    private const DIGESTS = ['messages' => ['email']];
+
     public static function state(string $category, string $channel): string
     {
-        if ($category === 'marketing') {
+        if ($category === 'marketing' || in_array($channel, self::DIGESTS[$category] ?? [], true)) {
             return 'editable';
         }
         $events = self::customerEvents($category, $channel);

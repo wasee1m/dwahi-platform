@@ -5,6 +5,7 @@ import { Field, inputClass, keepValues, Notice } from "@/components/forms";
 import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { AdminState } from "../../actions";
 import { cancelWorkOrder, scheduleWorkOrder } from "../service-actions";
+import { listSep } from "@/lib/format";
 
 type T = AppDictionary["admin"]["service"];
 type Tech = { id: string; name: string; skills: string[] };
@@ -29,7 +30,7 @@ export function ScheduleForm({ lang, t, id, technicians, rescheduling, initial }
       <h2 className="text-base">{rescheduling ? t.reschedule : t.schedule}</h2>
       <Field label={t.lead}>
         <select name="lead_id" value={lead} onChange={(e) => setLead(e.target.value)} className={inputClass}>
-          {technicians.map((x) => <option key={x.id} value={x.id}>{x.name}{x.skills.length ? ` · ${x.skills.join("، ")}` : ""}</option>)}
+          {technicians.map((x) => <option key={x.id} value={x.id}>{x.name}{x.skills.length ? ` · ${x.skills.join(listSep(lang))}` : ""}</option>)}
         </select>
       </Field>
       <fieldset className="text-sm">

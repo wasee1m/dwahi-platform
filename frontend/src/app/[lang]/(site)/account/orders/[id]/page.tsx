@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, intlLocale } from "@/i18n/config";
 import { fill, getAppDictionary } from "@/i18n/get-dictionary";
 import { authed } from "@/lib/auth/client";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, listSep } from "@/lib/format";
 import { ORDER_COLOR, type OrderDetail } from "@/lib/order-types";
 import { CancelOrder, ReturnForm } from "./OrderForms";
 
@@ -159,7 +159,7 @@ async function Detail({ params, searchParams }: { params: Props["params"]; searc
             {o.returns.map((r) => (
               <li key={r.id} className="rounded-sm border border-sand-300 p-3">
                 <p className="font-semibold">{d.returnStatuses[r.status]}{r.created_at && <span className="font-normal text-ink-muted"> · {date.format(new Date(r.created_at))}</span>}</p>
-                <p>{r.items.map((i) => `${i.part_number ?? ""} × ${Number(i.quantity)}`).join("، ")}</p>
+                <p>{r.items.map((i) => `${i.part_number ?? ""} × ${Number(i.quantity)}`).join(listSep(lang))}</p>
                 <p className="text-ink-muted">{r.reason}</p>
                 {r.decision_note && <p className="mt-1">{r.decision_note}</p>}
               </li>

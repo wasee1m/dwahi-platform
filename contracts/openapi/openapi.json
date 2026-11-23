@@ -1050,7 +1050,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.platform.admin.branchAdmin.save_232",
+                "operationId": "modules.platform.admin.branchAdmin.save_235",
                 "tags": [
                     "BranchAdmin"
                 ],
@@ -1216,7 +1216,7 @@
         },
         "/v1/admin/branches/{id}": {
             "put": {
-                "operationId": "modules.platform.admin.branchAdmin.save_233",
+                "operationId": "modules.platform.admin.branchAdmin.save_236",
                 "tags": [
                     "BranchAdmin"
                 ],
@@ -3442,7 +3442,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_198",
+                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_201",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3591,7 +3591,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_200",
+                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_203",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3820,7 +3820,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveModel_202",
+                "operationId": "modules.catalog.admin.catalogSetup.saveModel_205",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3969,7 +3969,7 @@
         },
         "/v1/admin/brands/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_199",
+                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_202",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -4078,7 +4078,7 @@
         },
         "/v1/admin/categories/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_201",
+                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_204",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -4186,7 +4186,7 @@
         },
         "/v1/admin/models/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveModel_203",
+                "operationId": "modules.catalog.admin.catalogSetup.saveModel_206",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -5426,7 +5426,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.savePage_215",
+                "operationId": "modules.content.admin.contentAdmin.savePage_218",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -5681,7 +5681,7 @@
                 }
             },
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.savePage_217",
+                "operationId": "modules.content.admin.contentAdmin.savePage_220",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -5876,7 +5876,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.saveFaq_219",
+                "operationId": "modules.content.admin.contentAdmin.saveFaq_222",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -6058,7 +6058,7 @@
         },
         "/v1/admin/faqs/{id}": {
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.saveFaq_221",
+                "operationId": "modules.content.admin.contentAdmin.saveFaq_224",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -6285,7 +6285,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.saveBanner_223",
+                "operationId": "modules.content.admin.contentAdmin.saveBanner_226",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -6397,7 +6397,7 @@
         },
         "/v1/admin/banners/{id}": {
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.saveBanner_224",
+                "operationId": "modules.content.admin.contentAdmin.saveBanner_227",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -20593,7 +20593,7 @@
         },
         "/v1/admin/staff-uploads": {
             "post": {
-                "operationId": "modules.platform.file.upload_133",
+                "operationId": "modules.platform.file.upload_136",
                 "summary": "POST /me/uploads: \u0635\u0648\u0631 \u0627\u0644\u0642\u0637\u0639 \u0648\u0627\u0644\u0633\u0644\u0646\u062f\u0631 \u0648\u0623\u0645\u0631 \u0627\u0644\u0634\u0631\u0627\u0621 \u0648\u0645\u0631\u0641\u0642\u0627\u062a \u0627\u0644\u0631\u0633\u0627\u0626\u0644. \u062e\u0627\u0635\u0629 \u062f\u0627\u0626\u0645\u0627\u064b (NFR-11)",
                 "tags": [
                     "File"
@@ -25978,7 +25978,7 @@
         },
         "/v1/admin/notifications": {
             "get": {
-                "operationId": "modules.notifications.notification.index_114",
+                "operationId": "modules.notifications.notification.index_117",
                 "tags": [
                     "Notification"
                 ],
@@ -26121,7 +26121,7 @@
         },
         "/v1/admin/notifications/count": {
             "get": {
-                "operationId": "modules.notifications.notification.count_115",
+                "operationId": "modules.notifications.notification.count_118",
                 "summary": "\u0644\u0644\u0639\u062f\u0627\u062f \u0641\u064a \u0631\u0623\u0633 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u062a\u0637\u0628\u064a\u0642",
                 "tags": [
                     "Notification"
@@ -26181,7 +26181,7 @@
         },
         "/v1/admin/notifications/read-all": {
             "post": {
-                "operationId": "modules.notifications.notification.readAll_116",
+                "operationId": "modules.notifications.notification.readAll_119",
                 "tags": [
                     "Notification"
                 ],
@@ -26240,7 +26240,7 @@
         },
         "/v1/admin/notifications/{id}/read": {
             "post": {
-                "operationId": "modules.notifications.notification.read_117",
+                "operationId": "modules.notifications.notification.read_120",
                 "tags": [
                     "Notification"
                 ],
@@ -34086,6 +34086,200 @@
                     },
                     "403": {
                         "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/dashboard": {
+            "get": {
+                "operationId": "report.dashboard",
+                "tags": [
+                    "Report"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/reports/{key}": {
+            "get": {
+                "operationId": "report.show",
+                "tags": [
+                    "Report"
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/reports/{key}/export": {
+            "get": {
+                "operationId": "report.export",
+                "summary": "FR-RPT-03: Excel \u0623\u0648 CSV \u0628\u0627\u0644\u0641\u0644\u0627\u062a\u0631 \u0627\u0644\u062d\u0627\u0644\u064a\u0629\u060c \u0648\u0627\u0644\u0639\u0645\u0644\u064a\u0629 \u0641\u064a \u0633\u062c\u0644 \u0627\u0644\u062a\u062f\u0642\u064a\u0642",
+                "tags": [
+                    "Report"
+                ],
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "csv",
+                                "xlsx",
+                                null
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Transfer-Encoding": {
+                                "required": true,
+                                "schema": {
+                                    "type": "string",
+                                    "enum": [
+                                        "chunked"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
                     },
                     "401": {
                         "$ref": "#/components/responses/AuthenticationException"

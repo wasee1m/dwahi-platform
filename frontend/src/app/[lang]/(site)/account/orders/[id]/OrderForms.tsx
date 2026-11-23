@@ -6,6 +6,7 @@ import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { OrderLine } from "@/lib/order-types";
 import { uploadPrivate } from "../../quotes/actions";
 import { orderAction, type OrderState } from "../../../order-actions";
+import { listSep } from "@/lib/format";
 
 type T = AppDictionary["orders"];
 
@@ -84,7 +85,7 @@ export function ReturnForm({ lang, t, order, items, until }: { lang: string; t: 
           <p className="font-semibold">{t.returnPhotos}</p>
           <input type="file" accept="image/*" disabled={uploading || photos.length >= 6} onChange={(e) => { const f = e.target.files?.[0]; if (f) void upload(f); e.target.value = ""; }}
             className="mt-1 block text-sm" />
-          {photos.length > 0 && <p className="mt-1 text-ink-muted">{photos.map((p) => p.name).join("، ")}</p>}
+          {photos.length > 0 && <p className="mt-1 text-ink-muted">{photos.map((p) => p.name).join(listSep(lang))}</p>}
         </div>
         {state.error && !state.fieldErrors && <Notice tone="danger">{state.error.message}</Notice>}
         {state.fieldErrors && !err("reason") && <Notice tone="danger">{Object.values(state.fieldErrors).flat()[0]}</Notice>}

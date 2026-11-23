@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, type Locale } from "@/i18n/config";
 import { fill, getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatMoney, formatPhone } from "@/lib/format";
+import { formatMoney, formatPhone, listSep } from "@/lib/format";
 import { age, STATUS_COLOR, type AdminRfqRow, type RfqStatus } from "./shared";
 
 // A-05 طلبات العروض (FR-RFQ-01، US-32): وارد بتبويبات الحالة، والأقدم أولاً بين المفتوحة
@@ -85,7 +85,7 @@ async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
                       <span className="block text-xs font-normal text-ink-muted">{r.types[x.type]} · {r.sources[x.source as keyof typeof r.sources] ?? x.source}</span></td>
                     <td className="px-4 py-2">{x.customer.organization ?? x.customer.name}
                       {x.customer.phone && <span className="num block text-xs font-normal text-ink-muted" dir="ltr">{formatPhone(x.customer.phone)}</span>}</td>
-                    <td className="max-w-64 truncate px-4 py-2 font-normal">{x.summary.join("، ")}</td>
+                    <td className="max-w-64 truncate px-4 py-2 font-normal">{x.summary.join(listSep(lang))}</td>
                     <td className="px-4 py-2" style={{ color: STATUS_COLOR[x.status] }}>{r.statuses[x.status]}</td>
                     <td className="px-4 py-2 font-normal">{x.assigned_to?.name ?? "—"}</td>
                     <td className="num px-4 py-2 font-normal">{x.quotation ? formatMoney(x.quotation.total, lang) : "—"}</td>

@@ -107,7 +107,7 @@ export function OnBehalfForm({ lang, t }: { lang: string; t: T }) {
             <select name="source" className={inputClass}>{(["phone", "whatsapp", "walk_in"] as const).map((x) => <option key={x} value={x}>{t.sources[x]}</option>)}</select>
           </Field>
           <div className="md:col-span-2">
-            <Field label={t.items} hint={t.itemLine}><textarea name="items" required rows={5} placeholder={"فلتر زيت 1R-0750 | 10\nطقم جوانات مضخة | 1"} className={inputClass} /></Field>
+            <Field label={t.items} hint={t.itemLine}><textarea name="items" required rows={5} placeholder={t.itemsPlaceholder} className={inputClass} /></Field>
           </div>
           <div className="md:col-span-2"><Field label={t.notes}><textarea name="notes" rows={2} className={inputClass} /></Field></div>
           {state.error && <div className="md:col-span-2"><Notice tone="danger">{state.fieldErrors ? Object.values(state.fieldErrors).flat()[0] : state.error.message}</Notice></div>}

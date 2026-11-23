@@ -7,6 +7,7 @@ import { apiUpload, authed } from "@/lib/auth/client";
 import { accessToken } from "@/lib/auth/session";
 import type { AdminState } from "../actions";
 import { bool, fail, id, lang, lines, num, opt, str } from "./form-data";
+import { listSep } from "@/lib/format";
 
 // A-02 المعدات، A-03 الماركات والفئات والموديلات، A-04 القطع والمخزون (FR-CAT-06، FR-PRT-04، US-36، US-37).
 // الـ API هو الحَكَم في الصلاحيات والقواعد (BR-03، BR-19)، والواجهة تعرض رسائله كما هي.
@@ -171,7 +172,7 @@ export async function receiveStock(_prev: AdminState, form: FormData): Promise<A
     if (hits.length !== 1) missing.push(cells.join(" | "));
     else resolved.push({ part_id: hits[0].id, qty: qty ?? "" });
   }
-  if (missing.length) return { error: { code: "PART_NOT_FOUND", message: missing.join("، ") } };
+  if (missing.length) return { error: { code: "PART_NOT_FOUND", message: missing.join(listSep(l)) } };
   if (!resolved.length) return {};
 
   const r = await authed("admin", l, "/admin/stock/receipts", {

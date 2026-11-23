@@ -152,6 +152,8 @@
     "clients": { "web": "Browser", "customer_app": "Customer app", "technician_app": "Technician app", "admin": "Admin panel" }
   },
   "admin": {
+    "dashboard": {"title": "Dashboard", "from": "From", "to": "To", "branch": "Branch", "allBranches": "All branches", "apply": "Show", "thisMonth": "This month", "quotes": "Quotes", "service": "Service", "parts": "Spare parts", "revenue": "Revenue", "ratings": "Ratings", "rfqs": "Quote requests", "medianResponse": "Median response time", "hours": "h", "acceptance": "Acceptance rate", "awaitingQuote": "Awaiting a quote", "open": "Open service requests", "slaBreached": "Past the triage deadline", "platformShare": "Via the platform", "workOrdersToday": "Work orders today", "inProgress": "In progress", "onHold": "On hold", "readyForPickup": "Ready for pickup", "documented": "Fully documented", "ordersDelivered": "Parts orders delivered", "sales": "Parts sales", "openOrders": "Orders being prepared", "stockouts": "Out-of-stock parts", "invoiced": "Invoiced", "collected": "Collected", "average": "Average rating", "reviews": "ratings", "lines": {"parts": "Spare parts", "service": "Service", "equipment": "Equipment", "other": "Other"}, "rfqsChart": "Quote requests per day", "revenueChart": "Invoiced revenue per day (OMR)", "showTable": "Show table", "day": "Day", "attention": "Needs attention", "attSla": "Past the triage deadline", "attHold": "Work orders on hold", "attExpiring": "Quotes expiring today", "nothing": "Nothing.", "noSections": "No indicators for your role. Use the sections in the menu.", "reports": "Reports", "since": "since"},
+    "reports": {"title": "Reports", "quotes": "Quotes", "service": "Service", "parts": "Top-selling parts", "stockouts": "Out of stock", "revenue": "Revenue", "exportXlsx": "Export Excel", "exportCsv": "Export CSV", "empty": "No data for this period.", "rows": "rows", "summary": "Summary", "medianResponse": "Median response time (hours)", "acceptance": "Acceptance rate", "lostReasons": "Lost reasons", "slaBreached": "Past the deadline", "openByAge": "Open by age (days)", "total": "Total", "collected": "Collected", "yes": "Yes", "no": "No", "shown": "Showing the first 200 rows; the file has all of them."},
     "service": {
       "title": "Service requests",
       "desk": "Workshop desk",
@@ -537,9 +539,9 @@
     "send": "Send",
     "panel": "Admin panel",
     "forbidden": "You do not have permission for this page.",
-    "nav": { "serviceRequests": "Service triage", "workOrders": "Work orders", "dispatch": "Dispatch board", "desk": "Workshop desk", "orders": "Parts orders", "finance": "Finance", "customers": "Customers", "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock", "content": "Content", "leads": "Enquiries", "settings": "Settings and branches", "rfqs": "Quote requests", "notifications": "Notifications" },
+    "nav": { "serviceRequests": "Service triage", "reports": "Reports", "workOrders": "Work orders", "dispatch": "Dispatch board", "desk": "Workshop desk", "orders": "Parts orders", "finance": "Finance", "customers": "Customers", "home": "Overview", "users": "Staff and roles", "audit": "Audit log", "logout": "Sign out", "equipment": "Equipment listings", "catalogSetup": "Brands, categories and models", "parts": "Parts and stock", "content": "Content", "leads": "Enquiries", "settings": "Settings and branches", "rfqs": "Quote requests", "notifications": "Notifications" },
     "rfqs": {
-      "title": "Quote requests", "new": "Request for a customer", "assignMe": "Assign to me", "assignTo": "Assign to", "assign": "Assign",
+      "itemsPlaceholder": "Oil filter 1R-0750 | 10\nPump seal kit | 1", "title": "Quote requests", "new": "Request for a customer", "assignMe": "Assign to me", "assignTo": "Assign to", "assign": "Assign",
       "statuses": { "submitted": "New", "in_review": "In review", "quoted": "Quote sent", "won": "Won", "lost": "Lost", "cancelled": "Cancelled" },
       "types": { "equipment": "Equipment", "parts": "Parts", "service": "Service" },
       "sources": { "web": "Website", "app": "App", "phone": "Phone", "whatsapp": "WhatsApp", "walk_in": "Walk-in", "system": "System" },
@@ -590,7 +592,7 @@
       "cols": { "photo": "Photo", "title": "Title", "model": "Model", "condition": "Condition", "price": "Price", "status": "Status" }
     },
     "catalogSetup": {
-      "title": "Brands, categories and models", "brands": "Brands", "categories": "Categories", "models": "Models",
+      "specsPlaceholder": "سعة الخزان | Fuel tank | 410 | L", "title": "Brands, categories and models", "brands": "Brands", "categories": "Categories", "models": "Models",
       "name": "Name", "slug": "URL slug (optional)", "represented": "Authorised dealer", "active": "Visible", "sort": "Order",
       "nameAr": "Name in Arabic", "nameEn": "Name in English", "parent": "Parent category", "noParent": "No parent",
       "brand": "Brand", "category": "Category", "modelName": "Model name", "weight": "Operating weight (kg)", "power": "Engine power (kW)",

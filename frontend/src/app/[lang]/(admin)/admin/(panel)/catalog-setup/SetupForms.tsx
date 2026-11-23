@@ -98,7 +98,7 @@ export function ModelForm({ lang, t, c, model, brands, categories }: { lang: str
       <Field label={t.lifting} error={err("lifting_capacity_kg")}><input name="lifting_capacity_kg" type="number" min={0} dir="ltr" defaultValue={model?.lifting_capacity_kg ?? ""} className={inputClass} /></Field>
       <div className="md:col-span-full">
         <Field label={t.extraSpecs} hint={t.specLine} error={specErrors[0]}>
-          <textarea name="specs" rows={3} defaultValue={specs} placeholder="سعة الخزان | Fuel tank | 410 | L" className={inputClass} />
+          <textarea name="specs" rows={3} defaultValue={specs} placeholder={t.specsPlaceholder} className={inputClass} />
         </Field>
       </div>
       <Footer state={state} pending={pending} c={c} />

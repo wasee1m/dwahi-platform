@@ -6,6 +6,7 @@ import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { AdminState } from "../../actions";
 import { findCustomer, staffUpload, type Customer } from "../rfq-actions";
 import { handOverItem, receiveItem } from "../service-actions";
+import { listSep } from "@/lib/format";
 
 type T = AppDictionary["admin"]["service"];
 
@@ -101,7 +102,7 @@ function IntakeFields({ lang, t, equipment, onSignature, onPhotos }: {
       <div className="text-sm">
         <p className="font-semibold">{t.conditionPhotos}</p>
         <input type="file" accept="image/*" capture="environment" multiple disabled={busy} onChange={(e) => { void add(e.target.files); e.target.value = ""; }} className="mt-1 block" />
-        {photos.length > 0 && <p className="mt-1 text-ink-muted">{photos.map((p) => p.name).join("، ")}</p>}
+        {photos.length > 0 && <p className="mt-1 text-ink-muted">{photos.map((p) => p.name).join(listSep(lang))}</p>}
       </div>
       <SignaturePad lang={lang} t={t} onUploaded={onSignature} />
     </>

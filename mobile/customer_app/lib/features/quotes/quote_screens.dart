@@ -63,8 +63,7 @@ class _QuoteListsState extends ConsumerState<_QuoteLists> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    final ar = _lang(context) == 'ar';
-    final labels = {'awaiting': ar ? 'بانتظاري' : 'Awaiting me', 'review': ar ? 'قيد المراجعة' : 'In review', 'done': ar ? 'مكتملة' : 'Done', 'closed': ar ? 'مغلقة' : 'Closed'};
+    final labels = {for (final k in tabs) k: s.quoteTab(k)};
     final async = ref.watch(rfqListProvider(tab));
     final counts = (async.value?.meta['counts'] as Map?)?.cast<String, dynamic>() ?? const {};
 
@@ -175,7 +174,7 @@ class _QuoteBody extends ConsumerWidget {
       if ((r['notes'] as String?)?.isNotEmpty == true) Text('${s.notes}: ${r['notes']}'),
       if (quotes.length > 1) ...[
         const SizedBox(height: 12),
-        ExpansionTile(tilePadding: EdgeInsets.zero, title: Text(lang == 'ar' ? 'النسخ السابقة' : 'Earlier versions'), children: [
+        ExpansionTile(tilePadding: EdgeInsets.zero, title: Text(S.of(context).earlierVersions), children: [
           for (final o in quotes.skip(1))
             ListTile(dense: true, title: Text('${o['number']}'), subtitle: Text(s.quoteStatus(o['status'] as String)), trailing: Text(formatMoney(o['total'] as Map<String, dynamic>, lang)),
                 onTap: o['pdf_url'] == null ? null : () => openExternal(o['pdf_url'] as String)),
@@ -627,7 +626,7 @@ class _PartPickerState extends ConsumerState<_PartPicker> {
       padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.viewInsetsOf(context).bottom + 16),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         TextField(controller: c, autofocus: true, keyboardType: TextInputType.visiblePassword, autocorrect: false, textDirection: TextDirection.ltr,
-            decoration: InputDecoration(hintText: s.partSearchHint, suffixIcon: IconButton(icon: const Icon(Icons.search), onPressed: _search)), onSubmitted: (_) => _search()),
+            decoration: InputDecoration(hintText: s.partSearchHint, suffixIcon: IconButton(tooltip: s.searchAction, icon: const Icon(Icons.search), onPressed: _search)), onSubmitted: (_) => _search()),
         if (loading) const Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator()),
         ConstrainedBox(constraints: const BoxConstraints(maxHeight: 360), child: ListView(shrinkWrap: true, children: [
           for (final p in rows)

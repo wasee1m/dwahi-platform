@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, listSep } from "@/lib/format";
 import type { ReturnRow, ReturnStatus } from "@/lib/order-types";
 import { ReturnActions } from "../OrderForms";
 
@@ -58,7 +58,7 @@ async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
                     {r.order && <Link href={`/${lang}/admin/orders/${r.order.id}`} className="num text-sun-text hover:underline" dir="ltr">{r.order.number}</Link>}
                     {" · "}{st[r.status]}{r.created_at && <span className="font-normal text-ink-muted"> · {date.format(new Date(r.created_at))}</span>}
                   </p>
-                  <p className="mt-1">{r.items.map((i) => `${i.part_number ?? ""} ${i.name} × ${Number(i.quantity)}`).join("، ")}</p>
+                  <p className="mt-1">{r.items.map((i) => `${i.part_number ?? ""} ${i.name} × ${Number(i.quantity)}`).join(listSep(lang))}</p>
                   <p className="mt-1 text-ink-muted">{r.reason}</p>
                   {r.decision_note && <p className="mt-1">{r.decision_note}</p>}
                   {r.photos.length > 0 && (

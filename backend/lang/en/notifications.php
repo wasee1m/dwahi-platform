@@ -49,6 +49,7 @@ return [
     'N-18-additional-approved' => ['title' => 'Additional work on :number approved', 'body' => 'Do the additional work and resume the task if paused.'],
     'N-18-additional-rejected' => ['title' => 'Additional work on :number will not be done', 'body' => 'Complete the approved work only.'],
     'N-32-handover' => ['title' => 'We handed over :item', 'body' => 'The handover receipt for request :number is on the request page.'],
+    'digest' => ['title' => 'You have :count unread messages'],
     'N-32' => ['title' => 'We received :item at the workshop', 'body' => 'Receiving card :card for request :number. The receipt is on the request page.'],
     'actions' => [
         'accepted' => 'accepted the quote.',

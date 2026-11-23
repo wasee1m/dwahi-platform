@@ -7,6 +7,7 @@ import { hasLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { staffLogout } from "../actions";
+import { listSep } from "@/lib/format";
 
 // إطار لوحة الإدارة (06 §3): قائمة جانبية بالأقسام المسموحة لدور المستخدم فقط (01 §3.2، US-39)
 export default async function PanelLayout({ children, params }: LayoutProps<"/[lang]/admin">) {
@@ -27,8 +28,9 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
   const me = await currentUser("admin", lang);
   const count = await authed<{ unread_count: number }>("admin", lang, "/admin/notifications/count");
   const unread = count.ok ? count.data.unread_count : 0;
-  const items: { href: string; label: string; ability: string | null; badge?: number }[] = [
+  const items: { href: string; label: string; ability: string | string[] | null; badge?: number }[] = [
     { href: "/admin", label: t.admin.nav.home, ability: null },
+    { href: "/admin/reports", label: t.admin.nav.reports, ability: ["reports.view", "reports.own"] },
     { href: "/admin/rfqs", label: t.admin.nav.rfqs, ability: "quotation.send" },
     { href: "/admin/customers", label: t.admin.nav.customers, ability: "customers.view" },
     { href: "/admin/service-requests", label: t.admin.nav.serviceRequests, ability: "service.triage" },
@@ -46,7 +48,7 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
     { href: "/admin/settings", label: t.admin.nav.settings, ability: "settings.manage" },
     { href: "/admin/users", label: t.admin.nav.users, ability: "staff.manage" },
     { href: "/admin/audit-log", label: t.admin.nav.audit, ability: "audit.view" },
-  ].filter((i) => !i.ability || me.permissions.includes(i.ability));
+  ].filter((i) => !i.ability || [i.ability].flat().some((a) => me.permissions.includes(a)));
 
   return (
     <aside className="flex flex-col bg-night p-5 text-on-night print:hidden">
@@ -65,7 +67,7 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
       </nav>
       <div className="mt-6 border-t border-white/15 pt-4 text-sm">
         <p className="font-semibold">{me.full_name}</p>
-        <p className="mt-0.5 opacity-75">{me.roles.map((r) => t.admin.roles[r as keyof AppDictionary["admin"]["roles"]] ?? r).join("، ")}</p>
+        <p className="mt-0.5 opacity-75">{me.roles.map((r) => t.admin.roles[r as keyof AppDictionary["admin"]["roles"]] ?? r).join(listSep(lang))}</p>
         <div className="mt-3 flex items-center justify-between gap-2">
           <Link href={`/${lang === "ar" ? "en" : "ar"}/admin`} className="rounded-sm border border-white/30 px-3 py-1">{lang === "ar" ? "English" : "العربية"}</Link>
           <form action={staffLogout}>

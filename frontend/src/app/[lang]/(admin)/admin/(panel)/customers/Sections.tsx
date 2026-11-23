@@ -2,7 +2,7 @@ import Link from "next/link";
 import { intlLocale, type Locale } from "@/i18n/config";
 import { fill, type AppDictionary } from "@/i18n/get-dictionary";
 import type { Address, CustomerProfile, FleetItem } from "@/lib/account-types";
-import { formatMoney, formatNumber, formatPhone } from "@/lib/format";
+import { formatMoney, formatNumber, formatPhone, listSep } from "@/lib/format";
 import { INVOICE_COLOR, ORDER_COLOR, type InvoiceRow, type OrderRow } from "@/lib/order-types";
 import { SERVICE_COLOR, type ServiceRow } from "@/lib/service-types";
 import { STATUS_COLOR, type AdminRfqRow } from "../rfqs/shared";
@@ -34,7 +34,7 @@ export function Records({ lang, t, requests, conversations, fleet, addresses, ca
             {requests.map((x) => (
               <li key={x.id} className="flex flex-wrap justify-between gap-3 py-2">
                 <span>{open(x.id, x.number)} · {r.types[x.type]} · {date.format(new Date(x.created_at))}
-                  <span className="block text-ink-muted">{x.summary.join(lang === "ar" ? "، " : ", ")}</span></span>
+                  <span className="block text-ink-muted">{x.summary.join(listSep(lang))}</span></span>
                 <span className="text-end">
                   <span className="block font-semibold" style={{ color: STATUS_COLOR[x.status] }}>{r.statuses[x.status]}</span>
                   {x.quotation && <><span className="num" dir="ltr">{x.quotation.number}</span> · <span className="num">{formatMoney(x.quotation.total, lang)}</span></>}
@@ -71,7 +71,7 @@ export function Records({ lang, t, requests, conversations, fleet, addresses, ca
                 <span>
                   {canOpenOrders ? <Link href={`/${lang}/admin/orders/${x.id}`} className="num font-semibold underline" dir="ltr">{x.number}</Link> : <span className="num font-semibold" dir="ltr">{x.number}</span>}
                   {x.created_at && <> · {date.format(new Date(x.created_at))}</>}
-                  <span className="block text-ink-muted">{x.summary.join(lang === "ar" ? "، " : ", ")}</span>
+                  <span className="block text-ink-muted">{x.summary.join(listSep(lang))}</span>
                 </span>
                 <span className="text-end">
                   <span className="block font-semibold" style={{ color: ORDER_COLOR[x.status] }}>{t.orders.statuses[x.status]}</span>

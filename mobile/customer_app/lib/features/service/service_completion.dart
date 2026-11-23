@@ -152,6 +152,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
         for (var n = 1; n <= 5; n++)
           IconButton(
             key: Key('$key-$n'),
+            tooltip: '$label · ${S.of(context).stars(n)}',
             visualDensity: VisualDensity.compact,
             onPressed: () => setState(() => _ratings[key] = n),
             icon: Icon(n <= (_ratings[key] ?? 0) ? Icons.star : Icons.star_border, color: Colors.amber.shade700),

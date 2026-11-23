@@ -8,7 +8,7 @@ import { hasLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import type { CompanyRow, CustomerRow } from "@/lib/account-types";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatPhone } from "@/lib/format";
+import { formatPhone, listSep } from "@/lib/format";
 import { searchCustomers } from "../customer-actions";
 import { CUSTOMER_COLOR, SEARCH_COOKIE } from "./shared";
 
@@ -91,7 +91,7 @@ async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
                       {u.flagged && <span className="ms-2 text-xs text-danger">{c.flagged}</span>}
                     </td>
                     <td className="num px-4 py-2" dir="ltr">{u.phone ? formatPhone(u.phone) : "—"}</td>
-                    <td className="px-4 py-2">{u.organizations.map((o) => o.name).join(lang === "ar" ? "، " : ", ") || "—"}</td>
+                    <td className="px-4 py-2">{u.organizations.map((o) => o.name).join(listSep(lang)) || "—"}</td>
                     <td className="px-4 py-2 font-semibold" style={{ color: CUSTOMER_COLOR[u.status] }}>{c.statuses[u.status]}</td>
                   </tr>
                 ))}

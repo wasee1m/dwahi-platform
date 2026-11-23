@@ -7,6 +7,7 @@ import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { SERVICE_COLOR, type ServiceRow, type WorkOrderRow, type WorkOrderStatus } from "@/lib/service-types";
+import { listSep } from "@/lib/format";
 
 // A-09 أوامر العمل (FR-WO-01، US-33): بالحالة والنوع والفني والموعد ورقم بطاقة الاستلام
 type Props = PageProps<"/[lang]/admin/work-orders">;
@@ -65,7 +66,7 @@ async function List({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
                     <span className="block text-xs text-ink-muted">{t.service.woTypes[w.type]}</span></td>
                   <td className="px-3 py-2"><span className="num" dir="ltr">{w.service_request.number}</span>
                     <span className="block text-xs text-ink-muted">{w.service_request.equipment?.name ?? t.service.components[w.service_request.component_type as keyof typeof t.service.components]}</span></td>
-                  <td className="px-3 py-2">{w.technicians.map((x) => `${x.name}${x.role === "lead" ? " ★" : ""}`).join("، ") || "—"}</td>
+                  <td className="px-3 py-2">{w.technicians.map((x) => `${x.name}${x.role === "lead" ? " ★" : ""}`).join(listSep(lang)) || "—"}</td>
                   <td className="px-3 py-2">{w.scheduled_start ? time.format(new Date(w.scheduled_start)) : "—"}</td>
                   <td className="px-3 py-2"><span className="font-semibold" style={{ color: SERVICE_COLOR[w.status] }}>{a.woStatuses[w.status]}</span></td>
                   <td className="px-3 py-2">{w.service_request.received ? "✓" : "—"}</td>

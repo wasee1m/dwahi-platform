@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, intlLocale } from "@/i18n/config";
 import { getAppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatMoney, formatPhone } from "@/lib/format";
+import { formatMoney, formatPhone, listSep } from "@/lib/format";
 import { SERVICE_COLOR, type ServiceDetail } from "@/lib/service-types";
 import { serviceStep } from "../../service-actions";
 import { DeclineForm, RepairForm, TriageForm } from "../ServiceForms";
@@ -93,7 +93,7 @@ async function Detail({ params }: { params: Props["params"] }) {
                 {r.work_orders.map((w) => (
                   <li key={w.id} className="flex flex-wrap justify-between gap-2 py-2">
                     <span><Link href={`/${lang}/admin/work-orders/${w.id}`} className="num font-semibold underline" dir="ltr">{w.number}</Link> · {s.woTypes[w.type]}
-                      {w.technicians.length > 0 && ` · ${w.technicians.map((x) => x.name).join("، ")}`}</span>
+                      {w.technicians.length > 0 && ` · ${w.technicians.map((x) => x.name).join(listSep(lang))}`}</span>
                     <span><span style={{ color: SERVICE_COLOR[w.status] }} className="font-semibold">{a.woStatuses[w.status]}</span>
                       {w.scheduled_start && ` · ${time.format(new Date(w.scheduled_start))}`}</span>
                   </li>

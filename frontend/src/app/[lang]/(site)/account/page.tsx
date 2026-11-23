@@ -6,7 +6,7 @@ import { hasLocale, type Locale } from "@/i18n/config";
 import { fill, getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import type { MyInvitation } from "@/lib/account-types";
 import { authed } from "@/lib/auth/client";
-import { formatMoney } from "@/lib/format";
+import { formatMoney, listSep } from "@/lib/format";
 import { daysLeft, type RfqRow } from "./quotes/shared";
 
 // C-01 لوحة العميل: "بحاجة لإجراء منك" = العروض التي تنتظر ردك. الطلبات (S6) والصيانة (S7) تُضاف مع وحداتها.
@@ -68,7 +68,7 @@ async function NeedsAction({ lang, t }: { lang: Locale; t: AppDictionary }) {
         return (
           <li key={r.id}>
             <Link href={`/${lang}/account/quotes/${r.id}`} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-sun bg-sand-0 p-4">
-              <span><span className="num font-bold" dir="ltr">{r.quotation?.number ?? r.number}</span> · {r.summary.join("، ")}{r.account && <span className="text-ink-muted"> · {r.account.name}</span>}</span>
+              <span><span className="num font-bold" dir="ltr">{r.quotation?.number ?? r.number}</span> · {r.summary.join(listSep(lang))}{r.account && <span className="text-ink-muted"> · {r.account.name}</span>}</span>
               <span className="text-end">
                 {r.quotation && <span className="num block font-bold">{formatMoney(r.quotation.total, lang)}</span>}
                 {left !== null && <span className="block text-xs font-semibold text-[var(--status-waiting)]">{left <= 0 ? t.quotes.lastDay : fill(t.quotes.daysLeft, { n: String(left) })}</span>}

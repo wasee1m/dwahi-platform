@@ -17,12 +17,11 @@ dwahi-platform/
 │       └── dwahi_ui/     # نظام التصميم المشترك للتطبيقين
 ├── contracts/openapi/    # عقد الـ API، مولّد من كود backend (Scramble)
 ├── infra/docker/         # صورة PHP للتطوير وتهيئة MySQL
-├── docs/                 # المتطلبات والمعمارية والخطة (00 إلى 09) والشعار
 ├── .github/workflows/    # CI: backend و frontend و mobile
 └── docker-compose.yml    # بيئة التطوير المحلية
 ```
 
-الوثائق مرجع كل قرار: [docs/00_README.md](docs/00_README.md) (الفهرس)، و [01_srs.md](docs/01_srs.md) (المتطلبات)، و [04_architecture.md](docs/04_architecture.md) (المعمارية)، و [09_implementation_plan.md](docs/09_implementation_plan.md) (الخطة).
+الوثائق (المتطلبات والمعمارية والخطة) مرجع كل قرار، وتُحفظ خارج هذا المستودع. أرقام المتطلبات والقصص والشاشات في الكود (FR-، US-، BR-، A-، C-، M-، T-) تشير إليها.
 
 ## التشغيل المحلي
 
@@ -81,7 +80,6 @@ docker compose exec api ./vendor/bin/pest           # backend: على قاعدة
 docker compose exec api ./vendor/bin/pint --test    # backend: نمط الكود
 cd frontend && npx tsc --noEmit && npx eslint src   # frontend
 cd mobile/customer_app && flutter analyze && flutter test   # mobile (وكذلك technician_app و packages/dwahi_ui)
-python docs/tools/trace_check.py docs --write        # اتساق الوثائق بعد تعديل المتطلبات أو القصص أو الشاشات
 ```
 
 ## المصادقة (04 §5)

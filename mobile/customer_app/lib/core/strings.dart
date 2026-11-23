@@ -30,6 +30,20 @@ class S {
   String throttledFor(int m) => _t('طلبت رموزاً كثيرة. انتظر $m دقيقة.', 'Too many codes requested. Wait $m minutes.');
   String get expired => _t('انتهت صلاحية الرمز. اطلب رمزاً جديداً.', 'The code expired. Request a new one.');
   String get invalidPhone => _t('اكتب رقم جوال صحيحاً.', 'Enter a valid mobile number.');
+  // الوصول (NFR-15): أسماء الأزرار ذات الأيقونة لقارئ الشاشة، ونصوص كانت في الشاشات (NFR-14)
+  String get openPolicy => _t('فتح السياسة', 'Open the policy');
+  String get decrease => _t('إنقاص', 'Decrease');
+  String get increase => _t('زيادة', 'Increase');
+  String get searchAction => _t('بحث', 'Search');
+  String stars(int n) => _t('$n من 5', '$n of 5');
+  String quoteTab(String k) => switch (k) {
+        'awaiting' => _t('بانتظاري', 'Awaiting me'),
+        'review' => _t('قيد المراجعة', 'In review'),
+        'done' => _t('مكتملة', 'Done'),
+        'closed' => _t('مغلقة', 'Closed'),
+        _ => k,
+      };
+  String get earlierVersions => _t('النسخ السابقة', 'Earlier versions');
   String get genericError => _t('حدث خطأ. حاول مرة أخرى.', 'Something went wrong. Please try again.');
   String get offline => _t('لا يوجد اتصال بالإنترنت.', 'No internet connection.');
   String get onboardingTitle => _t('أكمل ملفك', 'Complete your profile');
