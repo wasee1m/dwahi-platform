@@ -30,6 +30,22 @@ final class ServiceEvent
 
     public const WO_ON_HOLD = 'work_order.on_hold';         // N-13 للمنسق
 
+    public const WO_COMPLETED = 'work_order.completed';     // N-28 للمنسق
+
+    public const WO_RETURNED = 'work_order.returned';       // N-18 للفني بملاحظة المنسق
+
+    public const ADDITIONAL_REQUESTED = 'additional.requested'; // N-13 للمنسق
+
+    public const ADDITIONAL_DECIDED = 'additional.decided';     // N-18 للفني (approved أو rejected في note)
+
+    public const COMPLETED = 'service.completed';           // N-14 التقرير، و N-12 جاهز للاستلام
+
+    public const PICKUP_REMINDER = 'service.pickup_reminder'; // N-12 تذكير (J-12)
+
+    public const HANDED_OVER = 'service.handed_over';       // إيصال التسليم للعميل
+
+    public const REVIEW_INVITE = 'service.review_invite';   // N-15 (J-05)
+
     public function __construct(
         public string $type,
         public ServiceRequest $request,

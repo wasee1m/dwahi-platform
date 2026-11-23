@@ -10,9 +10,11 @@ import { authed } from "@/lib/auth/client";
 import { formatMoney } from "@/lib/format";
 import { SERVICE_COLOR, type ServiceDetail } from "@/lib/service-types";
 import { cancelServiceRequest } from "../../../service-actions";
+import { ReviewForm } from "../ReviewForm";
 import { statusText } from "../status";
 
-// تفاصيل طلب الصيانة للعميل (C-17 المبسطة): الحالة، والتقدير، والاستلام وإيصاله، والموعد، والإلغاء قبل بدء العمل (BR-11)
+// تفاصيل طلب الصيانة للعميل (C-17): الحالة، والتقدير والتقديرات الإضافية، والاستلام وإيصاله، والموعد، وتقرير الخدمة وصوره
+// ونتيجة الاختبار، و"جاهز للاستلام" بالمستحق، وإيصال التسليم والفاتورة، والتقييم (BR-10)، والإلغاء قبل بدء العمل (BR-11)
 export const metadata = { robots: { index: false } };
 type Props = PageProps<"/[lang]/account/service/[id]">;
 
@@ -36,6 +38,7 @@ async function Detail({ params, searchParams }: { params: Props["params"]; searc
   const s = t.service;
   const time = new Intl.DateTimeFormat(intlLocale(lang), { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Muscat" });
   const quote = r.estimate?.quotation;
+  const c = r.completion;
 
   return (
     <>
@@ -89,6 +92,57 @@ async function Detail({ params, searchParams }: { params: Props["params"]; searc
           ))}
         </section>
       </div>
+
+      {c?.pickup && (
+        <section className="rounded-md border-2 border-sun bg-sand-0 p-5">
+          <p className="text-lg font-bold">{s.readyForPickup}</p>
+          <p className="mt-1">{s.amountDue}: <span className="num font-bold">{formatMoney(c.pickup.due, lang)}</span></p>
+          <p className="text-sm text-ink-muted">{s.pickupHint}</p>
+          {r.branch_detail?.address && <p className="text-sm">{r.branch_detail.name} · {r.branch_detail.address}</p>}
+        </section>
+      )}
+      {c && c.additional.length > 0 && (
+        <section className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
+          <h2 className="text-lg">{s.additionalEstimates}</h2>
+          <ul className="mt-2 space-y-1">
+            {c.additional.map((x) => (
+              <li key={x.id}>{x.description}{x.quotation && <> · <span className="num">{formatMoney(x.quotation.total, lang)}</span> · {t.admin.service.additionalStatuses[x.status]}
+                {x.status === "quoted" && x.rfq_id && <> · <Link href={`/${lang}/account/quotes/${x.rfq_id}`} className="font-semibold underline">{s.reviewEstimate}</Link></>}</>}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+      {c?.reports.map((rep) => rep.report && (
+        <section key={rep.work_order} className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
+          <h2 className="text-lg">{s.report} · {s.woTypes[rep.type as keyof typeof s.woTypes] ?? rep.type}{rep.no_charge && ` · ${s.noCharge}`}</h2>
+          <p className="mt-2"><b>{s.findings}:</b> <span className="whitespace-pre-line">{rep.report.findings}</span></p>
+          {rep.report.actions_taken && <p><b>{s.actionsTaken}:</b> <span className="whitespace-pre-line">{rep.report.actions_taken}</span></p>}
+          {rep.report.recommendations && <p><b>{s.recommendations}:</b> {rep.report.recommendations}</p>}
+          {rep.report.hour_meter_reading !== null && <p>{s.hourReading}: <span className="num" dir="ltr">{rep.report.hour_meter_reading}</span></p>}
+          {rep.tests.map((x) => <p key={x.id}>{s.testResult}: {x.template} · <b>{x.result === "pass" ? s.pass : s.fail}</b></p>)}
+          {(["before", "after"] as const).map((ph) => rep[ph].length > 0 && (
+            <div key={ph} className="mt-2">
+              <p className="font-semibold">{s[ph]}</p>
+              <div className="mt-1 flex flex-wrap gap-2">
+                {rep[ph].map((u) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- رابط موقّع مؤقت من الـ API، لا يُحسَّن
+                  <a key={u} href={u} target="_blank" rel="noopener noreferrer"><img src={u} alt={s[ph]} className="h-24 rounded-sm object-cover" /></a>
+                ))}
+              </div>
+            </div>
+          ))}
+          {rep.report.pdf_url && <a href={rep.report.pdf_url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block font-semibold underline">{s.reportPdf}</a>}
+        </section>
+      ))}
+      {c?.handover && (
+        <p className="text-sm">{s.handedOver}{c.handover.handed_over_at && ` · ${time.format(new Date(c.handover.handed_over_at))}`} · {c.handover.receiver_name}
+          {c.handover.receipt_url && <> · <a href={c.handover.receipt_url} target="_blank" rel="noopener noreferrer" className="underline">{s.handoverReceipt}</a></>}</p>
+      )}
+      {c?.invoice && (
+        <p className="text-sm">{s.invoice}: <Link href={`/${lang}/account/invoices`} className="num underline" dir="ltr">{c.invoice.number}</Link> · <span className="num">{formatMoney(c.invoice.total, lang)}</span></p>
+      )}
+      {c?.review && <p className="text-sm">{s.yourRating}: <span className="text-sun">{"★".repeat(c.review.rating)}</span>{c.review.comment && ` · ${c.review.comment}`}</p>}
+      {c?.can_review && <ReviewForm lang={lang} t={s} id={r.id} until={c.review_until} />}
 
       {r.decline_reason && <Notice tone="danger">{s.declined}: {r.decline_reason}</Notice>}
       {r.cancel_reason && r.status === "cancelled" && <Notice tone="info">{s.cancelReason}: {r.cancel_reason}</Notice>}

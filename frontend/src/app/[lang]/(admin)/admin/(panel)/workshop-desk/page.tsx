@@ -6,13 +6,18 @@ import { Skeleton } from "@/components/ui";
 import { hasLocale, type Locale } from "@/i18n/config";
 import { getAppDictionary, type AppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
-import { formatPhone } from "@/lib/format";
+import { formatMoney, formatPhone } from "@/lib/format";
 import type { ServiceDetail, ServiceRow } from "@/lib/service-types";
+import type { Money } from "@/lib/types";
 import { findByCard } from "../service-actions";
-import { IntakeForm, WalkIn } from "./DeskForms";
+import { HandoverForm, IntakeForm, WalkIn } from "./DeskForms";
 
-// A-22 الاستلام في الورشة (FR-SRV-08، US-48): بحث بالطلب أو بطاقة الاستلام، وبطاقة الاستلام بصورها وتوقيعها،
-// وحضور دون طلب. التسليم مع الإنجاز (S9).
+// A-22 الاستلام والتسليم في الورشة (FR-SRV-08، FR-SRV-09، US-48، US-49): بحث بالطلب أو بطاقة الاستلام، وبطاقة الاستلام
+// بصورها وتوقيعها، وحضور دون طلب، و"جاهز للاستلام" بأيام الانتظار والمستحق، والتسليم بالدفعة والتوقيع.
+type Ready = ServiceRow & {
+  card: string | null; due: Money; invoice: { id: string; number: string | null; status: string } | null;
+  inspection_fee_pending: boolean; waiting_days: number; ready_since: string | null;
+};
 type Props = PageProps<"/[lang]/admin/workshop-desk">;
 
 export default async function DeskPage({ params, searchParams }: Props) {
@@ -35,6 +40,28 @@ async function Desk({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
   const sp = await searchParams;
   const a = t.admin.service;
   const receive = typeof sp.receive === "string" && /^[0-9a-f-]{36}$/i.test(sp.receive) ? sp.receive : null;
+  const handover = typeof sp.handover === "string" && /^[0-9a-f-]{36}$/i.test(sp.handover) ? sp.handover : null;
+  const ready = await authed<Ready[]>("admin", lang, "/admin/handovers");
+  const readyRows = ready.ok ? ready.data : [];
+
+  if (handover) {
+    const r = readyRows.find((x) => x.id === handover);
+    if (!r) notFound();
+    return (
+      <div className="max-w-2xl space-y-4">
+        <Link href={`/${lang}/admin/workshop-desk`} className="text-sm font-semibold text-ink-muted">← {a.desk}</Link>
+        <div className="rounded-md border border-sand-300 bg-sand-0 p-4 text-sm">
+          <p className="num font-bold" dir="ltr">{r.number}{r.card && ` · ${r.card}`}</p>
+          <p>{r.customer?.organization ?? r.customer?.name}{r.customer?.phone && <> · <span className="num" dir="ltr">{formatPhone(r.customer.phone)}</span></>}</p>
+          <p>{r.equipment?.name ?? t.service.components[r.component_type as keyof typeof t.service.components]}{r.status !== "completed" && ` · ${a.withoutRepair}`}</p>
+          <p className="mt-2 text-base font-bold">{a.due}: <span className="num">{formatMoney(r.due, lang)}</span></p>
+          {r.inspection_fee_pending && <p className="text-ink-muted">{a.inspectionFeeDue}</p>}
+          {r.invoice?.status === "draft" && <p className="text-ink-muted">{a.invoiceDraft}</p>}
+        </div>
+        <HandoverForm lang={lang} t={a} id={r.id} due={r.due.amount} methods={t.admin.orders.methods} />
+      </div>
+    );
+  }
   const q = typeof sp.q === "string" ? sp.q : "";
 
   if (receive) {
@@ -82,6 +109,23 @@ async function Desk({ lang, t, searchParams }: { lang: Locale; t: AppDictionary;
       <section className="space-y-4">
         <h2 className="text-xl">{a.walkIn}</h2>
         <WalkIn lang={lang} t={a} components={t.service.components} urgencies={t.service.urgencies} />
+      </section>
+      <section className="space-y-4 lg:col-span-2">
+        <h2 className="text-xl">{a.readyList}</h2>
+        {readyRows.length === 0 && <p className="text-ink-muted">{a.noReady}</p>}
+        <ul className="space-y-2">
+          {readyRows.map((r) => (
+            <li key={r.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-sand-300 bg-sand-0 p-3 text-sm">
+              <span><span className="num font-semibold" dir="ltr">{r.number}</span> · {r.customer?.organization ?? r.customer?.name}
+                <span className="block text-ink-muted">{r.equipment?.name ?? t.service.components[r.component_type as keyof typeof t.service.components]}
+                  {r.status !== "completed" && ` · ${a.withoutRepair}`} · {a.waitingDays}: <span className="num">{r.waiting_days}</span></span></span>
+              <span className="flex items-center gap-3">
+                <span className="num font-semibold">{formatMoney(r.due, lang)}</span>
+                <Link href={`?handover=${r.id}`} className="rounded-sm bg-sun px-4 py-2 font-bold text-on-sun">{a.handOver}</Link>
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );

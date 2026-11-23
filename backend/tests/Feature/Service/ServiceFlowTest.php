@@ -17,17 +17,6 @@ beforeEach(function () {
     Setting::query()->updateOrCreate(['key' => 'fees.inspection'], ['value' => '15.000']);
 });
 
-function sendEstimate($test, string $coordinator, string $srId, string $price = '120'): string
-{
-    $q = asUser($test, $coordinator)->postJson(api()."/admin/service-requests/{$srId}/estimate")->assertCreated()->json('data');
-    asUser($test, $coordinator)->putJson(api()."/admin/quotations/{$q['quotation_id']}", ['items' => [
-        ['item_type' => 'labor', 'description_ar' => 'تغيير جوانات السلندر', 'description_en' => 'Cylinder reseal', 'quantity' => '1', 'unit' => 'job', 'unit_price' => $price, 'vat_rate' => '5'],
-    ], 'estimated_duration' => 'يومان'])->assertOk();
-    asUser($test, $coordinator)->postJson(api()."/admin/quotations/{$q['quotation_id']}/send")->assertOk();
-
-    return $q['quotation_id'];
-}
-
 it('takes a service request with photos and a video after the inspection fee is acknowledged (US-17, BR-11, BR-09)', function () {
     staffUser(['service_coordinator'], 'coord@dwahi.test');
     $c = customerToken($this);

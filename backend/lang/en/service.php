@@ -11,6 +11,7 @@ return [
     'meter_required' => 'Enter the hour meter reading or why it cannot be read.',
     'intake_lower_reading' => 'The receiving reading is lower than the previous one.',
     'tech_lower_reading' => 'The technician reading is lower than the previous one.',
+    'handover_amount' => 'The amount due is :due OMR, recorded in full at handover.',
     'hold_reasons' => [
         'awaiting_parts' => 'Awaiting parts', 'awaiting_approval' => 'Awaiting approval', 'awaiting_customer' => 'Awaiting customer',
         'end_of_shift' => 'End of shift', 'other' => 'Other reason',

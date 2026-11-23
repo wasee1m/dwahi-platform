@@ -46,6 +46,11 @@ class WorkOrder extends Model
         return $this->hasMany(WorkOrderEvent::class)->orderBy('occurred_at');
     }
 
+    public function verifier(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'verified_by');
+    }
+
     /** الفنيون المسندون الآن */
     public function technicians(): BelongsToMany
     {

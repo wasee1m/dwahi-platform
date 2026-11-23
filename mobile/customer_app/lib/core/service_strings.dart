@@ -84,4 +84,41 @@ extension ServiceStrings on S {
   String get cancelRequestQ => _v('إلغاء طلب الصيانة؟', 'Cancel this service request?');
   String get requestCancelled => _v('أُلغي الطلب.', 'The request was cancelled.');
   String get uploadingFiles => _v('جارٍ الرفع...', 'Uploading...');
+
+  // S9: M-17
+  String get readyForPickup => _v('جاهز للاستلام من الورشة', 'Ready for pickup at the workshop');
+  String get amountDue => _v('المبلغ المستحق', 'Amount due');
+  String get pickupHint => _v('يُسلَّم في الورشة بعد السداد وتوقيع المستلم.', 'Handed over at the workshop after payment and the receiver signature.');
+  String get additionalEstimate => _v('تقدير إضافي', 'Additional estimate');
+  String additionalStatus(String st) => switch (st) {
+        'quoted' => _v('بانتظار موافقتك', 'Awaiting you'),
+        'approved' => _v('موافق عليه', 'Approved'),
+        'rejected' => _v('مرفوض', 'Rejected'),
+        _ => st,
+      };
+  String get serviceReport => _v('تقرير الخدمة', 'Service report');
+  String get noCharge => _v('بلا تكلفة', 'No charge');
+  String get findingsLabel => _v('الأعطال المكتشفة', 'Findings');
+  String get actionsLabel => _v('الأعمال المنفذة', 'Work done');
+  String get recommendationsLabel => _v('التوصيات', 'Recommendations');
+  String get hourReading => _v('قراءة العداد', 'Hour meter reading');
+  String get testResult => _v('نتيجة الاختبار', 'Test result');
+  String get testPass => _v('ناجح', 'Pass');
+  String get testFail => _v('فاشل', 'Fail');
+  String get beforePhotos => _v('قبل', 'Before');
+  String get afterPhotos => _v('بعد', 'After');
+  String get reportPdf => _v('تقرير PDF', 'Report PDF');
+  String get handedOver => _v('سُلّم', 'Handed over');
+  String get handoverReceipt => _v('إيصال التسليم', 'Handover receipt');
+  String get invoiceLabel => _v('الفاتورة', 'Invoice');
+  String get yourRating => _v('تقييمك', 'Your rating');
+  String get rateService => _v('قيّم الخدمة', 'Rate the service');
+  String get overallRating => _v('التقييم العام', 'Overall');
+  String get timeliness => _v('الالتزام بالموعد', 'On time');
+  String get quality => _v('الجودة', 'Quality');
+  String get communication => _v('التواصل', 'Communication');
+  String get ratingComment => _v('تعليق (اختياري)', 'Comment (optional)');
+  String get publishConsent => _v('أوافق على نشر تقييمي في الموقع', 'Show my rating on the website');
+  String get sendRating => _v('أرسل التقييم', 'Send rating');
+  String get thanksForRating => _v('شكراً لتقييمك.', 'Thank you for your rating.');
 }

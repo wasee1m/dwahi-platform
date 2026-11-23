@@ -80,7 +80,6 @@ class S {
   String get startNeedsIntake => _t('لا يبدأ العمل قبل تسجيل بطاقة الاستلام (BR-20).', 'Work cannot start before the receiving card is recorded (BR-20).');
   String get startNotToday => _t('موعد هذه المهمة لم يحن بعد.', 'This task is not due yet.');
   String anotherActive(String n) => _t('لديك مهمة جارية ($n). أوقفها أولاً.', 'You have a task in progress ($n). Pause it first.');
-  String get finishLater => _t('إنهاء العمل ونتيجة الاختبار في الإصدار القادم.', 'Finishing with the test result comes in the next release.');
   String holdReason(String r) => switch (r) {
         'awaiting_parts' => _t('بانتظار قطع', 'Awaiting parts'),
         'awaiting_approval' => _t('بانتظار موافقة', 'Awaiting approval'),
@@ -139,6 +138,67 @@ class S {
         _ => s,
       };
 
+  // T-08
+  String get additionalWork => _t('عمل إضافي', 'Additional work');
+  String get additionalTitle => _t('طلب عمل إضافي', 'Request additional work');
+  String get additionalHint => _t('صف العطل الإضافي الذي اكتشفته', 'Describe the extra fault you found');
+  String get partsNeeded => _t('القطع المطلوبة', 'Parts needed');
+  String get roughEstimate => _t('تقدير تقريبي (ر.ع.، اختياري)', 'Rough estimate (OMR, optional)');
+  String get continueApproved => _t('متابعة العمل المعتمد', 'Continue the approved work');
+  String get holdForApproval => _t('إيقاف مؤقت بانتظار الموافقة', 'Pause awaiting approval');
+  String get sendToCoordinator => _t('إرسال للمنسق', 'Send to coordinator');
+  String get noAdditional => _t('لا طلبات عمل إضافي.', 'No additional work requests.');
+  String additionalStatus(String s) => switch (s) {
+        'pending' => _t('بانتظار المنسق', 'With the coordinator'),
+        'quoted' => _t('أُرسل تقدير للعميل', 'Estimate sent to the customer'),
+        'approved' => _t('وافق العميل: نفّذه', 'Approved: do it'),
+        'rejected' => _t('لن يُنفَّذ: أكمل المعتمد فقط', 'Not approved: finish the approved work only'),
+        _ => s,
+      };
+
+  // T-09
+  String get testAndFinish => _t('الاختبار والإنهاء', 'Test and finish');
+  String get test => _t('الاختبار', 'Test');
+  String get recordTest => _t('تسجيل نتيجة الاختبار', 'Record the test result');
+  String get noTests => _t('لا اختبار بعد.', 'No test yet.');
+  String get pass => _t('ناجح', 'Pass');
+  String get fail => _t('فاشل', 'Fail');
+  String get yes => _t('نعم', 'Yes');
+  String get no => _t('لا', 'No');
+  String range(num? min, num? max, String? unit) => [
+        if (min != null) _t('من $min', 'from $min'),
+        if (max != null) _t('إلى $max', 'to $max'),
+        if (unit != null && unit.isNotEmpty) unit,
+      ].join(' ');
+  String get testMedia => _t('صورة الاختبار', 'Test photo');
+  String get testFailedHint => _t('الاختبار فاشل: أصلح وأعد الاختبار قبل الإنهاء.', 'The test failed: fix it and test again before finishing.');
+  String get findings => _t('الأعطال المكتشفة', 'Findings');
+  String get actionsTaken => _t('الأعمال المنفذة', 'Work done');
+  String get recommendations => _t('التوصيات (اختياري)', 'Recommendations (optional)');
+  String get noPartsUsed => _t('لم تُستخدم قطع', 'No parts used');
+  String get checklist => _t('قبل الإنهاء (BR-07)', 'Before finishing (BR-07)');
+  String checkItem(String k) => switch (k) {
+        'worked_time' => _t('وقت عمل مسجل', 'Working time recorded'),
+        'hour_meter' => _t('قراءة العداد', 'Hour meter reading'),
+        'after_photo' => _t('صورة "بعد" واحدة على الأقل', 'At least one "after" photo'),
+        'parts' => _t('القطع المستخدمة أو "لم تُستخدم قطع"', 'Parts used, or "no parts used"'),
+        'test_passed' => _t('اختبار ناجح', 'A passed test'),
+        _ => k,
+      };
+  String get confirmFinish => _t('تأكيد الإنهاء', 'Confirm finish');
+  String get leadOnly => _t('الفني الرئيسي وحده يُنهي المهمة.', 'Only the lead technician can finish the task.');
+  String get finishedWaiting => _t('أُنهيت المهمة، وهي بانتظار مراجعة المنسق.', 'The task is finished and awaits the coordinator review.');
+  String returnedBy(String note) => _t('أعادها المنسق: $note', 'Returned by the coordinator: $note');
+
+  // T-10
+  String get historyTitle => _t('السجل', 'History');
+  String get completedTasks => _t('المهام المنجزة', 'Completed tasks');
+  String get dailyHours => _t('ساعات العمل اليومية', 'Daily working hours');
+  String get weeklyHours => _t('ساعات العمل الأسبوعية', 'Weekly working hours');
+  String weekOf(String d) => _t('أسبوع $d', 'Week of $d');
+  String get returnedTasks => _t('المعادة من المنسق', 'Returned by the coordinator');
+  String get nothingYet => _t('لا شيء بعد.', 'Nothing yet.');
+
   // T-11
   String get syncCenter => _t('مركز الإرسال', 'Sync center');
   String get sendNow => _t('أرسل الآن', 'Send now');
@@ -156,6 +216,9 @@ class S {
         'part_used' => '$addPart · ${p['label'] ?? p['description'] ?? ''} × ${p['quantity']}',
         'part_removed' => '$remove $addPart',
         'hour_meter_recorded' => '$hourMeter · ${p['reading']}',
+        'test_recorded' => '$test · ${p['local_result'] == 'pass' ? pass : fail}',
+        'additional_work_requested' => '$additionalWork · ${p['description'] ?? ''}',
+        'report_submitted' => confirmFinish,
         _ => type,
       };
 

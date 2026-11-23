@@ -106,6 +106,7 @@ final class ServicePresenter
                 'quotation' => $quote ? ['id' => $quote->id, 'number' => $quote->number, 'status' => $quote->status, 'total' => Money::of((string) $quote->total)] : null,
             ] : null,
             'work_orders' => $sr->workOrders->map(fn (WorkOrder $w) => self::workOrderRow($w, $staff))->values(),
+            'completion' => CompletionPresenter::customer($sr),
             'can_cancel' => ! $staff && in_array($sr->status, ['submitted', 'triaged', 'awaiting_approval', 'approved', 'in_service'], true)
                 && ! $sr->workOrders->contains(fn (WorkOrder $w) => in_array($w->status, ['in_progress', 'work_completed'], true)),
         ];
@@ -141,6 +142,12 @@ final class ServicePresenter
                 'at' => $e->occurred_at?->toIso8601ZuluString(),
             ])->values(),
             'execution' => self::execution($w),
+            'completion' => CompletionPresenter::workOrder($w),
+            /** @var list<array{description: string, quantity: string, total: array{amount: string, currency: string}}> */
+            'approved_scope' => $w->quotation ? $w->quotation->items->map(fn ($i) => [
+                'description' => app()->getLocale() === 'en' ? $i->description_en : $i->description_ar, 'quantity' => (string) $i->quantity,
+                'total' => Money::of((string) $i->line_total),
+            ])->values()->all() : [],
         ];
     }
 

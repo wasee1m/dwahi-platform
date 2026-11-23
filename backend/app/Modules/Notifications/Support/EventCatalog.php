@@ -5,7 +5,6 @@ namespace App\Modules\Notifications\Support;
 /**
  * أحداث الإشعارات المبنية حتى الآن (01 §8): الفئة لتفضيلات المستخدم (FR-NOT-03)، والقنوات، والإلزامية.
  * in_app دائماً (مركز الإشعارات C-19)، والقنوات الأخرى تُرسل في الطابور. الإلزامي لا تعطله التفضيلات.
- * N-12 و N-14 و N-15 مع الإنجاز والتسليم (S9).
  */
 final class EventCatalog
 {
@@ -15,17 +14,13 @@ final class EventCatalog
     public const CATEGORIES = ['quotes', 'orders', 'service', 'messages', 'marketing'];
 
     /** أحداث للموظف وحده، فلا تدخل مصفوفة العميل */
-    private const STAFF_ONLY = ['N-03', 'N-23', 'N-08', 'N-08-urgent', 'N-09', 'N-18', 'N-13'];
+    private const STAFF_ONLY = ['N-03', 'N-23', 'N-08', 'N-08-urgent', 'N-09', 'N-18', 'N-13', 'N-28'];
 
     /**
      * أحداث العميل في الوحدات القادمة كما في 01 §8، لتعرض C-20 الإلزامي صحيحاً من الآن.
      * ينتقل كل حدث إلى EVENTS مع وحدته.
      */
-    private const UPCOMING = [
-        'N-12' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
-        'N-14' => ['category' => 'service', 'channels' => ['push', 'email'], 'mandatory' => true],
-        'N-15' => ['category' => 'service', 'channels' => ['push'], 'mandatory' => false],
-    ];
+    private const UPCOMING = [];
 
     /** @var array<string, array{category: string, channels: list<string>, mandatory: bool}> */
     public const EVENTS = [
@@ -46,7 +41,11 @@ final class EventCatalog
         'N-11' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],   // موعد العمل في الورشة
         'N-24' => ['category' => 'service', 'channels' => ['push', 'email'], 'mandatory' => true],   // اعتماد آلي ضمن حد الموافقة
         'N-29' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],   // إلغاء موعد أو أمر عمل
-        'N-32' => ['category' => 'service', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],   // استلام المعدة مع الإيصال
+        'N-32' => ['category' => 'service', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],   // استلام المعدة مع الإيصال، وتسليمها
+        'N-12' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],   // جاهز للاستلام، وتذكير J-12
+        'N-14' => ['category' => 'service', 'channels' => ['push', 'email'], 'mandatory' => true],  // اكتمال العمل وتقرير الخدمة
+        'N-15' => ['category' => 'service', 'channels' => ['push'], 'mandatory' => false],          // دعوة للتقييم (J-05)
+        'N-28' => ['category' => 'service', 'channels' => ['push'], 'mandatory' => true],           // أمر عمل بانتظار التحقق، للمنسق
         'N-08' => ['category' => 'service', 'channels' => ['email'], 'mandatory' => true],            // طلب صيانة جديد للمنسقين
         'N-08-urgent' => ['category' => 'service', 'channels' => ['email', 'sms'], 'mandatory' => true], // والعاجل برسالة SMS
         'N-09' => ['category' => 'service', 'channels' => ['email'], 'mandatory' => true],            // تجاوز مهلة الفرز

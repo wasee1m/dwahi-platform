@@ -13,6 +13,7 @@ import '../core/api.dart';
 import '../core/outbox.dart';
 import '../core/strings.dart';
 import '../core/tasks.dart';
+import 'finish_screens.dart';
 
 /// الكاميرا لصور العمل: تُستبدل في الاختبارات
 final photoPickerProvider = Provider<Future<String?> Function()>((ref) => () async {
@@ -105,6 +106,7 @@ class TasksScreen extends ConsumerWidget {
           actions: [
             IconButton(tooltip: s.syncCenter, onPressed: () => context.push('/sync'), icon: Badge(
                 isLabelVisible: outbox.pending.isNotEmpty, label: Text('${outbox.pending.length}'), child: const Icon(Icons.sync))),
+            IconButton(tooltip: s.historyTitle, onPressed: () => context.push('/history'), icon: const Icon(Icons.history)),
             IconButton(tooltip: s.account, onPressed: () => context.push('/account'), icon: const Icon(Icons.person_outline)),
           ],
           bottom: TabBar(tabs: [Tab(text: s.today), Tab(text: s.upcoming)]),
@@ -458,6 +460,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
                       : null,
                 ),
             ], action: canAct ? TextButton.icon(onPressed: _part, icon: const Icon(Icons.add), label: Text(s.addPart)) : null),
+            if (t.additional.isNotEmpty)
+              _Section(s.additionalWork, [
+                for (final a in t.additional)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    title: Text('${a['description'] ?? ''}'),
+                    subtitle: Text('${s.additionalStatus('${a['status']}')}${a['pending'] == true ? ' · ${s.pendingMark}' : ''}'
+                        '${a['rejection_reason'] != null ? '\n${a['rejection_reason']}' : ''}'),
+                  ),
+              ]),
+            if (t.tests.isNotEmpty)
+              _Section(s.test, [
+                for (final x in t.tests) Text('${x['template'] ?? s.test} · ${x['result'] == 'pass' ? s.pass : s.fail}${x['pending'] == true ? ' · ${s.pendingMark}' : ''}'),
+              ]),
             _Section(s.notes, [
               if (t.notes.isEmpty) Text(s.noNotes),
               for (final n in t.notes)
@@ -518,7 +535,20 @@ class _ExecutionCard extends ConsumerWidget {
           ]),
           if (t.status == 'on_hold' && t.holdReason != null) Text('${s.pauseReason}: ${s.holdReason(t.holdReason!)}'),
           if (blocked != null) Text(blocked, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-          if (t.status == 'in_progress') Text(s.finishLater, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12)),
+          if (t.returnedNote != null)
+            Padding(padding: const EdgeInsets.only(top: 6), child: Text(s.returnedBy(t.returnedNote!), style: TextStyle(color: Theme.of(context).colorScheme.error))),
+          if (t.status == 'work_completed') Padding(padding: const EdgeInsets.only(top: 6), child: Text(s.finishedWaiting)),
+          if (t.assigned && (t.status == 'in_progress' || t.status == 'on_hold'))
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Wrap(spacing: 8, runSpacing: 8, children: [
+                OutlinedButton.icon(key: const Key('additional'), onPressed: () => requestAdditional(context, ref, t.id),
+                    icon: const Icon(Icons.add_task), label: Text(s.additionalWork)),
+                if (t.status == 'in_progress')
+                  FilledButton.icon(key: const Key('finish'), onPressed: () => context.push('/tasks/${t.id}/finish'),
+                      icon: const Icon(Icons.fact_check_outlined), label: Text(s.testAndFinish)),
+              ]),
+            ),
         ]),
       ),
     );

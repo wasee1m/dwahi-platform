@@ -91,4 +91,49 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('route /requests/r9'), findsOneWidget);
   });
+
+  testWidgets('shows the report, the amount due for pickup, and sends a rating once closed (US-19, US-20, US-49, M-17)', (tester) async {
+    tester.view.physicalSize = const Size(1080, 4000);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.reset);
+    Map<String, dynamic> completion({bool closed = false}) => {
+          'reports': [
+            {'work_order': 'WO-2026-000002', 'type': 'repair', 'no_charge': false, 'before': <String>[], 'after': <String>[],
+              'report': {'findings': 'تلف الجوانات', 'actions_taken': 'تغيير الجوانات', 'recommendations': null, 'hour_meter_reading': 9130,
+                'no_parts_used': false, 'submitted_at': null, 'pdf_url': 'http://localhost/r.pdf'},
+              'tests': [{'id': 't1', 'template': 'اختبار السلندر', 'result': 'pass', 'values': {}, 'fields': [], 'notes': null, 'tested_at': null}]},
+          ],
+          'additional': [
+            {'id': 'a1', 'description': 'شرخ في العمود', 'status': 'quoted', 'rfq_id': 'r7', 'quotation': {'id': 'q7', 'number': 'QT-2026-000010-v1', 'status': 'sent', 'total': money('84.000')}},
+          ],
+          'pickup': closed ? null : {'due': money('210.000'), 'invoice_id': 'i1', 'invoice_number': null, 'ready_since': null},
+          'handover': closed ? {'handed_over_at': '2026-11-25T08:00:00Z', 'receiver_name': 'سائق اللوبد', 'receipt_url': 'http://localhost/h.pdf'} : null,
+          'invoice': closed ? {'id': 'i1', 'number': 'INV-2026-000004', 'status': 'paid', 'total': money('210.000')} : null,
+          'review': null, 'can_review': closed, 'review_until': null,
+        };
+    final api = FakeApi({'/me': me(), '/me/service-requests/s1': {...request(status: 'completed', key: 'completed'), 'completion': completion()}});
+    await tester.pumpWidget(screen(api, const ServiceDetailScreen(id: 's1')));
+    await tester.pumpAndSettle();
+    expect(find.text('جاهز للاستلام من الورشة'), findsWidgets);
+    expect(find.textContaining('210.000'), findsOneWidget);
+    expect(find.textContaining('تلف الجوانات'), findsOneWidget);
+    expect(find.textContaining('ناجح'), findsOneWidget);
+    await tester.tap(find.text('راجع التقدير'));
+    await tester.pumpAndSettle();
+    expect(find.text('route /requests/r7'), findsOneWidget);
+
+    final closed = FakeApi({'/me': me(), '/me/service-requests/s1': {...request(status: 'closed', key: 'closed'), 'completion': completion(closed: true)}});
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(screen(closed, const ServiceDetailScreen(id: 's1')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('سائق اللوبد'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('rate')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('rating-5')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('send-rating')));
+    await tester.pumpAndSettle();
+    expect(closed.posts.single.$1, '/me/service-requests/s1/review');
+    expect(closed.posts.single.$2['rating'], 5);
+  });
 }

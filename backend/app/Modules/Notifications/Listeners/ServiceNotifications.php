@@ -3,14 +3,17 @@
 namespace App\Modules\Notifications\Listeners;
 
 use App\Models\User;
+use App\Modules\Billing\Models\Invoice;
 use App\Modules\Notifications\Services\Notifier;
 use App\Modules\Service\Events\ServiceEvent;
 use App\Modules\Service\Models\ServiceRequest;
+use App\Modules\Service\Services\ReviewService;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-/** إشعارات الصيانة (01 §8): N-08، N-09، N-11، N-13، N-18، N-24، N-25، N-29، N-32. بعد الالتزام فقط. */
+/** إشعارات الصيانة (01 §8): N-08، N-09، N-11 إلى N-15، N-18، N-24، N-25، N-28، N-29، N-32. بعد الالتزام فقط. */
 class ServiceNotifications implements ShouldHandleEventsAfterCommit
 {
     public function __construct(private readonly Notifier $notifier) {}
@@ -36,6 +39,21 @@ class ServiceNotifications implements ShouldHandleEventsAfterCommit
             ServiceEvent::WO_SCHEDULED => $this->scheduled($sr, $e, $link, $item, $when),
             ServiceEvent::WO_CANCELLED => $this->cancelled($sr, $e, $link),
             ServiceEvent::WO_ON_HOLD => $this->onHold($sr, $e, $item),
+            ServiceEvent::WO_COMPLETED => $this->notifier->notify($this->coordinators($sr), 'N-28',
+                ['number' => $wo->number, 'item' => $item, 'technician' => $e->actor?->full_name ?? ''], "/admin/work-orders/{$wo->id}"),
+            ServiceEvent::WO_RETURNED => $this->notifier->notify($this->team($wo->id), 'N-18', ['number' => $wo->number, 'note' => (string) $e->note],
+                "/tech/tasks/{$wo->id}", [], 'N-18-returned'),
+            ServiceEvent::ADDITIONAL_REQUESTED => $this->notifier->notify($this->coordinators($sr), 'N-13',
+                ['number' => $wo->number, 'technician' => $e->actor?->full_name ?? '', 'description' => Str::limit((string) $e->note, 140)],
+                "/admin/work-orders/{$wo->id}", [], 'N-13-additional'),
+            ServiceEvent::ADDITIONAL_DECIDED => $this->notifier->notify($this->team($wo->id), 'N-18', ['number' => $wo->number],
+                "/tech/tasks/{$wo->id}", [], 'N-18-additional-'.($e->note === 'approved' ? 'approved' : 'rejected')),
+            ServiceEvent::COMPLETED => $this->completed($sr, $link, $item),
+            ServiceEvent::PICKUP_REMINDER => $this->notifier->notify($sr->customerRecipients(), 'N-12',
+                ['number' => $sr->number, 'item' => $item, 'days' => (string) max(1, (int) $sr->completed_at?->diffInDays(now()))], $link, [], 'N-12-reminder'),
+            ServiceEvent::HANDED_OVER => $this->notifier->notify($sr->customerRecipients(), 'N-32', ['number' => $sr->number, 'item' => $item], $link, [], 'N-32-handover'),
+            ServiceEvent::REVIEW_INVITE => $this->notifier->notify($sr->customerRecipients(), 'N-15',
+                ['number' => $sr->number, 'days' => (string) ReviewService::windowDays()], $link),
             default => null,
         };
     }
@@ -69,6 +87,15 @@ class ServiceNotifications implements ShouldHandleEventsAfterCommit
             'number' => $wo->number, 'item' => $item, 'technician' => $e->actor?->full_name ?? '',
             'reason' => fn (string $l) => __("service.hold_reasons.{$e->note}", [], $l),
         ], "/admin/work-orders/{$wo->id}");
+    }
+
+    /** 4.12: التقرير (N-14) وجاهز للاستلام بالمبلغ المستحق (N-12) */
+    private function completed(ServiceRequest $sr, string $link, \Closure $item): void
+    {
+        $this->notifier->notify($sr->customerRecipients(), 'N-14', ['number' => $sr->number, 'item' => $item], $link);
+        $invoice = Invoice::query()->where('service_request_id', $sr->id)->where('status', '!=', 'void')->first();
+        $due = $invoice ? ($invoice->status === 'draft' ? (string) $invoice->total : $invoice->balance()) : '0';
+        $this->notifier->notify($sr->customerRecipients(), 'N-12', ['number' => $sr->number, 'item' => $item, 'due' => number_format((float) $due, 3)], $link);
     }
 
     /** منسقو الفرع (وإن لم يوجد أحد فكل المنسقين)، ومع تجاوز المهلة المدير أيضاً بدل "رئيس المنسقين" */

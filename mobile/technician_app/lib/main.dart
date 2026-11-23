@@ -7,6 +7,7 @@ import 'package:dwahi_ui/dwahi_ui.dart';
 import 'core/api.dart';
 import 'core/outbox.dart';
 import 'features/auth.dart';
+import 'features/finish_screens.dart';
 import 'features/sync_account.dart';
 import 'features/task_screens.dart';
 
@@ -80,6 +81,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       GoRoute(path: '/tasks', builder: (_, _) => const TasksScreen()),
       GoRoute(path: '/tasks/:id', builder: (_, state) => TaskScreen(state.pathParameters['id']!)),
+      GoRoute(path: '/tasks/:id/finish', builder: (_, state) => FinishScreen(state.pathParameters['id']!)),
+      GoRoute(path: '/history', builder: (_, _) => const HistoryScreen()),
       GoRoute(path: '/scan', builder: (_, _) => const ScanScreen()),
       GoRoute(path: '/sync', builder: (_, _) => const SyncScreen()),
       GoRoute(path: '/account', builder: (_, _) => const AccountScreen()),

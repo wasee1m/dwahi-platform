@@ -1050,7 +1050,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.platform.admin.branchAdmin.save_224",
+                "operationId": "modules.platform.admin.branchAdmin.save_232",
                 "tags": [
                     "BranchAdmin"
                 ],
@@ -1216,7 +1216,7 @@
         },
         "/v1/admin/branches/{id}": {
             "put": {
-                "operationId": "modules.platform.admin.branchAdmin.save_225",
+                "operationId": "modules.platform.admin.branchAdmin.save_233",
                 "tags": [
                     "BranchAdmin"
                 ],
@@ -3442,7 +3442,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_190",
+                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_198",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3591,7 +3591,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_192",
+                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_200",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3820,7 +3820,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveModel_194",
+                "operationId": "modules.catalog.admin.catalogSetup.saveModel_202",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -3969,7 +3969,7 @@
         },
         "/v1/admin/brands/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_191",
+                "operationId": "modules.catalog.admin.catalogSetup.saveBrand_199",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -4078,7 +4078,7 @@
         },
         "/v1/admin/categories/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_193",
+                "operationId": "modules.catalog.admin.catalogSetup.saveCategory_201",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -4186,7 +4186,7 @@
         },
         "/v1/admin/models/{id}": {
             "put": {
-                "operationId": "modules.catalog.admin.catalogSetup.saveModel_195",
+                "operationId": "modules.catalog.admin.catalogSetup.saveModel_203",
                 "tags": [
                     "CatalogSetup"
                 ],
@@ -4457,6 +4457,884 @@
                 }
             }
         },
+        "/v1/admin/additional-work/{id}/reject": {
+            "post": {
+                "operationId": "completionAdmin.rejectAdditional",
+                "summary": "4a.3",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "reason": {
+                                        "type": "string",
+                                        "minLength": 3,
+                                        "maxLength": 1000
+                                    }
+                                },
+                                "required": [
+                                    "reason"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "rejected"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/additional-work/{id}/estimate": {
+            "post": {
+                "operationId": "completionAdmin.estimateAdditional",
+                "summary": "\u062a\u0642\u062f\u064a\u0631 \u0625\u0636\u0627\u0641\u064a: \u0645\u0633\u0648\u062f\u0629 \u062a\u064f\u062d\u0631\u0631 \u0641\u064a A-06 \u062b\u0645 \u062a\u064f\u0631\u0633\u0644 \u0644\u0644\u0639\u0645\u064a\u0644",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "quotation_id": {
+                                                    "type": "string"
+                                                },
+                                                "rfq_id": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "quotation_id",
+                                                "rfq_id"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/handovers": {
+            "get": {
+                "operationId": "completionAdmin.handovers",
+                "summary": "A-22 \"\u062c\u0627\u0647\u0632 \u0644\u0644\u0627\u0633\u062a\u0644\u0627\u0645\" \u0645\u0639 \u0623\u064a\u0627\u0645 \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631 \u0648\u0627\u0644\u0645\u0628\u0644\u063a \u0627\u0644\u0645\u0633\u062a\u062d\u0642",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {}
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/service-requests/{id}/handover": {
+            "post": {
+                "operationId": "completionAdmin.handOver",
+                "summary": "US-49: \u0627\u0644\u062f\u0641\u0639\u0629 \u0648\u0627\u0644\u062a\u0648\u0642\u064a\u0639 \u0648\u0627\u0644\u0627\u0633\u0645 \u0641\u064a \u0645\u0639\u0627\u0645\u0644\u0629 \u0648\u0627\u062d\u062f\u0629\u060c \u062b\u0645 \u0625\u064a\u0635\u0627\u0644 \u0627\u0644\u062a\u0633\u0644\u064a\u0645",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "receiver_name": {
+                                        "type": "string",
+                                        "minLength": 2,
+                                        "maxLength": 120
+                                    },
+                                    "receiver_phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "maxLength": 20
+                                    },
+                                    "signature_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "payment": {
+                                        "type": [
+                                            "object",
+                                            "null"
+                                        ],
+                                        "properties": {
+                                            "method": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "cash",
+                                                    "pos_card",
+                                                    "bank_transfer",
+                                                    "cheque"
+                                                ]
+                                            },
+                                            "amount": {
+                                                "type": "number",
+                                                "minimum": 0.001
+                                            },
+                                            "reference_text": {
+                                                "type": [
+                                                    "string",
+                                                    "null"
+                                                ],
+                                                "maxLength": 120
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "receiver_name",
+                                    "signature_id"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "service_request_id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                },
+                                                "receipt_url": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "service_request_id",
+                                                "status",
+                                                "receipt_url"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/work-orders/{id}/verify": {
+            "post": {
+                "operationId": "completionAdmin.verify",
+                "summary": "5.12 \u0627\u0644\u0627\u0639\u062a\u0645\u0627\u062f\u060c \u0623\u0648 5.13 \"\u0628\u0644\u0627 \u062a\u0643\u0644\u0641\u0629\" \u0628\u0633\u0628\u0628",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "no_charge": {
+                                        "type": [
+                                            "boolean",
+                                            "null"
+                                        ]
+                                    },
+                                    "reason": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "maxLength": 500
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/work-orders/{id}/return": {
+            "post": {
+                "operationId": "completionAdmin.returnToTechnician",
+                "summary": "5.11 \u0625\u0639\u0627\u062f\u0629 \u0644\u0644\u0641\u0646\u064a \u0628\u0645\u0644\u0627\u062d\u0638\u0629",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "note": {
+                                        "type": "string",
+                                        "minLength": 3,
+                                        "maxLength": 1000
+                                    }
+                                },
+                                "required": [
+                                    "note"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/test-templates": {
+            "get": {
+                "operationId": "completionAdmin.templates",
+                "summary": "A-18: \u0642\u0648\u0627\u0644\u0628 \u0627\u0644\u0627\u062e\u062a\u0628\u0627\u0631 (Q-20)",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name_ar": {
+                                                        "type": "string"
+                                                    },
+                                                    "name_en": {
+                                                        "type": "string"
+                                                    },
+                                                    "applies_to": {
+                                                        "type": "string"
+                                                    },
+                                                    "fields": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "additionalProperties": {}
+                                                        }
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name_ar",
+                                                    "name_en",
+                                                    "applies_to",
+                                                    "fields",
+                                                    "is_active"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "/v1/admin/test-templates/{id}": {
+            "put": {
+                "operationId": "completionAdmin.updateTemplate",
+                "tags": [
+                    "CompletionAdmin"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name_ar": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "name_en": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "is_active": {
+                                        "type": "boolean"
+                                    },
+                                    "fields": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "key": {
+                                                    "type": "string",
+                                                    "pattern": "^[a-z][a-z0-9_]{0,39}$"
+                                                },
+                                                "label_ar": {
+                                                    "type": "string",
+                                                    "maxLength": 120
+                                                },
+                                                "label_en": {
+                                                    "type": "string",
+                                                    "maxLength": 120
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "number",
+                                                        "boolean"
+                                                    ]
+                                                },
+                                                "unit": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "maxLength": 20
+                                                },
+                                                "min": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "max": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "expect": {
+                                                    "type": [
+                                                        "boolean",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "key",
+                                                "label_ar",
+                                                "label_en",
+                                                "type"
+                                            ]
+                                        },
+                                        "minItems": 1,
+                                        "maxItems": 20,
+                                        "uniqueItems": true
+                                    }
+                                },
+                                "required": [
+                                    "name_ar",
+                                    "name_en",
+                                    "is_active",
+                                    "fields"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name_ar": {
+                                                        "type": "string"
+                                                    },
+                                                    "name_en": {
+                                                        "type": "string"
+                                                    },
+                                                    "applies_to": {
+                                                        "type": "string"
+                                                    },
+                                                    "fields": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "additionalProperties": {}
+                                                        }
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "name_ar",
+                                                    "name_en",
+                                                    "applies_to",
+                                                    "fields",
+                                                    "is_active"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/v1/admin/pages": {
             "get": {
                 "operationId": "contentAdmin.pages",
@@ -4548,7 +5426,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.savePage_207",
+                "operationId": "modules.content.admin.contentAdmin.savePage_215",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -4803,7 +5681,7 @@
                 }
             },
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.savePage_209",
+                "operationId": "modules.content.admin.contentAdmin.savePage_217",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -4998,7 +5876,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.saveFaq_211",
+                "operationId": "modules.content.admin.contentAdmin.saveFaq_219",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -5180,7 +6058,7 @@
         },
         "/v1/admin/faqs/{id}": {
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.saveFaq_213",
+                "operationId": "modules.content.admin.contentAdmin.saveFaq_221",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -5407,7 +6285,7 @@
                 }
             },
             "post": {
-                "operationId": "modules.content.admin.contentAdmin.saveBanner_215",
+                "operationId": "modules.content.admin.contentAdmin.saveBanner_223",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -5519,7 +6397,7 @@
         },
         "/v1/admin/banners/{id}": {
             "put": {
-                "operationId": "modules.content.admin.contentAdmin.saveBanner_216",
+                "operationId": "modules.content.admin.contentAdmin.saveBanner_224",
                 "tags": [
                     "ContentAdmin"
                 ],
@@ -19597,7 +20475,7 @@
         },
         "/v1/tech/uploads": {
             "post": {
-                "operationId": "modules.platform.file.upload_101",
+                "operationId": "modules.platform.file.upload_103",
                 "summary": "POST /me/uploads: \u0635\u0648\u0631 \u0627\u0644\u0642\u0637\u0639 \u0648\u0627\u0644\u0633\u0644\u0646\u062f\u0631 \u0648\u0623\u0645\u0631 \u0627\u0644\u0634\u0631\u0627\u0621 \u0648\u0645\u0631\u0641\u0642\u0627\u062a \u0627\u0644\u0631\u0633\u0627\u0626\u0644. \u062e\u0627\u0635\u0629 \u062f\u0627\u0626\u0645\u0627\u064b (NFR-11)",
                 "tags": [
                     "File"
@@ -19715,7 +20593,7 @@
         },
         "/v1/admin/staff-uploads": {
             "post": {
-                "operationId": "modules.platform.file.upload_131",
+                "operationId": "modules.platform.file.upload_133",
                 "summary": "POST /me/uploads: \u0635\u0648\u0631 \u0627\u0644\u0642\u0637\u0639 \u0648\u0627\u0644\u0633\u0644\u0646\u062f\u0631 \u0648\u0623\u0645\u0631 \u0627\u0644\u0634\u0631\u0627\u0621 \u0648\u0645\u0631\u0641\u0642\u0627\u062a \u0627\u0644\u0631\u0633\u0627\u0626\u0644. \u062e\u0627\u0635\u0629 \u062f\u0627\u0626\u0645\u0627\u064b (NFR-11)",
                 "tags": [
                     "File"
@@ -24766,7 +25644,7 @@
         },
         "/v1/me/notifications": {
             "get": {
-                "operationId": "modules.notifications.notification.index_91",
+                "operationId": "modules.notifications.notification.index_92",
                 "tags": [
                     "Notification"
                 ],
@@ -24909,7 +25787,7 @@
         },
         "/v1/me/notifications/count": {
             "get": {
-                "operationId": "modules.notifications.notification.count_92",
+                "operationId": "modules.notifications.notification.count_93",
                 "summary": "\u0644\u0644\u0639\u062f\u0627\u062f \u0641\u064a \u0631\u0623\u0633 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u062a\u0637\u0628\u064a\u0642",
                 "tags": [
                     "Notification"
@@ -24969,7 +25847,7 @@
         },
         "/v1/me/notifications/read-all": {
             "post": {
-                "operationId": "modules.notifications.notification.readAll_93",
+                "operationId": "modules.notifications.notification.readAll_94",
                 "tags": [
                     "Notification"
                 ],
@@ -25028,7 +25906,7 @@
         },
         "/v1/me/notifications/{id}/read": {
             "post": {
-                "operationId": "modules.notifications.notification.read_94",
+                "operationId": "modules.notifications.notification.read_95",
                 "tags": [
                     "Notification"
                 ],
@@ -25100,7 +25978,7 @@
         },
         "/v1/admin/notifications": {
             "get": {
-                "operationId": "modules.notifications.notification.index_112",
+                "operationId": "modules.notifications.notification.index_114",
                 "tags": [
                     "Notification"
                 ],
@@ -25243,7 +26121,7 @@
         },
         "/v1/admin/notifications/count": {
             "get": {
-                "operationId": "modules.notifications.notification.count_113",
+                "operationId": "modules.notifications.notification.count_115",
                 "summary": "\u0644\u0644\u0639\u062f\u0627\u062f \u0641\u064a \u0631\u0623\u0633 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u0627\u0644\u062a\u0637\u0628\u064a\u0642",
                 "tags": [
                     "Notification"
@@ -25303,7 +26181,7 @@
         },
         "/v1/admin/notifications/read-all": {
             "post": {
-                "operationId": "modules.notifications.notification.readAll_114",
+                "operationId": "modules.notifications.notification.readAll_116",
                 "tags": [
                     "Notification"
                 ],
@@ -25362,7 +26240,7 @@
         },
         "/v1/admin/notifications/{id}/read": {
             "post": {
-                "operationId": "modules.notifications.notification.read_115",
+                "operationId": "modules.notifications.notification.read_117",
                 "tags": [
                     "Notification"
                 ],
@@ -44140,6 +45018,128 @@
                 }
             }
         },
+        "/v1/me/service-requests/{id}/review": {
+            "post": {
+                "operationId": "service.review",
+                "summary": "US-20\u060c BR-10: \u062a\u0642\u064a\u064a\u0645 \u0648\u0627\u062d\u062f \u062e\u0644\u0627\u0644 \u0627\u0644\u0645\u062f\u0629 \u0628\u0639\u062f \u0627\u0644\u0625\u063a\u0644\u0627\u0642",
+                "tags": [
+                    "Service"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "rating": {
+                                        "type": "integer",
+                                        "minimum": 1,
+                                        "maximum": 5
+                                    },
+                                    "timeliness_rating": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "minimum": 1,
+                                        "maximum": 5
+                                    },
+                                    "quality_rating": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "minimum": 1,
+                                        "maximum": 5
+                                    },
+                                    "communication_rating": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "minimum": 1,
+                                        "maximum": 5
+                                    },
+                                    "comment": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "maxLength": 2000
+                                    },
+                                    "publish_consent": {
+                                        "type": [
+                                            "boolean",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "rating"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/v1/admin/service-requests": {
             "get": {
                 "operationId": "serviceAdmin.index",
@@ -48755,6 +49755,137 @@
                 }
             }
         },
+        "/v1/tech/history": {
+            "get": {
+                "operationId": "tech.history",
+                "summary": "T-10: \u0627\u0644\u0645\u0647\u0627\u0645 \u0627\u0644\u0645\u0646\u062c\u0632\u0629\u060c \u0648\u0633\u0627\u0639\u0627\u062a \u0627\u0644\u0639\u0645\u0644 \u0627\u0644\u064a\u0648\u0645\u064a\u0629 \u0648\u0627\u0644\u0623\u0633\u0628\u0648\u0639\u064a\u0629\u060c \u0648\u0627\u0644\u0645\u0639\u0627\u062f\u0629 \u0645\u0646 \u0627\u0644\u0645\u0646\u0633\u0642",
+                "tags": [
+                    "Tech"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "completed": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "array",
+                                                        "items": {}
+                                                    }
+                                                },
+                                                "days": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "date": {
+                                                                "type": "string"
+                                                            },
+                                                            "seconds": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "date",
+                                                            "seconds"
+                                                        ]
+                                                    }
+                                                },
+                                                "weeks": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "week_start": {
+                                                                "type": "string"
+                                                            },
+                                                            "seconds": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "week_start",
+                                                            "seconds"
+                                                        ]
+                                                    }
+                                                },
+                                                "returned": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "number": {
+                                                                "type": "string"
+                                                            },
+                                                            "note": {
+                                                                "type": "string"
+                                                            },
+                                                            "at": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "id",
+                                                            "number",
+                                                            "note",
+                                                            "at"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "completed",
+                                                "days",
+                                                "weeks",
+                                                "returned"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Too many requests",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview."
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/AuthorizationException"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/AuthenticationException"
+                    }
+                }
+            }
+        },
         "/v1/tech/parts": {
             "get": {
                 "operationId": "tech.parts",
@@ -48886,7 +50017,10 @@
                                                         "note_added",
                                                         "part_used",
                                                         "part_removed",
-                                                        "hour_meter_recorded"
+                                                        "hour_meter_recorded",
+                                                        "test_recorded",
+                                                        "additional_work_requested",
+                                                        "report_submitted"
                                                     ]
                                                 },
                                                 "occurred_at": {

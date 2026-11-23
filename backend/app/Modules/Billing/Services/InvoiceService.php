@@ -18,6 +18,7 @@ use App\Modules\Platform\Support\Audit;
 use App\Modules\Platform\Support\SettingsRegistry;
 use App\Modules\Quoting\Models\Quotation;
 use App\Modules\Quoting\Support\QuoteMath;
+use App\Modules\Service\Models\ServiceRequest;
 use App\Support\ApiProblem;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -85,6 +86,57 @@ final class InvoiceService
             ])->all();
 
             return $this->createDraft(['quotation_id' => $q->id, 'branch_id' => $q->rfq->branch_id], $q->rfq->customer, $q->rfq->organization, $lines);
+        });
+    }
+
+    /**
+     * الصيانة (US-34): مسودة من التقديرات المعتمدة للطلب (الأساسي والإضافية) عند اكتماله، أو رسوم الفحص وحدها
+     * عند الإلغاء بعد فحص (BR-11). فاتورة صيانة واحدة غير ملغاة لكل طلب.
+     *
+     * @param  iterable<Quotation>  $quotes
+     */
+    public function draftForService(ServiceRequest $sr, iterable $quotes, bool $inspectionFeeOnly = false): ?Invoice
+    {
+        return DB::transaction(function () use ($sr, $quotes, $inspectionFeeOnly) {
+            $existing = Invoice::query()->where('service_request_id', $sr->id)->where('status', '!=', 'void')->lockForUpdate()->first();
+            if ($existing) {
+                return $existing;
+            }
+            $sr->loadMissing(['customer', 'organization']);
+            $lines = [];
+            if ($inspectionFeeOnly) {
+                $fee = (string) ($sr->inspection_fee ?? '0');
+                if (bccomp($fee, '0', 3) <= 0) {
+                    return null;
+                }
+                $rate = (string) Setting::read('vat.default_rate', '5.00');
+                $vat = bcdiv(bcmul($fee, $rate, 6), '100', 3);
+                $lines[] = [
+                    'item_type' => 'service_fee', 'order_item_id' => null,
+                    'description_ar' => __('billing.inspection_line', ['number' => $sr->number], 'ar'),
+                    'description_en' => __('billing.inspection_line', ['number' => $sr->number], 'en'),
+                    'quantity' => '1', 'unit' => 'service', 'unit_price' => $fee, 'discount_amount' => '0', 'vat_rate' => $rate,
+                    'line_subtotal' => $fee, 'line_vat' => $vat, 'line_total' => bcadd($fee, $vat, 3), 'warranty_months' => null,
+                ];
+            } else {
+                foreach ($quotes as $q) {
+                    foreach ($q->items as $i) {
+                        $lines[] = [
+                            'item_type' => $i->item_type, 'order_item_id' => null,
+                            'description_ar' => $i->description_ar, 'description_en' => $i->description_en,
+                            'quantity' => $i->quantity, 'unit' => $i->unit, 'unit_price' => $i->unit_price,
+                            'discount_amount' => $i->discount_amount, 'vat_rate' => $i->vat_rate,
+                            'line_subtotal' => $i->line_subtotal, 'line_vat' => $i->line_vat, 'line_total' => $i->line_total,
+                            'warranty_months' => $i->warranty_months,
+                        ];
+                    }
+                }
+            }
+            if (! $lines) {
+                return null;
+            }
+
+            return $this->createDraft(['service_request_id' => $sr->id, 'branch_id' => $sr->branch_id], $sr->customer, $sr->organization, $lines);
         });
     }
 

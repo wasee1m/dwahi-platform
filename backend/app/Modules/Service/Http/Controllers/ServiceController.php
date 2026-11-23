@@ -7,6 +7,7 @@ use App\Modules\Platform\Models\Branch;
 use App\Modules\Platform\Models\Setting;
 use App\Modules\Service\Http\ServicePresenter;
 use App\Modules\Service\Models\ServiceRequest;
+use App\Modules\Service\Services\ReviewService;
 use App\Modules\Service\Services\ServiceRequestService;
 use App\Modules\Service\Support\Sla;
 use App\Support\Money;
@@ -114,6 +115,23 @@ class ServiceController
         $user = $this->user($request);
         $data = $request->validate(['reason' => ['nullable', 'string', 'max:500']]);
         $this->service->cancel($this->find($user, $id), $user, $data['reason'] ?? null);
+
+        return $this->show($request, $id);
+    }
+
+    /** US-20، BR-10: تقييم واحد خلال المدة بعد الإغلاق */
+    public function review(Request $request, string $id, ReviewService $reviews): JsonResponse
+    {
+        $user = $this->user($request);
+        $data = $request->validate([
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'timeliness_rating' => ['nullable', 'integer', 'between:1,5'],
+            'quality_rating' => ['nullable', 'integer', 'between:1,5'],
+            'communication_rating' => ['nullable', 'integer', 'between:1,5'],
+            'comment' => ['nullable', 'string', 'max:2000'],
+            'publish_consent' => ['nullable', 'boolean'],
+        ]);
+        $reviews->submit($this->find($user, $id), $user, $data);
 
         return $this->show($request, $id);
     }

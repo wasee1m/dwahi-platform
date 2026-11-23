@@ -8,6 +8,7 @@ import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/media.dart';
 import '../../core/service_strings.dart';
+import 'service_completion.dart';
 import '../../core/strings.dart';
 import '../account/account_common.dart';
 import '../catalog/catalog_screens.dart';
@@ -330,6 +331,8 @@ class ServiceDetailScreen extends ConsumerWidget {
               for (final w in orders.where((w) => w['scheduled_start'] != null && w['status'] != 'cancelled'))
                 Text(formatDateTime(w['scheduled_start'] as String, lang)),
               if (r['cancel_reason'] != null) Text(r['cancel_reason'] as String, style: t.bodySmall),
+              if (r['completion'] is Map)
+                ServiceCompletion(id: id, data: (r['completion'] as Map).cast<String, dynamic>(), onChanged: () => ref.invalidate(serviceProvider(id))),
               const SizedBox(height: 16),
               if (r['can_cancel'] == true)
                 TextButton(

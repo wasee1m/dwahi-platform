@@ -25,6 +25,7 @@ use App\Modules\Quoting\Events\QuotingEvent;
 use App\Modules\Service\Console\ServiceJobs;
 use App\Modules\Service\Events\ServiceEvent;
 use App\Modules\Service\Listeners\EstimateResponses;
+use App\Modules\Service\Listeners\ServiceInvoices;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
@@ -81,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(QuotingEvent::class, QuoteAccepted::class);
         Event::listen(OrderEvent::class, OrderNotifications::class);
         Event::listen(InvoiceIssued::class, [OrderNotifications::class, 'invoiceIssued']);
+        Event::listen(InvoiceIssued::class, ServiceInvoices::class);
         $this->commands([AccountJobs::class, OrderJobs::class, ServiceJobs::class]);
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService

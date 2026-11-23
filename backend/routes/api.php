@@ -41,6 +41,7 @@ use App\Modules\Platform\Http\Controllers\FileController;
 use App\Modules\Quoting\Http\Controllers\Admin\QuotationAdminController;
 use App\Modules\Quoting\Http\Controllers\Admin\RfqAdminController;
 use App\Modules\Quoting\Http\Controllers\RfqController;
+use App\Modules\Service\Http\Controllers\Admin\CompletionAdminController;
 use App\Modules\Service\Http\Controllers\Admin\ServiceAdminController;
 use App\Modules\Service\Http\Controllers\Admin\WorkOrderAdminController;
 use App\Modules\Service\Http\Controllers\ServiceController;
@@ -162,6 +163,7 @@ Route::prefix('v1')->group(function () {
             Route::post('service-requests', [ServiceController::class, 'store'])->middleware('throttle:orders');
             Route::get('service-requests/{id}', [ServiceController::class, 'show']);
             Route::post('service-requests/{id}/cancel', [ServiceController::class, 'cancel']);
+            Route::post('service-requests/{id}/review', [ServiceController::class, 'review']);
         });
 
         // C-20: حقوق البيانات لا تنتظر إكمال الملف
@@ -192,6 +194,7 @@ Route::prefix('v1')->group(function () {
         Route::get('tasks', [TechController::class, 'tasks']);
         Route::get('tasks/by-tag/{number}', [TechController::class, 'byTag']);
         Route::get('tasks/{id}', [TechController::class, 'show']);
+        Route::get('history', [TechController::class, 'history']);
         Route::get('parts', [TechController::class, 'parts']);
         Route::post('uploads', [FileController::class, 'upload'])->middleware('throttle:uploads');
         Route::post('sync/events', [TechController::class, 'syncEvents']);
@@ -265,6 +268,8 @@ Route::prefix('v1')->group(function () {
             Route::get('work-orders/{id}', [WorkOrderAdminController::class, 'show']);
             Route::post('work-orders/{id}/schedule', [WorkOrderAdminController::class, 'schedule']);
             Route::post('work-orders/{id}/cancel', [WorkOrderAdminController::class, 'cancel']);
+            Route::post('additional-work/{id}/reject', [CompletionAdminController::class, 'rejectAdditional']);
+            Route::post('additional-work/{id}/estimate', [CompletionAdminController::class, 'estimateAdditional']);
             Route::get('dispatch', [WorkOrderAdminController::class, 'board']);
         });
         // A-22 الاستلام في الورشة (منسق، مدير)
@@ -273,6 +278,13 @@ Route::prefix('v1')->group(function () {
             Route::post('service-requests/{id}/intake', [ServiceAdminController::class, 'intake']);
             Route::get('service-requests/{id}/receipt', [ServiceAdminController::class, 'receipt']);
             Route::get('intakes/{number}', [ServiceAdminController::class, 'byCard']);
+            Route::get('handovers', [CompletionAdminController::class, 'handovers']);
+            Route::post('service-requests/{id}/handover', [CompletionAdminController::class, 'handOver']);
+        });
+        // A-09: التحقق والإغلاق (FR-WO-05)
+        Route::middleware('can:workorder.verify')->group(function () {
+            Route::post('work-orders/{id}/verify', [CompletionAdminController::class, 'verify']);
+            Route::post('work-orders/{id}/return', [CompletionAdminController::class, 'returnToTechnician']);
         });
 
         // A-13: المالية (محاسب، مدير)
@@ -388,6 +400,8 @@ Route::prefix('v1')->group(function () {
             Route::get('branches', [BranchAdminController::class, 'index']);
             Route::post('branches', [BranchAdminController::class, 'save']);
             Route::put('branches/{id}', [BranchAdminController::class, 'save']);
+            Route::get('test-templates', [CompletionAdminController::class, 'templates']);
+            Route::put('test-templates/{id}', [CompletionAdminController::class, 'updateTemplate']);
         });
     });
 });

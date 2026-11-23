@@ -87,6 +87,13 @@ final class ApiErrorRenderer
         'NO_HOUR_METER' => ['ar' => 'المكوّن المنفصل بلا عداد ساعات.', 'en' => 'A separate component has no hour meter.'],
         'UNKNOWN_EVENT' => ['ar' => 'نوع حدث غير معروف. حدّث التطبيق.', 'en' => 'Unknown event type. Update the app.'],
         'NOT_YOUR_TASK' => ['ar' => 'لا مهمة مسندة إليك على هذه المعدة.', 'en' => 'No task on this item is assigned to you.'],
+        // الإنجاز والتسليم (S9)
+        'LEAD_ONLY' => ['ar' => 'الفني الرئيسي وحده يُنهي المهمة.', 'en' => 'Only the lead technician can finish the task.'],
+        'CHECKLIST_INCOMPLETE' => ['ar' => 'قائمة التحقق قبل الإنهاء غير مكتملة (BR-07).', 'en' => 'The checklist before finishing is not complete (BR-07).'],
+        'REASON_REQUIRED' => ['ar' => 'اكتب السبب.', 'en' => 'Enter the reason.'],
+        'ALREADY_HANDED_OVER' => ['ar' => 'سُلّم هذا الطلب للعميل من قبل.', 'en' => 'This request was already handed over.'],
+        'ALREADY_REVIEWED' => ['ar' => 'قيّمت هذا الطلب من قبل.', 'en' => 'You have already rated this request.'],
+        'REVIEW_CLOSED' => ['ar' => 'انتهت مدة التقييم لهذا الطلب.', 'en' => 'The rating period for this request has ended.'],
     ];
 
     /** رسالة الرمز بلغة الطلب (لنتائج المزامنة التي لا تمر بالاستجابة نفسها) */

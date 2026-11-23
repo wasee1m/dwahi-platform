@@ -4,20 +4,35 @@ namespace App\Modules\Service\Console;
 
 use App\Modules\Service\Events\ServiceEvent;
 use App\Modules\Service\Models\ServiceRequest;
+use App\Modules\Service\Services\ReviewService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-/** J-04 (02 §9): تنبيه واحد لكل طلب صيانة تجاوز مهلة الفرز دون فرز (BR-09، N-09). متكرر الأمان. */
+/**
+ * مهام الصيانة (02 §9)، كلها متكررة الأمان: J-04 تنبيه واحد لكل طلب تجاوز مهلة الفرز (BR-09، N-09)،
+ * و J-05 دعوة التقييم (N-15)، و J-12 تذكير الاستلام من الورشة (BR-20، N-12).
+ */
 class ServiceJobs extends Command
 {
-    protected $signature = 'service:run {job : sla}';
+    protected $signature = 'service:run {job : sla|reviews|pickup}';
 
-    protected $description = 'J-04 alert on service requests past their triage SLA';
+    protected $description = 'J-04 triage SLA alert, J-05 review invitations, J-12 pickup reminders';
 
-    public function handle(): int
+    public function handle(ReviewService $reviews): int
     {
-        if ($this->argument('job') !== 'sla') {
-            $this->error('job must be sla');
+        $job = $this->argument('job');
+        if ($job === 'reviews') {
+            $this->info('invited '.$reviews->inviteDue());
+
+            return self::SUCCESS;
+        }
+        if ($job === 'pickup') {
+            $this->info('reminded '.$reviews->remindPickups());
+
+            return self::SUCCESS;
+        }
+        if ($job !== 'sla') {
+            $this->error('job must be sla, reviews or pickup');
 
             return self::FAILURE;
         }

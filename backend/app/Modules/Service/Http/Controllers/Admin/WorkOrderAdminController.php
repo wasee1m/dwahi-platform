@@ -49,7 +49,7 @@ class WorkOrderAdminController
     public function show(string $id): JsonResponse
     {
         abort_unless(Str::isUuid($id), 404);
-        $wo = WorkOrder::query()->with([...self::WITH, 'events.actor', 'quotation'])->findOrFail($id);
+        $wo = WorkOrder::query()->with([...self::WITH, 'events.actor', 'quotation.items'])->findOrFail($id);
 
         return response()->json(['data' => ServicePresenter::workOrderDetail($wo)]);
     }

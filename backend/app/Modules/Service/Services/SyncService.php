@@ -20,9 +20,9 @@ final class SyncService
     /** انحراف ساعة الجهاز المقبول قبل استبداله بوقت الاستلام */
     private const MAX_SKEW_SECONDS = 300;
 
-    public const TYPES = ['status_changed', 'photo_added', 'note_added', 'part_used', 'part_removed', 'hour_meter_recorded'];
+    public const TYPES = ['status_changed', 'photo_added', 'note_added', 'part_used', 'part_removed', 'hour_meter_recorded', 'test_recorded', 'additional_work_requested', 'report_submitted'];
 
-    public function __construct(private readonly ExecutionService $exec) {}
+    public function __construct(private readonly ExecutionService $exec, private readonly CompletionService $completion) {}
 
     /**
      * @param  list<array{client_event_id: string, work_order_id: string, type: string, occurred_at: string, payload?: array<string, mixed>}>  $events
@@ -81,7 +81,7 @@ final class SyncService
             'status_changed' => match ($p['to'] ?? null) {
                 'in_progress' => $this->exec->start($wo, $user, $at, $e['client_event_id']),
                 'on_hold' => $this->exec->hold($wo, $user, (string) ($p['reason'] ?? ''), $at, $e['client_event_id'], $p['note'] ?? null),
-                default => throw new ApiProblem('INVALID_TRANSITION', 409), // الإنهاء (work_completed) مع S9
+                default => throw new ApiProblem('INVALID_TRANSITION', 409), // الإنهاء بحدث report_submitted
             },
             'photo_added' => $this->exec->addPhoto($wo, $user, (string) ($p['attachment_id'] ?? ''), (string) ($p['phase'] ?? ''), $p['caption'] ?? null, $at),
             'note_added' => $this->exec->addNote($wo, $user, $p['body'] ?? null, $p['voice_attachment_id'] ?? null, $at, $p['id'] ?? null),
@@ -91,6 +91,9 @@ final class SyncService
             ], $at),
             'part_removed' => $this->exec->removePart($wo, $user, (string) ($p['id'] ?? ''), $at),
             'hour_meter_recorded' => $this->exec->recordMeter($wo, $user, (int) ($p['reading'] ?? -1) >= 0 ? (int) $p['reading'] : throw ValidationException::withMessages(['reading' => [__('validation.required', ['attribute' => 'reading'])]]), $p['photo_id'] ?? null, $at),
+            'test_recorded' => $this->completion->recordTest($wo, $user, $p, $at),
+            'additional_work_requested' => $this->completion->requestAdditional($wo, $user, $p, $at, $e['client_event_id']),
+            'report_submitted' => $this->completion->finish($wo, $user, $p, $at, $e['client_event_id']),
             default => throw new ApiProblem('UNKNOWN_EVENT', 422),
         };
     }

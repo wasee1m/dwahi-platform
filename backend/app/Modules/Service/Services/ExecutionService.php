@@ -67,7 +67,7 @@ final class ExecutionService
     }
 
     /** 5.8: إيقاف مؤقت بسبب من القائمة، ويتوقف الوقت لكل الفريق (N-13 للمنسق) */
-    public function hold(WorkOrder $wo, User $user, string $reason, CarbonInterface $at, ?string $clientEventId = null, ?string $note = null): WorkOrder
+    public function hold(WorkOrder $wo, User $user, string $reason, CarbonInterface $at, ?string $clientEventId = null, ?string $note = null, bool $announce = true): WorkOrder
     {
         if (! in_array($reason, self::HOLD_REASONS, true)) {
             throw ValidationException::withMessages(['reason' => [__('validation.in', ['attribute' => 'reason'])]]);
@@ -78,12 +78,14 @@ final class ExecutionService
                 throw new ApiProblem('INVALID_TRANSITION', 409, null, ['from' => $wo->status, 'to' => 'on_hold']);
             }
             $wo->update(['status' => 'on_hold', 'on_hold_reason' => $reason]);
-            DB::table('time_entries')->where('work_order_id', $wo->id)->whereNull('ended_at')->update(['ended_at' => self::ts($at)]);
+            self::closeEntries($wo->id, $at);
             $this->event($wo, $user, 'in_progress', 'on_hold', $note ? "{$reason}: {$note}" : $reason, $at, $clientEventId);
 
             return $wo;
         });
-        ServiceEvent::dispatch(ServiceEvent::WO_ON_HOLD, $wo->serviceRequest, $user, $reason, $wo);
+        if ($announce) {
+            ServiceEvent::dispatch(ServiceEvent::WO_ON_HOLD, $wo->serviceRequest, $user, $reason, $wo);
+        }
 
         return $wo;
     }
@@ -203,6 +205,16 @@ final class ExecutionService
         });
     }
 
+    /**
+     * إغلاق فترات العمل المفتوحة عند وقت الحدث. الفترة التي بدأت بعده (فتحها الخادم عند الإعادة 5.11، ووقت الجهاز أسبق) فارغة فتُحذف.
+     */
+    public static function closeEntries(string $workOrderId, CarbonInterface $at): void
+    {
+        $ts = self::ts($at);
+        DB::table('time_entries')->where('work_order_id', $workOrderId)->whereNull('ended_at')->where('started_at', '>=', $ts)->delete();
+        DB::table('time_entries')->where('work_order_id', $workOrderId)->whereNull('ended_at')->update(['ended_at' => $ts]);
+    }
+
     /** وقت العمل بالثواني من فترات الحالة (المفتوحة حتى الآن) */
     public static function workedSeconds(string $workOrderId, ?string $technicianId = null): int
     {
@@ -211,7 +223,7 @@ final class ExecutionService
             ->selectRaw('COALESCE(SUM(TIMESTAMPDIFF(SECOND, started_at, COALESCE(ended_at, ?))), 0) AS s', [self::ts(now())])->value('s');
     }
 
-    private function lockAssigned(WorkOrder $wo, User $user): WorkOrder
+    public function lockAssigned(WorkOrder $wo, User $user): WorkOrder
     {
         $wo = WorkOrder::query()->lockForUpdate()->findOrFail($wo->id);
         if (! $this->isAssigned($wo, $user)) {
@@ -229,14 +241,14 @@ final class ExecutionService
         }
     }
 
-    private function ownUpload(string $attachmentId, User $user): void
+    public function ownUpload(string $attachmentId, User $user): void
     {
         if (! DB::table('attachments')->where('id', $attachmentId)->where('uploaded_by', $user->id)->exists()) {
             throw ValidationException::withMessages(['attachment_id' => [__('validation.exists', ['attribute' => 'attachment'])]]);
         }
     }
 
-    private function event(WorkOrder $wo, User $actor, string $from, string $to, ?string $reason, CarbonInterface $at, ?string $clientEventId): void
+    public function event(WorkOrder $wo, User $actor, string $from, string $to, ?string $reason, CarbonInterface $at, ?string $clientEventId): void
     {
         DB::table('work_order_status_events')->insert([
             'id' => (string) Str::uuid7(), 'work_order_id' => $wo->id, 'from_status' => $from, 'to_status' => $to, 'actor_user_id' => $actor->id,

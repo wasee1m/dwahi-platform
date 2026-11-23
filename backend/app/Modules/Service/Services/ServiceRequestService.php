@@ -28,7 +28,11 @@ use Illuminate\Validation\ValidationException;
  */
 final class ServiceRequestService
 {
-    public function __construct(private readonly QuotationService $quotes, private readonly WorkOrderService $workOrders) {}
+    public function __construct(
+        private readonly QuotationService $quotes,
+        private readonly WorkOrderService $workOrders,
+        private readonly VerificationService $verification,
+    ) {}
 
     /**
      * 4.1: الإنشاء من العميل، أو من الموظف لعميل حاضر (walk_in). معدة من الأسطول، أو إضافة سريعة لها، أو مكوّن منفصل.
@@ -210,7 +214,13 @@ final class ServiceRequestService
     public function onQuote(QuotingEvent $e): void
     {
         $rfq = $e->rfq;
-        if ($rfq->type !== 'service' || $rfq->is_additional || ! $rfq->service_request_id) {
+        if ($rfq->type !== 'service' || ! $rfq->service_request_id) {
+            return;
+        }
+        if ($rfq->is_additional) {
+            $sr = ServiceRequest::query()->findOrFail($rfq->service_request_id);
+            $this->verification->onAdditionalQuote($e, $e->type === QuotingEvent::QUOTATION_SENT && $e->quotation && $this->withinPreapproval($sr, $e->quotation));
+
             return;
         }
         $to = match ($e->type) {

@@ -29,7 +29,35 @@ export type ServiceDetail = ServiceRow & {
   estimate: { rfq_id: string; rfq_status: string; quotation: { id: string; number: string | null; status: string; total: Money | null } | null } | null;
   work_orders: WorkOrderRow[];
   can_cancel: boolean;
+  completion?: CustomerCompletion;
   equipment_history?: { id: string; number: string; status: ServiceStatus; created_at: string | null }[];
+};
+
+/** S9: تقرير الفني ونتائج الاختبار والعمل الإضافي لكل أمر عمل */
+export type TestField = { key: string; label_ar: string; label_en: string; type: "number" | "boolean"; unit?: string | null; min?: number | null; max?: number | null; expect?: boolean | null };
+export type WorkReport = {
+  findings: string; actions_taken: string; recommendations: string | null; hour_meter_reading: number | null;
+  no_parts_used: boolean; submitted_at: string | null; pdf_url: string | null;
+};
+export type TestResult = { id: string; template: string | null; result: "pass" | "fail"; values: Record<string, number | boolean>; fields: TestField[]; notes: string | null; tested_at: string | null };
+export type AdditionalWork = {
+  id: string; description: string; parts_needed: string | null; estimated_amount: Money | null; status: "pending" | "quoted" | "approved" | "rejected";
+  blocks_work: boolean; rejection_reason: string | null; requested_at: string | null; by: string | null; rfq_id: string | null; photos: (string | null)[];
+  quotation: { id: string; number: string | null; status: string; total: Money } | null;
+};
+export type WorkOrderCompletion = {
+  report: WorkReport | null; tests: (TestResult & { media_url: string | null })[]; additional: AdditionalWork[];
+  checklist: Record<string, boolean> | null; no_charge_reason: string | null;
+};
+/** للعميل (C-17) */
+export type CustomerCompletion = {
+  reports: { work_order: string; type: string; no_charge: boolean; report: WorkReport | null; tests: TestResult[]; before: string[]; after: string[] }[];
+  additional: AdditionalWork[];
+  pickup: { due: Money; invoice_id: string | null; invoice_number: string | null; ready_since: string | null } | null;
+  handover: { handed_over_at: string | null; receiver_name: string; receipt_url: string | null } | null;
+  invoice: { id: string; number: string | null; status: string; total: Money } | null;
+  review: { rating: number; comment: string | null } | null;
+  can_review: boolean; review_until: string | null;
 };
 
 export type ServiceMeta = {

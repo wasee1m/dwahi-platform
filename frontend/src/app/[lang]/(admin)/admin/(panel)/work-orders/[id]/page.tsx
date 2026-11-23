@@ -7,7 +7,8 @@ import { getAppDictionary } from "@/i18n/get-dictionary";
 import { authed } from "@/lib/auth/client";
 import { formatMoney } from "@/lib/format";
 import type { Money } from "@/lib/types";
-import { SERVICE_COLOR, type ServiceRow, type WorkOrderRow } from "@/lib/service-types";
+import { SERVICE_COLOR, type ServiceRow, type WorkOrderCompletion, type WorkOrderRow } from "@/lib/service-types";
+import { AdditionalActions, VerifyActions } from "../CompletionForms";
 import { CancelWorkOrder, ScheduleForm } from "../ScheduleForm";
 
 // A-09 تفاصيل أمر العمل: الخط الزمني للحالات، والطلب والاستلام، والتقدير المعتمد، والجدولة والإلغاء
@@ -25,6 +26,8 @@ type Detail = WorkOrderRow & {
     notes: { id: string; body: string | null; by: string | null; from_previous_technician: boolean; at: string }[];
     readings: { reading: number; needs_review: boolean; at: string | null }[];
   };
+  completion: WorkOrderCompletion;
+  approved_scope: { description: string; quantity: string; total: Money }[];
 };
 
 /** ساعات:دقائق */
@@ -88,6 +91,7 @@ async function View({ params }: { params: Props["params"] }) {
             {w.technicians.length > 0 && <p className="mt-2">{a.technicians}: {w.technicians.map((x) => `${x.name}${x.role === "lead" ? ` (${a.lead})` : ""}`).join("، ")}</p>}
           </section>
           <Execution w={w} a={a} time={time} lang={lang} />
+          <Completion w={w} a={a} time={time} lang={lang} />
           <section className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
             <h2 className="text-lg">{a.timeline}</h2>
             <ol className="mt-3 space-y-2 border-s-2 border-sand-300 ps-4">
@@ -104,6 +108,7 @@ async function View({ params }: { params: Props["params"] }) {
             <ScheduleForm lang={lang} t={a} id={w.id} technicians={board.ok ? board.data.technicians : []} rescheduling={w.status === "scheduled"}
               initial={{ lead, assistants: w.technicians.filter((x) => x.role === "assistant").map((x) => x.id), start: localMuscat(w.scheduled_start), hours }} />
           )}
+          {w.status === "work_completed" && <VerifyActions lang={lang} t={a} id={w.id} />}
           {["unassigned", "scheduled", "on_hold"].includes(w.status) && <CancelWorkOrder lang={lang} t={a} id={w.id} />}
           {w.cancel_reason && <p className="rounded-sm bg-sand-200 p-3 text-sm">{a.cancelReason}: {w.cancel_reason}</p>}
         </aside>
@@ -178,6 +183,83 @@ function Execution({ w, a, time, lang }: { w: Detail; a: Dict; time: Intl.DateTi
           )}
         </div>
       )}
+    </section>
+  );
+}
+
+/** US-34: التقرير والاختبارات وقائمة BR-07، ونطاق التقدير المعتمد للمقارنة، والعمل الإضافي بقراره */
+function Completion({ w, a, time, lang }: { w: Detail; a: Dict; time: Intl.DateTimeFormat; lang: "ar" | "en" }) {
+  const c = w.completion;
+  if (!c.report && !c.tests.length && !c.additional.length && !c.checklist) return null;
+  const label = (f: { label_ar: string; label_en: string }) => (lang === "en" ? f.label_en : f.label_ar);
+  return (
+    <section className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
+      <h2 className="text-lg">{a.completion}</h2>
+      <div className="mt-3 space-y-4">
+        {c.checklist && (
+          <div>
+            <h3 className="font-semibold">{a.checklist}</h3>
+            <ul className="mt-1 grid gap-1 sm:grid-cols-2">
+              {Object.entries(c.checklist).map(([k, ok]) => (
+                <li key={k} className={ok ? "" : "text-danger"}>{ok ? "✓" : "✗"} {a.checkItems[k as keyof typeof a.checkItems] ?? k}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {c.report && (
+          <div>
+            <h3 className="font-semibold">{a.report}{c.report.submitted_at && <span className="font-normal text-ink-muted"> · {time.format(new Date(c.report.submitted_at))}</span>}</h3>
+            <p className="mt-1"><b>{a.findings}:</b> <span className="whitespace-pre-line">{c.report.findings}</span></p>
+            {c.report.actions_taken && <p><b>{a.actionsTaken}:</b> <span className="whitespace-pre-line">{c.report.actions_taken}</span></p>}
+            {c.report.recommendations && <p><b>{a.recommendations}:</b> {c.report.recommendations}</p>}
+            {c.report.no_parts_used && <p>{a.noPartsUsed}</p>}
+            {c.report.pdf_url && <a href={c.report.pdf_url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block underline">{a.reportPdf}</a>}
+            {c.no_charge_reason && <p className="mt-1">{a.noChargeDone}: {c.no_charge_reason}</p>}
+          </div>
+        )}
+        {c.tests.length > 0 && (
+          <div>
+            <h3 className="font-semibold">{a.tests}</h3>
+            {c.tests.map((x) => (
+              <div key={x.id} className="mt-1">
+                <p>{x.template} · <b className={x.result === "pass" ? "text-success" : "text-danger"}>{x.result === "pass" ? a.pass : a.fail}</b>
+                  {x.tested_at && <span className="text-ink-muted"> · {time.format(new Date(x.tested_at))}</span>}</p>
+                <ul className="text-xs text-ink-muted">
+                  {x.fields.map((f) => {
+                    const v = x.values[f.key];
+                    return <li key={f.key}>{label(f)}: <span className="num" dir="ltr">{typeof v === "boolean" ? (v ? "✓" : "✗") : v ?? "—"} {f.type === "number" ? f.unit ?? "" : ""}</span></li>;
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+        {w.approved_scope.length > 0 && (
+          <div>
+            <h3 className="font-semibold">{a.approvedScope}</h3>
+            <ul className="mt-1">{w.approved_scope.map((s, n) => <li key={n}>{s.description} × <span className="num">{s.quantity}</span> · {formatMoney(s.total, lang)}</li>)}</ul>
+          </div>
+        )}
+        {c.additional.length > 0 && (
+          <div>
+            <h3 className="font-semibold">{a.additional}</h3>
+            <ul className="mt-1 space-y-3">
+              {c.additional.map((x) => (
+                <li key={x.id} className="rounded-sm border border-sand-300 p-3">
+                  <p className="whitespace-pre-line">{x.description}</p>
+                  {x.parts_needed && <p className="text-ink-muted">{x.parts_needed}</p>}
+                  <p className="text-xs text-ink-muted">{x.by}{x.requested_at && ` · ${time.format(new Date(x.requested_at))}`}
+                    {x.estimated_amount && ` · ${formatMoney(x.estimated_amount, lang)}`}</p>
+                  <p className="mt-1 font-semibold">{a.additionalStatuses[x.status]}{x.blocks_work && x.status === "pending" && ` · ${a.blocksWork}`}</p>
+                  {x.rejection_reason && <p>{a.rejectReason}: {x.rejection_reason}</p>}
+                  {x.quotation && <p><Link href={`/${lang}/admin/quotations/${x.quotation.id}`} className="num underline" dir="ltr">{x.quotation.number ?? a.draft}</Link> · {formatMoney(x.quotation.total, lang)}</p>}
+                  {x.status === "pending" && <AdditionalActions lang={lang} t={a} id={x.id} />}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

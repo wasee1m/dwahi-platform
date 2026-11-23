@@ -38,6 +38,8 @@ class ServiceRequest extends Model
         'cancelled_at' => 'datetime',
         'completed_at' => 'datetime',
         'closed_at' => 'datetime',
+        'pickup_reminded_at' => 'datetime',
+        'review_invited_at' => 'datetime',
     ];
 
     public function personalColumn(): string

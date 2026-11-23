@@ -8,6 +8,7 @@ import 'package:technician_app/core/api.dart';
 import 'package:technician_app/core/outbox.dart';
 import 'package:technician_app/core/tasks.dart';
 import 'package:technician_app/features/auth.dart';
+import 'package:technician_app/features/finish_screens.dart';
 import 'package:technician_app/features/sync_account.dart';
 import 'package:technician_app/features/task_screens.dart';
 
@@ -76,6 +77,10 @@ class FakeApi extends Api {
           d['status'] = e['payload']['to'];
           d['on_hold_reason'] = e['payload']['reason'];
         }
+        if (e['type'] == 'test_recorded' && d is Map<String, dynamic>) {
+          d['tests'] = [...(d['tests'] as List? ?? const []), {'id': e['payload']['id'], 'template': 'x', 'result': e['payload']['local_result'], 'values': e['payload']['values']}];
+        }
+        if (e['type'] == 'report_submitted' && d is Map<String, dynamic>) d['status'] = 'work_completed';
       }
       return {
         'results': [
@@ -394,5 +399,117 @@ void main() {
     final v = TaskView(task(worked: 600), [ev('in_progress', 0), ev('on_hold', 30), ev('in_progress', 60)], fetched);
     expect(v.status, 'in_progress');
     expect(v.worked(fetched.add(const Duration(minutes: 75))).inMinutes, 10 + 30 + 15);
+  });
+
+  Map<String, dynamic> ready({List<Map<String, dynamic>> tests = const []}) => detail({
+        ...task(status: 'in_progress', worked: 3600),
+        'photos': [{'id': 'ph1', 'phase': 'after', 'url': null, 'caption': null, 'taken_at': '2026-11-24T08:00:00Z'}],
+        'parts': [{'id': 'pl1', 'part_id': null, 'part_number': null, 'name': 'جوانات', 'quantity': '2', 'source': 'customer_supplied', 'removed': false}],
+        'meter_recorded': true,
+        'tests': tests,
+        'template': {'id': 'tpl', 'name': 'اختبار تشغيل المعدة', 'fields': [
+          {'key': 'functions_ok', 'label_ar': 'كل الوظائف تعمل', 'label_en': 'All functions work', 'type': 'boolean', 'expect': true},
+          {'key': 'run_minutes', 'label_ar': 'مدة التشغيل', 'label_en': 'Run time', 'type': 'number', 'unit': 'min', 'min': 10},
+        ]},
+      });
+
+  testWidgets('T-09: the test result is evaluated on the device and finishing waits for the BR-07 checklist', (tester) async {
+    tall(tester);
+    final api = FakeApi(responses(d: ready()));
+    final store = MemoryOutboxStore();
+    await tester.pumpWidget(app(api, store, const FinishScreen('w1')));
+    await tester.pumpAndSettle();
+    expect(find.text('كل الوظائف تعمل'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.byKey(const Key('confirm-finish'))).onPressed, isNull);
+
+    // قيمة خارج الحدود: فاشل
+    await tester.tap(find.descendant(of: find.byKey(const Key('test-functions_ok')), matching: find.text('نعم')));
+    await tester.enterText(find.byKey(const Key('test-run_minutes')), '5');
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('record-test')));
+    await tester.pumpAndSettle();
+    expect(api.sentEvents.last['type'], 'test_recorded');
+    expect(api.sentEvents.last['payload']['values'], {'functions_ok': true, 'run_minutes': 5});
+    expect(find.textContaining('الاختبار فاشل'), findsOneWidget);
+
+    await tester.enterText(find.byKey(const Key('test-run_minutes')), '20');
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('record-test')));
+    await tester.pumpAndSettle();
+    expect(api.sentEvents.last['payload']['local_result'], 'pass');
+
+    await tester.enterText(find.byKey(const Key('findings')), 'تلف الجوانات');
+    await tester.pump();
+    expect(tester.widget<FilledButton>(find.byKey(const Key('confirm-finish'))).onPressed, isNull, reason: 'الأعمال المنفذة مطلوبة');
+    await tester.enterText(find.byKey(const Key('actions')), 'تغيير الجوانات');
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('confirm-finish')));
+    await tester.pumpAndSettle();
+    expect(api.sentEvents.last['type'], 'report_submitted');
+    expect(api.sentEvents.last['payload']['findings'], 'تلف الجوانات');
+  });
+
+  testWidgets('T-09: an assistant sees the checklist but cannot finish', (tester) async {
+    tall(tester);
+    final api = FakeApi(responses(d: {...ready(tests: [{'id': 't1', 'template': 'x', 'result': 'pass', 'values': {}}]), 'my_role': 'assistant'}));
+    await tester.pumpWidget(app(api, MemoryOutboxStore(), const FinishScreen('w1')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('findings')), 'x');
+    await tester.enterText(find.byKey(const Key('actions')), 'y');
+    await tester.pump();
+    expect(find.text('الفني الرئيسي وحده يُنهي المهمة.'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.byKey(const Key('confirm-finish'))).onPressed, isNull);
+  });
+
+  testWidgets('T-08: additional work with "pause awaiting approval" pauses the task at once', (tester) async {
+    tall(tester);
+    final api = FakeApi(responses(d: detail({...task(status: 'in_progress')})));
+    final store = MemoryOutboxStore();
+    await tester.pumpWidget(app(api, store, const TaskScreen('w1'), extra: [photoPickerProvider.overrideWithValue(() async => '/tmp/crack.jpg')]));
+    await tester.pumpAndSettle();
+    api.offline = true; // يبقى في الصندوق ليظهر العرض المتفائل
+    await tester.tap(find.byKey(const Key('additional')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('add-desc')), 'شرخ في عمود السلندر');
+    await tester.tap(find.text('صورة').last);
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('add-hold')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('add-send')));
+    await tester.pumpAndSettle();
+    final e = store.saved.single;
+    expect(e.type, 'additional_work_requested');
+    expect(e.payload['hold'], isTrue);
+    expect(e.localFile, '/tmp/crack.jpg');
+    expect(find.text('متوقفة'), findsOneWidget);
+    expect(find.textContaining('بانتظار موافقة'), findsWidgets);
+    expect(find.text('شرخ في عمود السلندر'), findsOneWidget);
+  });
+
+  testWidgets('T-10: history shows weekly hours, returned tasks and completed ones', (tester) async {
+    final api = FakeApi({
+      '/tech/history': {
+        'completed': [{...task(id: 'w3', status: 'verified'), 'completed_at': '2026-11-20T10:00:00Z'}],
+        'days': [{'date': '2026-11-22', 'seconds': 5400}],
+        'weeks': [{'week_start': '2026-11-21', 'seconds': 5400}],
+        'returned': [{'id': 'w1', 'number': 'WO-2026-000001', 'note': 'صورة العداد غير واضحة', 'at': '2026-11-23T09:00:00Z'}],
+      },
+    });
+    await tester.pumpWidget(app(api, MemoryOutboxStore(), const HistoryScreen()));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('1:30'), findsNWidgets(2));
+    expect(find.text('صورة العداد غير واضحة'), findsOneWidget);
+    expect(find.textContaining('WO-2026-000003'), findsOneWidget);
+  });
+
+  test('the test rule matches the server: numbers within limits, yes/no as expected', () {
+    final fields = [
+      {'key': 'p', 'type': 'number', 'min': 150, 'max': 400},
+      {'key': 'leak', 'type': 'boolean', 'expect': false},
+    ];
+    expect(evaluateTest(fields, {'p': 200, 'leak': false}), 'pass');
+    expect(evaluateTest(fields, {'p': 100, 'leak': false}), 'fail');
+    expect(evaluateTest(fields, {'p': 200, 'leak': true}), 'fail');
+    expect(evaluateTest(fields, {'p': 200}), 'fail');
   });
 }

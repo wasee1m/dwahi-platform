@@ -108,3 +108,43 @@ export async function findByCard(form: FormData) {
   }
   redirect(`/${l}/admin/workshop-desk?q=${encodeURIComponent(str(form, "q"))}`);
 }
+
+/** A-09 (US-34): الاعتماد، و"بلا تكلفة" بسبب، والإعادة للفني بملاحظة، وقرار العمل الإضافي (4a) */
+export async function completionStep(_prev: AdminState, form: FormData): Promise<AdminState> {
+  const l = lang(form);
+  const id = str(form, "id");
+  const op = str(form, "op");
+  if (!uuid.test(id)) return {};
+  if (op === "estimate_additional") {
+    const r = await authed<{ quotation_id: string }>("admin", l, `/admin/additional-work/${id}/estimate`, { method: "POST" });
+    if (!r.ok) return fail(r.error);
+    redirect(`/${l}/admin/quotations/${r.data.quotation_id}`);
+  }
+  const calls: Record<string, [string, Record<string, unknown>]> = {
+    verify: [`/admin/work-orders/${id}/verify`, {}],
+    no_charge: [`/admin/work-orders/${id}/verify`, { no_charge: true, reason: str(form, "reason") }],
+    return: [`/admin/work-orders/${id}/return`, { note: str(form, "note") }],
+    reject_additional: [`/admin/additional-work/${id}/reject`, { reason: str(form, "reason") }],
+  };
+  if (!calls[op]) return {};
+  const r = await authed("admin", l, calls[op][0], { method: "POST", body: calls[op][1] });
+  if (!r.ok) return fail(r.error);
+  revalidatePath(`/${l}/admin/work-orders`, "layout");
+  return { ok: true, message: op };
+}
+
+/** A-22 (US-49): الدفعة بالمتبقي والتوقيع والاسم في خطوة واحدة (BR-20) */
+export async function handOverItem(_prev: AdminState & { receipt?: string | null }, form: FormData): Promise<AdminState & { receipt?: string | null }> {
+  const l = lang(form);
+  const id = str(form, "id");
+  if (!uuid.test(id)) return {};
+  const amount = str(form, "amount");
+  const body = {
+    receiver_name: str(form, "receiver_name"), receiver_phone: opt(form, "receiver_phone"), signature_id: str(form, "signature_id"),
+    payment: amount && Number(amount) > 0 ? { method: str(form, "method"), amount, reference_text: opt(form, "reference_text") } : null,
+  };
+  const r = await authed<{ receipt_url: string | null }>("admin", l, `/admin/service-requests/${id}/handover`, { method: "POST", body });
+  if (!r.ok) return fail(r.error);
+  revalidatePath(`/${l}/admin/workshop-desk`, "layout");
+  return { ok: true, receipt: r.data.receipt_url };
+}

@@ -35,3 +35,21 @@ export async function cancelServiceRequest(_prev: ServiceState, form: FormData):
   revalidatePath(`/${l}/account`, "layout");
   return { ok: true };
 }
+
+/** US-20، BR-10: تقييم واحد بعد الإغلاق خلال المدة */
+export async function reviewService(_prev: ServiceState, form: FormData): Promise<ServiceState> {
+  const l = toLocale(String(form.get("lang")));
+  const id = String(form.get("id") ?? "");
+  if (!/^[0-9a-f-]{36}$/i.test(id)) return {};
+  const n = (k: string) => (form.get(k) ? Number(form.get(k)) : null);
+  const r = await authed("customer", l, `/me/service-requests/${id}/review`, {
+    method: "POST",
+    body: {
+      rating: n("rating"), timeliness_rating: n("timeliness_rating"), quality_rating: n("quality_rating"), communication_rating: n("communication_rating"),
+      comment: String(form.get("comment") ?? "").trim() || null, publish_consent: form.get("publish_consent") === "on",
+    },
+  });
+  if (!r.ok) return fail(r.error);
+  revalidatePath(`/${l}/account/service/${id}`);
+  return { ok: true };
+}

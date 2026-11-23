@@ -63,22 +63,47 @@ class TaskView {
   bool get assigned => server['my_role'] != null;
   DateTime? get scheduledStart => server['scheduled_start'] == null ? null : DateTime.parse(server['scheduled_start'] as String);
 
-  Iterable<OutboxEvent> get _statusEvents => pending.where((e) => e.type == 'status_changed');
+  bool get isLead => server['my_role'] == 'lead';
+
+  /// انتقالات الحالة من أحداث الجهاز: البدء والإيقاف، والإنهاء (report_submitted)، والعمل الإضافي مع الإيقاف
+  Iterable<({String to, String? reason, DateTime at})> get _transitions sync* {
+    for (final e in pending) {
+      if (e.type == 'status_changed') {
+        yield (to: '${e.payload['to']}', reason: e.payload['reason'] as String?, at: e.occurredAt);
+      } else if (e.type == 'report_submitted') {
+        yield (to: 'work_completed', reason: null, at: e.occurredAt);
+      } else if (e.type == 'additional_work_requested' && e.payload['hold'] == true) {
+        yield (to: 'on_hold', reason: 'awaiting_approval', at: e.occurredAt);
+      }
+    }
+  }
 
   String get status {
     var s = serverStatus;
-    for (final e in _statusEvents) {
-      s = e.payload['to'] as String? ?? s;
+    for (final t in _transitions) {
+      if (t.to == 'on_hold' && s != 'in_progress') continue; // الإيقاف من جارية فقط
+      s = t.to;
     }
     return s;
   }
 
   String? get holdReason {
     String? r = server['on_hold_reason'] as String?;
-    for (final e in _statusEvents) {
-      r = e.payload['to'] == 'on_hold' ? e.payload['reason'] as String? : null;
+    var s = serverStatus;
+    for (final t in _transitions) {
+      if (t.to == 'on_hold' && s != 'in_progress') continue;
+      s = t.to;
+      r = t.to == 'on_hold' ? t.reason : null;
     }
     return r;
+  }
+
+  /// ملاحظة المنسق عند إعادة المهمة (5.11)، ما دامت جارية
+  String? get returnedNote {
+    final events = (server['events'] as List? ?? const []).cast<Map<String, dynamic>>();
+    if (events.isEmpty || status != 'in_progress') return null;
+    final last = events.last;
+    return last['to'] == 'in_progress' && last['reason'] != null ? '${last['reason']}' : null;
   }
 
   bool get hasPending => pending.any((e) => e.appliedAt == null);
@@ -87,10 +112,10 @@ class TaskView {
   Duration worked(DateTime now) {
     var seconds = (server['worked_seconds'] as num? ?? 0).toInt();
     DateTime? since = serverStatus == 'in_progress' ? fetchedAt : null;
-    for (final e in _statusEvents) {
-      if (e.payload['to'] == 'in_progress' && since == null) since = e.occurredAt;
-      if (e.payload['to'] == 'on_hold' && since != null) {
-        seconds += e.occurredAt.difference(since).inSeconds.clamp(0, 1 << 31);
+    for (final t in _transitions) {
+      if (t.to == 'in_progress' && since == null) since = t.at;
+      if (t.to != 'in_progress' && since != null) {
+        seconds += t.at.difference(since).inSeconds.clamp(0, 1 << 31);
         since = null;
       }
     }
@@ -139,6 +164,57 @@ class TaskView {
   }
 
   bool get meterPending => pending.any((e) => e.type == 'hour_meter_recorded');
+
+  bool get meterRecorded => server['meter_recorded'] == true || meterPending;
+
+  Map<String, dynamic>? get template => (server['template'] as Map?)?.cast<String, dynamic>();
+
+  /// نتائج الاختبار: من الخادم، ثم ما سُجل على الجهاز بنتيجته المحسوبة محلياً (الخادم يعيد الحساب)
+  List<Map<String, dynamic>> get tests => [
+        ...(server['tests'] as List? ?? const []).cast<Map<String, dynamic>>(),
+        for (final e in pending.where((e) => e.type == 'test_recorded'))
+          {'id': e.payload['id'], 'template': template?['name'], 'result': e.payload['local_result'], 'values': e.payload['values'], 'pending': true},
+      ];
+
+  bool get lastTestPassed => tests.isNotEmpty && tests.last['result'] == 'pass';
+
+  List<Map<String, dynamic>> get additional => [
+        ...(server['additional'] as List? ?? const []).cast<Map<String, dynamic>>(),
+        for (final e in pending.where((e) => e.type == 'additional_work_requested'))
+          {'id': e.payload['id'], 'description': e.payload['description'], 'parts_needed': e.payload['parts_needed'], 'status': 'pending', 'pending': true},
+      ];
+
+  Map<String, dynamic>? get report => (server['report'] as Map?)?.cast<String, dynamic>();
+
+  /// قائمة BR-07 (US-29) كما في الخادم: الفحص يحتاج الوقت والعداد فقط
+  Map<String, bool> checklist({bool noPartsUsed = false, DateTime? now}) {
+    final inspection = server['type'] == 'inspection';
+    return {
+      'worked_time': worked(now ?? DateTime.now()).inSeconds > 0,
+      'hour_meter': isComponent || meterRecorded,
+      if (!inspection) ...{
+        'after_photo': photos.any((p) => p['phase'] == 'after'),
+        'parts': noPartsUsed || parts.any((p) => p['removed'] != true),
+        'test_passed': lastTestPassed,
+      },
+    };
+  }
+}
+
+/// نتيجة الاختبار من حدود القالب، بنفس قاعدة الخادم
+String evaluateTest(List<Map<String, dynamic>> fields, Map<String, dynamic> values) {
+  for (final f in fields) {
+    final v = values[f['key']];
+    if ((f['type'] ?? 'number') == 'boolean') {
+      if (v is! bool || v != (f['expect'] ?? true)) return 'fail';
+      continue;
+    }
+    if (v is! num) return 'fail';
+    final min = f['min'] as num?;
+    final max = f['max'] as num?;
+    if ((min != null && v < min) || (max != null && v > max)) return 'fail';
+  }
+  return 'pass';
 }
 
 /// التفاصيل مع الأحداث المعلقة لهذا الأمر

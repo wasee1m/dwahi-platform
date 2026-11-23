@@ -5,12 +5,12 @@ import { Field, inputClass, keepValues, Notice } from "@/components/forms";
 import type { AppDictionary } from "@/i18n/get-dictionary";
 import type { AdminState } from "../../actions";
 import { findCustomer, staffUpload, type Customer } from "../rfq-actions";
-import { receiveItem } from "../service-actions";
+import { handOverItem, receiveItem } from "../service-actions";
 
 type T = AppDictionary["admin"]["service"];
 
 /** لوحة توقيع باللمس أو الفأرة، تُرفع صورة PNG خاصة */
-function SignaturePad({ lang, t, onUploaded }: { lang: string; t: T; onUploaded: (id: string | null) => void }) {
+export function SignaturePad({ lang, t, onUploaded }: { lang: string; t: T; onUploaded: (id: string | null) => void }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
   const [dirty, setDirty] = useState(false);
@@ -186,6 +186,51 @@ export function WalkIn({ lang, t, components, urgencies }: { lang: string; t: T;
       <IntakeFields lang={lang} t={t} equipment={kind === "machine"} onSignature={setSignature} onPhotos={setPhotos} />
       {state.error && <Notice tone="danger">{Object.values(state.fieldErrors ?? {}).flat()[0] ?? state.error.message}</Notice>}
       <button disabled={pending || !signature} className="w-full rounded-sm bg-sun px-4 py-3 font-bold text-on-sun disabled:opacity-50">{t.saveWalkIn}</button>
+    </form>
+  );
+}
+
+type Methods = Record<"cash" | "pos_card" | "bank_transfer" | "cheque", string>;
+
+/** US-49: المستلم وتوقيعه، والدفعة بالمستحق كاملاً إن وُجد، في خطوة واحدة (BR-20)، ثم إيصال التسليم */
+export function HandoverForm({ lang, t, id, due, methods }: { lang: string; t: T; id: string; due: string; methods: Methods }) {
+  const [state, action, pending] = useActionState<AdminState & { receipt?: string | null }, FormData>(handOverItem, {});
+  const [signature, setSignature] = useState<string | null>(null);
+  const paying = Number(due) > 0;
+  const message = state.error ? Object.values(state.fieldErrors ?? {}).flat()[0] ?? state.error.message : null;
+
+  if (state.ok) {
+    return (
+      <Notice tone="success">{t.handedOver}{" "}
+        {state.receipt && <a href={state.receipt} target="_blank" rel="noopener noreferrer" className="font-semibold underline">{t.handoverReceipt}</a>}
+      </Notice>
+    );
+  }
+
+  return (
+    <form action={action} onSubmit={keepValues(action)} className="space-y-3 rounded-md border-2 border-sun bg-sand-0 p-4 text-sm">
+      <input type="hidden" name="lang" value={lang} />
+      <input type="hidden" name="id" value={id} />
+      <input type="hidden" name="signature_id" value={signature ?? ""} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label={t.receiverName}><input name="receiver_name" required minLength={2} maxLength={120} className={inputClass} /></Field>
+        <Field label={t.receiverPhone}><input name="receiver_phone" inputMode="tel" dir="ltr" maxLength={20} className={inputClass} /></Field>
+      </div>
+      {paying ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label={t.paymentMethod}>
+            <select name="method" defaultValue="cash" className={inputClass}>
+              {(Object.keys(methods) as (keyof Methods)[]).map((m) => <option key={m} value={m}>{methods[m]}</option>)}
+            </select>
+          </Field>
+          <Field label={t.amount}><input name="amount" readOnly value={due} dir="ltr" className={`${inputClass} num`} /></Field>
+        </div>
+      ) : <p className="text-ink-muted">{t.noPaymentNeeded}</p>}
+      <SignaturePad lang={lang} t={t} onUploaded={setSignature} />
+      {message && <Notice tone="danger">{message}</Notice>}
+      <button disabled={pending || !signature} className="w-full rounded-sm bg-sun px-4 py-2.5 font-bold text-on-sun disabled:opacity-60">
+        {paying ? t.confirmHandover : t.confirmHandoverFree}
+      </button>
     </form>
   );
 }

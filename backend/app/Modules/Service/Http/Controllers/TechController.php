@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Modules\Parts\Support\PartNumber;
 use App\Modules\Platform\Models\Attachment;
 use App\Modules\Quoting\Models\QuotationItem;
+use App\Modules\Service\Http\CompletionPresenter;
 use App\Modules\Service\Models\ServiceRequest;
 use App\Modules\Service\Models\WorkOrder;
 use App\Modules\Service\Models\WorkOrderEvent;
@@ -14,8 +15,10 @@ use App\Modules\Service\Services\ExecutionService;
 use App\Modules\Service\Services\SyncService;
 use App\Support\ApiProblem;
 use App\Support\Search;
+use Carbon\CarbonInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -97,6 +100,49 @@ class TechController
             'notes' => $notes->map(fn ($n) => ['id' => $n->id, 'body' => $n->body, 'by' => $n->full_name, 'from_previous_technician' => (bool) $n->from_previous_technician,
                 'at' => str_replace(' ', 'T', substr($n->created_at, 0, 19)).'Z'])->values(),
             'events' => $w->events->map(fn (WorkOrderEvent $e) => ['to' => $e->to_status, 'reason' => $e->reason, 'by' => $e->actor?->full_name, 'at' => $e->occurred_at?->toIso8601ZuluString()])->values(),
+            // T-08 و T-09: القالب والاختبارات والتقرير والعمل الإضافي وقائمة BR-07
+            'template' => CompletionPresenter::template($sr),
+            'meter_recorded' => DB::table('hour_meter_readings')->where('work_order_id', $w->id)->exists(),
+        ] + CompletionPresenter::workOrder($w)]);
+    }
+
+    /** T-10: المهام المنجزة، وساعات العمل اليومية والأسبوعية، والمعادة من المنسق */
+    public function history(Request $request): JsonResponse
+    {
+        $user = $this->user($request);
+        $tz = 'Asia/Muscat';
+        $mine = DB::table('work_order_assignments')->where('technician_user_id', $user->id)->select('work_order_id');
+        $done = WorkOrder::query()->whereIn('id', $mine)->whereIn('status', ['work_completed', 'verified', 'closed'])->with(self::WITH)
+            ->orderByDesc('updated_at')->limit(50)->get();
+        $since = now($tz)->startOfWeek(CarbonInterface::SATURDAY)->subWeeks(3)->utc();
+        $entries = DB::table('time_entries')->where('technician_user_id', $user->id)->where('started_at', '>=', ExecutionService::ts($since))
+            ->get(['started_at', 'ended_at']);
+        $days = [];
+        foreach ($entries as $e) {
+            $start = Carbon::parse($e->started_at, 'UTC');
+            $end = $e->ended_at ? Carbon::parse($e->ended_at, 'UTC') : now();
+            $day = $start->copy()->timezone($tz)->toDateString();
+            $days[$day] = ($days[$day] ?? 0) + max(0, (int) $start->diffInSeconds($end));
+        }
+        ksort($days);
+        $weeks = [];
+        foreach ($days as $day => $s) {
+            $week = Carbon::parse($day, $tz)->startOfWeek(CarbonInterface::SATURDAY)->toDateString();
+            $weeks[$week] = ($weeks[$week] ?? 0) + $s;
+        }
+        $returned = DB::table('work_order_status_events as e')->join('work_orders as w', 'w.id', '=', 'e.work_order_id')
+            ->whereIn('e.work_order_id', $mine)->where('e.from_status', 'work_completed')->where('e.to_status', 'in_progress')
+            ->orderByDesc('e.occurred_at')->limit(20)->get(['w.id', 'w.number', 'e.reason', 'e.occurred_at']);
+
+        return response()->json(['data' => [
+            'completed' => $done->map(fn (WorkOrder $w) => $this->row($w, $user) + ['completed_at' => $w->events()->where('to_status', 'work_completed')
+                ->orderByDesc('occurred_at')->value('occurred_at')])->values(),
+            /** @var list<array{date: string, seconds: int}> */
+            'days' => collect($days)->map(fn ($s, $d) => ['date' => (string) $d, 'seconds' => (int) $s])->values()->all(),
+            /** @var list<array{week_start: string, seconds: int}> */
+            'weeks' => collect($weeks)->map(fn ($s, $d) => ['week_start' => (string) $d, 'seconds' => (int) $s])->values()->all(),
+            'returned' => $returned->map(fn ($r) => ['id' => $r->id, 'number' => $r->number, 'note' => $r->reason,
+                'at' => str_replace(' ', 'T', substr((string) $r->occurred_at, 0, 19)).'Z'])->values(),
         ]]);
     }
 

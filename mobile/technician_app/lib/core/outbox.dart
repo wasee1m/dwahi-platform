@@ -51,7 +51,11 @@ class OutboxEvent {
   bool get pending => state == 'pending';
 
   /// مفتاح معرّف الملف في الحمولة بعد رفعه
-  String get fileKey => type == 'hour_meter_recorded' ? 'photo_id' : 'attachment_id';
+  String get fileKey => switch (type) {
+        'hour_meter_recorded' => 'photo_id',
+        'test_recorded' => 'media_id',
+        _ => 'attachment_id',
+      };
 
   bool get needsUpload => localFile != null && payload[fileKey] == null;
 

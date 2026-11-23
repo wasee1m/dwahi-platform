@@ -12,6 +12,7 @@ return [
     'meter_required' => 'أدخل قراءة العداد أو سبب تعذرها.',
     'intake_lower_reading' => 'قراءة الاستلام أقل من السابقة.',
     'tech_lower_reading' => 'قراءة الفني أقل من السابقة.',
+    'handover_amount' => 'المبلغ المستحق :due ر.ع. يُسجَّل كاملاً عند التسليم.',
     'hold_reasons' => [
         'awaiting_parts' => 'بانتظار قطع', 'awaiting_approval' => 'بانتظار موافقة', 'awaiting_customer' => 'بانتظار العميل',
         'end_of_shift' => 'نهاية الدوام', 'other' => 'سبب آخر',

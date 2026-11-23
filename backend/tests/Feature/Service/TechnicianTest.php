@@ -1,12 +1,8 @@
 <?php
 
-use App\Models\User;
-use App\Modules\Identity\Models\DeviceActivationCode;
 use App\Modules\Parts\Models\Part;
-use App\Modules\Platform\Models\Branch;
 use App\Modules\Platform\Models\Setting;
 use App\Modules\Service\Models\WorkOrder;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -18,60 +14,6 @@ beforeEach(function () {
     Storage::fake('public');
     Setting::query()->updateOrCreate(['key' => 'fees.inspection'], ['value' => '15.000']);
 });
-
-/** فني بجهاز مفعّل برمز لمرة واحدة (إصداره من الإدارة مختبر في StaffAuthTest)، ويعيد رمز جلسة technician_app */
-function techToken($test, User $tech): string
-{
-    $code = 'TECH'.strtoupper(Str::random(4));
-    DeviceActivationCode::query()->create(['user_id' => $tech->id, 'code_hash' => hash('sha256', $code), 'expires_at' => now()->addDay(), 'issued_by' => $tech->id]);
-    app('auth')->forgetGuards();
-
-    return $test->withHeaders(['Authorization' => ''])->postJson(api().'/auth/technician/login', [
-        'login' => $tech->email, 'password' => 'correct horse battery', 'platform' => 'android', 'activation_code' => $code,
-    ])->assertOk()->json('data.access_token');
-}
-
-/**
- * طلب فحص مجدول اليوم لفني، ومستلم في الورشة إلا إن طُلب غير ذلك.
- *
- * @return array{tech: User, token: string, wo: string, coord: string, sr: array<string, mixed>, customer: string}
- */
-function techTask($test, array $opts = []): array
-{
-    $tech = $opts['tech'] ?? staffUser(['technician'], 'tech@dwahi.test');
-    $c = $opts['customer'] ?? customerToken($test);
-    $sr = serviceRequest($test, $c);
-    $coord = $opts['coord'] ?? staffToken($test, 'service_coordinator');
-    $wo = asUser($test, $coord)->postJson(api()."/admin/service-requests/{$sr['id']}/triage", ['route' => 'inspection', 'urgency' => 'normal', 'branch_id' => Branch::query()->value('id')])
-        ->assertOk()->json('data.work_orders.0.id');
-    $start = $opts['start'] ?? now();
-    asUser($test, $coord)->postJson(api()."/admin/work-orders/{$wo}/schedule", ['lead_id' => $tech->id, 'start' => $start->toIso8601String(), 'end' => $start->copy()->addHours(2)->toIso8601String(), 'force' => true])
-        ->assertOk();
-    if ($opts['receive'] ?? true) {
-        asUser($test, $coord)->postJson(api()."/admin/service-requests/{$sr['id']}/intake", [
-            'brought_by_name' => 'سائق اللوبد', 'signature_id' => staffUpload($test, $coord, 'sig.png'), 'hour_meter_reading' => 9120,
-        ])->assertOk();
-    }
-    $token = $opts['token'] ?? techToken($test, $tech);
-
-    return ['tech' => $tech, 'token' => $token, 'wo' => $wo, 'coord' => $coord, 'sr' => $sr, 'customer' => $c];
-}
-
-/** حدث واحد من الصندوق الصادر */
-function ev(string $wo, string $type, array $payload = [], ?string $at = null, ?string $id = null): array
-{
-    return ['client_event_id' => $id ?? (string) Str::uuid(), 'work_order_id' => $wo, 'type' => $type, 'occurred_at' => $at ?? now()->toIso8601ZuluString(), 'payload' => $payload];
-}
-
-function sync($test, string $token, array $events): array
-{
-    return asUser($test, $token)->postJson(api().'/tech/sync/events', ['events' => $events])->assertOk()->json('data.results');
-}
-
-function techUpload($test, string $token, string $name = 'p.jpg'): string
-{
-    return asUser($test, $token)->post(api().'/tech/uploads', ['file' => UploadedFile::fake()->image($name)], ['Accept' => 'application/json'])->assertCreated()->json('data.id');
-}
 
 it('lists only my tasks for today and opens one by scanning its receiving card (US-24, T-02, T-03, FR-TEC-01)', function () {
     $t = techTask($this);
