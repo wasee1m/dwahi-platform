@@ -79,8 +79,23 @@ final class ApiErrorRenderer
         'SERVICE_WORK_STARTED' => ['ar' => 'بدأ العمل على المعدة، فالإلغاء عبر المنسق. تواصل معنا.', 'en' => 'Work has started, so cancellation goes through the coordinator. Contact us.'],
         'SCHEDULE_CONFLICT' => ['ar' => 'للفني مهمة في نفس الوقت. اختر وقتاً أو فنياً آخر، أو أكّد رغم التعارض.', 'en' => 'The technician has a task at the same time. Choose another time or technician, or confirm anyway.'],
         'ALREADY_RECEIVED' => ['ar' => 'سُجّل استلام هذا الطلب من قبل.', 'en' => 'This request was already received.'],
-        'NOT_RECEIVED' => ['ar' => 'لم تُستلم المعدة في الورشة بعد (BR-20).', 'en' => 'The item has not been received at the workshop yet (BR-20).'],
+        'NOT_RECEIVED' => ['ar' => 'لم تُسجل بطاقة استلام لهذه المعدة بعد (BR-20).', 'en' => 'No receiving card has been recorded for this item yet (BR-20).'],
+        // تطبيق الفني (S8)
+        'NOT_TODAY' => ['ar' => 'موعد هذه المهمة لم يحن بعد.', 'en' => 'This task is not scheduled for today yet.'],
+        'ANOTHER_TASK_ACTIVE' => ['ar' => 'لديك مهمة جارية أخرى. أوقفها أولاً.', 'en' => 'You have another task in progress. Pause it first.'],
+        'NOT_ASSIGNED' => ['ar' => 'لم تعد هذه المهمة مسندة إليك. تواصل مع المنسق.', 'en' => 'This task is no longer assigned to you. Contact the coordinator.'],
+        'NO_HOUR_METER' => ['ar' => 'المكوّن المنفصل بلا عداد ساعات.', 'en' => 'A separate component has no hour meter.'],
+        'UNKNOWN_EVENT' => ['ar' => 'نوع حدث غير معروف. حدّث التطبيق.', 'en' => 'Unknown event type. Update the app.'],
+        'NOT_YOUR_TASK' => ['ar' => 'لا مهمة مسندة إليك على هذه المعدة.', 'en' => 'No task on this item is assigned to you.'],
     ];
+
+    /** رسالة الرمز بلغة الطلب (لنتائج المزامنة التي لا تمر بالاستجابة نفسها) */
+    public static function message(string $code): string
+    {
+        $locale = app()->getLocale() === 'en' ? 'en' : 'ar';
+
+        return self::MESSAGES[$code][$locale] ?? self::MESSAGES['INTERNAL_ERROR'][$locale];
+    }
 
     public static function render(Throwable $e): JsonResponse
     {

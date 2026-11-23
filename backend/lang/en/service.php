@@ -10,6 +10,11 @@ return [
     'not_technicians' => 'Choose active technicians only.',
     'meter_required' => 'Enter the hour meter reading or why it cannot be read.',
     'intake_lower_reading' => 'The receiving reading is lower than the previous one.',
+    'tech_lower_reading' => 'The technician reading is lower than the previous one.',
+    'hold_reasons' => [
+        'awaiting_parts' => 'Awaiting parts', 'awaiting_approval' => 'Awaiting approval', 'awaiting_customer' => 'Awaiting customer',
+        'end_of_shift' => 'End of shift', 'other' => 'Other reason',
+    ],
     'components' => ['diesel_engine' => 'Diesel engine', 'hydraulic_pump' => 'Hydraulic pump', 'hydraulic_cylinder' => 'Hydraulic cylinder', 'transmission' => 'Transmission', 'other' => 'Other component'],
     'urgency' => ['normal' => 'normal', 'urgent' => 'urgent'],
 ];

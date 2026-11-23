@@ -28,6 +28,8 @@ final class ServiceEvent
 
     public const WO_CANCELLED = 'work_order.cancelled';     // N-29
 
+    public const WO_ON_HOLD = 'work_order.on_hold';         // N-13 للمنسق
+
     public function __construct(
         public string $type,
         public ServiceRequest $request,

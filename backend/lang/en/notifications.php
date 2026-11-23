@@ -35,6 +35,7 @@ return [
     'N-10' => ['title' => 'Service estimate :number awaits your approval', 'body' => 'Total OMR :total, valid until :valid_until. Review it and approve or decline.'],
     'N-11' => ['title' => 'Work scheduled on :item', 'body' => 'Workshop time for request :number: :when.'],
     'N-18' => ['title' => 'Task :number', 'body' => ':item · :when'],
+    'N-13' => ['title' => 'Work order :number on hold', 'body' => ':technician · :reason · :item'],
     'N-24' => ['title' => 'Service estimate :number approved', 'body' => 'OMR :total is within your company pre-approval limit, so we started scheduling.'],
     'N-29' => ['title' => 'Work appointment :number cancelled', 'body' => ':reason'],
     'N-29-tech' => ['title' => 'Task :number cancelled', 'body' => ':reason'],

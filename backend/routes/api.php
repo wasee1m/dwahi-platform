@@ -44,6 +44,7 @@ use App\Modules\Quoting\Http\Controllers\RfqController;
 use App\Modules\Service\Http\Controllers\Admin\ServiceAdminController;
 use App\Modules\Service\Http\Controllers\Admin\WorkOrderAdminController;
 use App\Modules\Service\Http\Controllers\ServiceController;
+use App\Modules\Service\Http\Controllers\TechController;
 use Illuminate\Support\Facades\Route;
 
 // /api/v1 (04 §4)
@@ -184,6 +185,17 @@ Route::prefix('v1')->group(function () {
 
     // رابط موقّع للملف الخاص، صالح 15 دقيقة (04 §8.2)
     Route::get('files/{id}', [FileController::class, 'show'])->name('files.show')->middleware(['signed', 'throttle:public']);
+
+    // ---------- تطبيق الفني: جلسة technician_app على جهاز مفعّل (FR-TEC، 04 §6) ----------
+    Route::middleware(['auth:sanctum', 'ensure.session:technician_app', 'can:workorder.execute', 'throttle:account'])->prefix('tech')->group(function () {
+        Route::get('me', [TechController::class, 'me']);
+        Route::get('tasks', [TechController::class, 'tasks']);
+        Route::get('tasks/by-tag/{number}', [TechController::class, 'byTag']);
+        Route::get('tasks/{id}', [TechController::class, 'show']);
+        Route::get('parts', [TechController::class, 'parts']);
+        Route::post('uploads', [FileController::class, 'upload'])->middleware('throttle:uploads');
+        Route::post('sync/events', [TechController::class, 'syncEvents']);
+    });
 
     // ---------- لوحة الإدارة: جلسة إدارة (بعد TOTP) + صلاحية (01 §3.2) ----------
     Route::middleware(['auth:sanctum', 'ensure.session:admin', 'throttle:account'])->prefix('admin')->group(function () {

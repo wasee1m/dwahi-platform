@@ -9,7 +9,9 @@ use App\Modules\Quoting\Models\Rfq;
 use App\Modules\Service\Models\ServiceRequest;
 use App\Modules\Service\Models\WorkOrder;
 use App\Modules\Service\Models\WorkOrderEvent;
+use App\Modules\Service\Services\ExecutionService;
 use App\Support\Money;
+use Illuminate\Support\Facades\DB;
 
 /** شكل طلب الصيانة وأمر العمل في الـ API. للعميل تسمية الحالة كما في 02 SM-4، وللموظف التفاصيل الداخلية. */
 final class ServicePresenter
@@ -138,6 +140,46 @@ final class ServicePresenter
                 'from' => $e->from_status, 'to' => $e->to_status, 'reason' => $e->reason, 'by' => $e->actor?->full_name,
                 'at' => $e->occurred_at?->toIso8601ZuluString(),
             ])->values(),
+            'execution' => self::execution($w),
+        ];
+    }
+
+    /**
+     * ما سجله الفريق من التطبيق (FR-WO-03، FR-WO-04، FR-TEC-04): الوقت، والصور بمراحلها، والقطع بأسعارها المحفوظة، والملاحظات، والعداد.
+     *
+     * @return array{worked_seconds: int, on_hold_reason: string|null, photos: list<array{id: string, phase: string, caption: string|null, url: string|null, by: string|null, from_previous_technician: bool, at: string}>, parts: list<array{id: string, part_number: string|null, name: string|null, quantity: string, source: string, unit_price: Money|null, removed: bool, by: string|null}>, notes: list<array{id: string, body: string|null, by: string|null, from_previous_technician: bool, at: string}>, readings: list<array{reading: int, needs_review: bool, at: string|null}>}
+     */
+    public static function execution(WorkOrder $w): array
+    {
+        $iso = fn (?string $ts) => $ts ? str_replace(' ', 'T', substr($ts, 0, 19)).'Z' : null;
+        $photos = DB::table('work_order_photos as p')->leftJoin('users', 'users.id', '=', 'p.taken_by')->where('p.work_order_id', $w->id)
+            ->orderBy('p.taken_at')->get(['p.attachment_id', 'p.phase', 'p.caption', 'p.taken_at', 'p.from_previous_technician', 'users.full_name']);
+        $files = Attachment::query()->whereIn('id', $photos->pluck('attachment_id'))->get()->keyBy('id');
+        $en = app()->getLocale() === 'en';
+
+        return [
+            'worked_seconds' => ExecutionService::workedSeconds($w->id),
+            'on_hold_reason' => $w->on_hold_reason,
+            'photos' => $photos->map(fn ($p) => [
+                'id' => (string) $p->attachment_id, 'phase' => (string) $p->phase, 'caption' => $p->caption, 'url' => $files[$p->attachment_id]?->accessUrl(),
+                'by' => $p->full_name, 'from_previous_technician' => (bool) $p->from_previous_technician, 'at' => (string) $iso($p->taken_at),
+            ])->values()->all(),
+            'parts' => DB::table('work_order_parts as l')->leftJoin('parts', 'parts.id', '=', 'l.part_id')->leftJoin('users', 'users.id', '=', 'l.recorded_by')
+                ->where('l.work_order_id', $w->id)->orderBy('l.recorded_at')
+                ->get(['l.id', 'l.description', 'l.quantity', 'l.source', 'l.unit_price', 'l.removed_at', 'parts.part_number', 'parts.name_ar', 'parts.name_en', 'users.full_name'])
+                ->map(fn ($l) => [
+                    'id' => (string) $l->id, 'part_number' => $l->part_number,
+                    'name' => $l->part_number ? ($en ? ($l->name_en ?: $l->name_ar) : $l->name_ar) : $l->description,
+                    'quantity' => (string) $l->quantity, 'source' => (string) $l->source,
+                    'unit_price' => $l->unit_price !== null ? Money::of((string) $l->unit_price) : null,
+                    'removed' => $l->removed_at !== null, 'by' => $l->full_name,
+                ])->values()->all(),
+            'notes' => DB::table('work_order_notes as n')->leftJoin('users', 'users.id', '=', 'n.author_id')->where('n.work_order_id', $w->id)->orderBy('n.created_at')
+                ->get(['n.id', 'n.body', 'n.from_previous_technician', 'n.created_at', 'users.full_name'])
+                ->map(fn ($n) => ['id' => (string) $n->id, 'body' => $n->body, 'by' => $n->full_name, 'from_previous_technician' => (bool) $n->from_previous_technician,
+                    'at' => (string) $iso($n->created_at)])->values()->all(),
+            'readings' => DB::table('hour_meter_readings')->where('work_order_id', $w->id)->orderBy('recorded_at')->get(['reading', 'needs_review', 'recorded_at'])
+                ->map(fn ($r) => ['reading' => (int) $r->reading, 'needs_review' => (bool) $r->needs_review, 'at' => $iso($r->recorded_at)])->values()->all(),
         ];
     }
 }

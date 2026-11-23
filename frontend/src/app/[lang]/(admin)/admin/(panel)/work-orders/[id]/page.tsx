@@ -17,7 +17,21 @@ type Detail = WorkOrderRow & {
   intake: { number: string; received_at: string | null } | null;
   quotation: { id: string; number: string | null; total: Money | null } | null;
   events: { from: string; to: string; reason: string | null; by: string | null; at: string | null }[];
+  execution: {
+    worked_seconds: number;
+    on_hold_reason: string | null;
+    photos: { id: string; phase: string; caption: string | null; url: string | null; by: string | null; from_previous_technician: boolean; at: string }[];
+    parts: { id: string; part_number: string | null; name: string | null; quantity: string; source: string; unit_price: Money | null; removed: boolean; by: string | null }[];
+    notes: { id: string; body: string | null; by: string | null; from_previous_technician: boolean; at: string }[];
+    readings: { reading: number; needs_review: boolean; at: string | null }[];
+  };
 };
+
+/** ساعات:دقائق */
+function duration(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  return `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`;
+}
 type Board = { technicians: { id: string; name: string; skills: string[] }[] };
 
 export default function WorkOrderPage({ params }: Props) {
@@ -73,6 +87,7 @@ async function View({ params }: { params: Props["params"] }) {
             {w.quotation && <p>{a.approvedEstimate}: <span className="num" dir="ltr">{w.quotation.number}</span> · {w.quotation.total && formatMoney(w.quotation.total, lang)}</p>}
             {w.technicians.length > 0 && <p className="mt-2">{a.technicians}: {w.technicians.map((x) => `${x.name}${x.role === "lead" ? ` (${a.lead})` : ""}`).join("، ")}</p>}
           </section>
+          <Execution w={w} a={a} time={time} lang={lang} />
           <section className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
             <h2 className="text-lg">{a.timeline}</h2>
             <ol className="mt-3 space-y-2 border-s-2 border-sand-300 ps-4">
@@ -94,5 +109,75 @@ async function View({ params }: { params: Props["params"] }) {
         </aside>
       </div>
     </>
+  );
+}
+
+type Dict = Awaited<ReturnType<typeof getAppDictionary>>["admin"]["service"];
+
+/** ما سجله الفريق من تطبيق الفني: الوقت والصور بمراحلها والقطع والملاحظات والعداد */
+function Execution({ w, a, time, lang }: { w: Detail; a: Dict; time: Intl.DateTimeFormat; lang: "ar" | "en" }) {
+  const x = w.execution;
+  const empty = !x.worked_seconds && !x.photos.length && !x.parts.length && !x.notes.length && !x.readings.length;
+  return (
+    <section className="rounded-md border border-sand-300 bg-sand-0 p-5 text-sm">
+      <h2 className="text-lg">{a.execution}</h2>
+      {empty ? <p className="mt-2 text-ink-muted">{a.nothingYet}</p> : (
+        <div className="mt-3 space-y-4">
+          <p>{a.workedTime}: <b className="num" dir="ltr">{duration(x.worked_seconds)}</b>
+            {w.status === "on_hold" && x.on_hold_reason && ` · ${a.holdReason}: ${a.holdReasons[x.on_hold_reason as keyof typeof a.holdReasons] ?? x.on_hold_reason}`}</p>
+          {x.photos.length > 0 && (
+            <div>
+              <h3 className="font-semibold">{a.photos}</h3>
+              <ul className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
+                {x.photos.map((p) => (
+                  <li key={p.id} className="text-xs">
+                    {p.url
+                      // eslint-disable-next-line @next/next/no-img-element -- رابط موقّع مؤقت من الـ API، لا يُحسَّن
+                      ? <a href={p.url} target="_blank" rel="noreferrer"><img src={p.url} alt={a.phases[p.phase as keyof typeof a.phases] ?? p.phase} className="aspect-square w-full rounded-sm object-cover" /></a>
+                      : <div className="aspect-square rounded-sm bg-sand-200" />}
+                    <span className="block">{a.phases[p.phase as keyof typeof a.phases] ?? p.phase}{p.caption && ` · ${p.caption}`}</span>
+                    <span className="block text-ink-muted">{p.by}{p.from_previous_technician && ` · ${a.fromPrevious}`}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {x.parts.length > 0 && (
+            <div>
+              <h3 className="font-semibold">{a.partsUsed}</h3>
+              <ul className="mt-1 space-y-1">
+                {x.parts.map((p) => (
+                  <li key={p.id} className={p.removed ? "text-ink-muted line-through" : ""}>
+                    {p.part_number && <span className="num" dir="ltr">{p.part_number} · </span>}{p.name} × <span className="num">{p.quantity}</span>
+                    {" · "}{a.partSources[p.source as keyof typeof a.partSources] ?? p.source}
+                    {p.unit_price && ` · ${formatMoney(p.unit_price, lang)}`}{p.removed && ` · ${a.removedPart}`}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {x.readings.length > 0 && (
+            <div>
+              <h3 className="font-semibold">{a.hourReadings}</h3>
+              <ul className="mt-1">
+                {x.readings.map((r, n) => (
+                  <li key={n}><span className="num" dir="ltr">{r.reading}</span>{r.at && ` · ${time.format(new Date(r.at))}`}{r.needs_review && <b className="text-danger"> · {a.needsReview}</b>}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {x.notes.length > 0 && (
+            <div>
+              <h3 className="font-semibold">{a.internalNotes}</h3>
+              <ul className="mt-1 space-y-1">
+                {x.notes.map((n) => (
+                  <li key={n.id}>{n.body}<span className="block text-xs text-ink-muted">{n.by} · {time.format(new Date(n.at))}{n.from_previous_technician && ` · ${a.fromPrevious}`}</span></li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
   );
 }

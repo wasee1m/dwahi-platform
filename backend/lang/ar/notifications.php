@@ -36,6 +36,7 @@ return [
     'N-10' => ['title' => 'تقدير الصيانة :number بانتظار موافقتك', 'body' => 'الإجمالي :total ر.ع.، صالح حتى :valid_until. راجعه ووافق أو ارفض.'],
     'N-11' => ['title' => 'موعد العمل على :item', 'body' => 'حُدد موعد العمل لطلب :number في الورشة: :when.'],
     'N-18' => ['title' => 'مهمة :number', 'body' => ':item · :when'],
+    'N-13' => ['title' => 'توقف أمر العمل :number', 'body' => ':technician · :reason · :item'],
     'N-24' => ['title' => 'اعتُمد تقدير الصيانة :number', 'body' => 'الإجمالي :total ر.ع. ضمن حد الموافقة المسبقة لشركتك، فبدأنا الجدولة.'],
     'N-29' => ['title' => 'أُلغي موعد العمل :number', 'body' => ':reason'],
     'N-29-tech' => ['title' => 'أُلغيت المهمة :number', 'body' => ':reason'],

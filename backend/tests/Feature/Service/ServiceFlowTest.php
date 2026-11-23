@@ -17,26 +17,6 @@ beforeEach(function () {
     Setting::query()->updateOrCreate(['key' => 'fees.inspection'], ['value' => '15.000']);
 });
 
-function machine($test, string $token): string
-{
-    return asUser($test, $token)->postJson(api().'/me/fleet', ['brand_text' => 'CAT', 'model_text' => '320D', 'organization_id' => null, 'hour_meter' => 9000])
-        ->assertCreated()->json('data.id');
-}
-
-function serviceRequest($test, string $token, array $extra = []): array
-{
-    return asUser($test, $token)->postJson(api().'/me/service-requests', $extra + [
-        'customer_equipment_id' => machine($test, $token), 'organization_id' => null,
-        'problem_description' => 'تسريب زيت من سلندر البوم', 'urgency' => 'normal', 'fees_acknowledged' => true,
-    ])->assertCreated()->json('data');
-}
-
-function staffUpload($test, string $token, string $name = 'x.png'): string
-{
-    return asUser($test, $token)->post(api().'/admin/staff-uploads', ['file' => UploadedFile::fake()->image($name)], ['Accept' => 'application/json'])
-        ->assertCreated()->json('data.id');
-}
-
 function sendEstimate($test, string $coordinator, string $srId, string $price = '120'): string
 {
     $q = asUser($test, $coordinator)->postJson(api()."/admin/service-requests/{$srId}/estimate")->assertCreated()->json('data');

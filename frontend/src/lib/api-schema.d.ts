@@ -62,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_217"];
+        post: operations["modules.platform.admin.branchAdmin.save_224"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +77,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_218"];
+        put: operations["modules.platform.admin.branchAdmin.save_225"];
         post?: never;
         delete?: never;
         options?: never;
@@ -178,7 +178,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_183"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_190"];
         delete?: never;
         options?: never;
         head?: never;
@@ -194,7 +194,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_185"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_192"];
         delete?: never;
         options?: never;
         head?: never;
@@ -210,7 +210,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_187"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_194"];
         delete?: never;
         options?: never;
         head?: never;
@@ -225,7 +225,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_184"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_191"];
         post?: never;
         delete?: never;
         options?: never;
@@ -241,7 +241,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_186"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_193"];
         post?: never;
         delete?: never;
         options?: never;
@@ -257,7 +257,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_188"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_195"];
         post?: never;
         delete?: never;
         options?: never;
@@ -290,7 +290,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_200"];
+        post: operations["modules.content.admin.contentAdmin.savePage_207"];
         delete?: never;
         options?: never;
         head?: never;
@@ -305,7 +305,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_202"];
+        put: operations["modules.content.admin.contentAdmin.savePage_209"];
         post?: never;
         delete?: never;
         options?: never;
@@ -322,7 +322,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_204"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_211"];
         delete?: never;
         options?: never;
         head?: never;
@@ -354,7 +354,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_206"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_213"];
         post?: never;
         delete?: never;
         options?: never;
@@ -371,7 +371,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_208"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_215"];
         delete?: never;
         options?: never;
         head?: never;
@@ -386,7 +386,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_209"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_216"];
         post?: never;
         delete?: never;
         options?: never;
@@ -825,6 +825,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tech/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
+        post: operations["modules.platform.file.upload_101"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/staff-uploads": {
         parameters: {
             query?: never;
@@ -835,7 +852,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_124"];
+        post: operations["modules.platform.file.upload_131"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1367,7 +1384,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_105"];
+        get: operations["modules.notifications.notification.index_112"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1384,7 +1401,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_106"];
+        get: operations["modules.notifications.notification.count_113"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1402,7 +1419,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_107"];
+        post: operations["modules.notifications.notification.readAll_114"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1418,7 +1435,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_108"];
+        post: operations["modules.notifications.notification.read_115"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2902,6 +2919,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tech/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** T-12: الاسم والمهارات */
+        get: operations["tech.me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tech/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** T-02: اليوم (والمتأخر والجاري والمتوقف) والقادمة، بالموعد ثم الأولوية */
+        get: operations["tech.tasks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tech/tasks/by-tag/{number}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** فتح المهمة بمسح ملصق بطاقة الاستلام (FR-TEC-01) */
+        get: operations["tech.byTag"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tech/tasks/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** T-03: كل ما يحتاجه الفني قبل العمل وأثناءه */
+        get: operations["tech.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tech/parts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** T-07: قطع مخزن فرع الفني بالرقم أو الاسم، مع المتاح فيه */
+        get: operations["tech.parts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/tech/sync/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 04 §6.2: الأحداث بالترتيب، ولكل حدث نتيجته */
+        post: operations["tech.syncEvents"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/uploads": {
         parameters: {
             query?: never;
@@ -3616,7 +3735,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_217": {
+    "modules.platform.admin.branchAdmin.save_224": {
         parameters: {
             query?: never;
             header?: never;
@@ -3672,7 +3791,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_218": {
+    "modules.platform.admin.branchAdmin.save_225": {
         parameters: {
             query?: never;
             header?: never;
@@ -4347,7 +4466,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_183": {
+    "modules.catalog.admin.catalogSetup.saveBrand_190": {
         parameters: {
             query?: never;
             header?: never;
@@ -4429,7 +4548,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_185": {
+    "modules.catalog.admin.catalogSetup.saveCategory_192": {
         parameters: {
             query?: never;
             header?: never;
@@ -4526,7 +4645,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_187": {
+    "modules.catalog.admin.catalogSetup.saveModel_194": {
         parameters: {
             query?: never;
             header?: never;
@@ -4584,7 +4703,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_184": {
+    "modules.catalog.admin.catalogSetup.saveBrand_191": {
         parameters: {
             query?: never;
             header?: never;
@@ -4633,7 +4752,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_186": {
+    "modules.catalog.admin.catalogSetup.saveCategory_193": {
         parameters: {
             query?: never;
             header?: never;
@@ -4681,7 +4800,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_188": {
+    "modules.catalog.admin.catalogSetup.saveModel_195": {
         parameters: {
             query?: never;
             header?: never;
@@ -4830,7 +4949,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_200": {
+    "modules.content.admin.contentAdmin.savePage_207": {
         parameters: {
             query?: never;
             header?: never;
@@ -4931,7 +5050,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_202": {
+    "modules.content.admin.contentAdmin.savePage_209": {
         parameters: {
             query?: never;
             header?: never;
@@ -5019,7 +5138,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_204": {
+    "modules.content.admin.contentAdmin.saveFaq_211": {
         parameters: {
             query?: never;
             header?: never;
@@ -5108,7 +5227,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_206": {
+    "modules.content.admin.contentAdmin.saveFaq_213": {
         parameters: {
             query?: never;
             header?: never;
@@ -5209,7 +5328,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_208": {
+    "modules.content.admin.contentAdmin.saveBanner_215": {
         parameters: {
             query?: never;
             header?: never;
@@ -5263,7 +5382,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_209": {
+    "modules.content.admin.contentAdmin.saveBanner_216": {
         parameters: {
             query?: never;
             header?: never;
@@ -8733,7 +8852,60 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_124": {
+    "modules.platform.file.upload_101": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @description Maximum file size: 102400 kilobytes.
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string | null;
+                            mime_type: string;
+                            url: string | null;
+                            width: number | null;
+                            height: number | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "modules.platform.file.upload_131": {
         parameters: {
             query?: never;
             header?: never;
@@ -10708,7 +10880,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_105": {
+    "modules.notifications.notification.index_112": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -10758,7 +10930,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_106": {
+    "modules.notifications.notification.count_113": {
         parameters: {
             query?: never;
             header?: never;
@@ -10794,7 +10966,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_107": {
+    "modules.notifications.notification.readAll_114": {
         parameters: {
             query?: never;
             header?: never;
@@ -10830,7 +11002,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_108": {
+    "modules.notifications.notification.read_115": {
         parameters: {
             query?: never;
             header?: never;
@@ -17989,6 +18161,321 @@ export interface operations {
                     };
                 };
             };
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            full_name: string;
+                            email: string | null;
+                            phone: string | null;
+                            skills: string[];
+                            branch: string | null;
+                            preferred_locale: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            today: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                on_hold_reason: string | null;
+                                scheduled_start: string | null;
+                                scheduled_end: string | null;
+                                urgent: boolean;
+                                customer: string;
+                                item: string;
+                                is_component: boolean;
+                                service_request: string;
+                                card: string | null;
+                                received: boolean;
+                                my_role: string | null;
+                                team: {
+                                    name: string;
+                                    role: string;
+                                }[];
+                                worked_seconds: number;
+                                scope_total: null;
+                            }[];
+                            upcoming: {
+                                id: string;
+                                number: string;
+                                type: string;
+                                status: string;
+                                on_hold_reason: string | null;
+                                scheduled_start: string | null;
+                                scheduled_end: string | null;
+                                urgent: boolean;
+                                customer: string;
+                                item: string;
+                                is_component: boolean;
+                                service_request: string;
+                                card: string | null;
+                                received: boolean;
+                                my_role: string | null;
+                                team: {
+                                    name: string;
+                                    role: string;
+                                }[];
+                                worked_seconds: number;
+                                scope_total: null;
+                            }[];
+                            server_time: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.byTag": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                number: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.parts": {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            part_number: string;
+                            name: string;
+                            unit: string;
+                            available: string;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "tech.syncEvents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    events: {
+                        /** Format: uuid */
+                        client_event_id: string;
+                        /** Format: uuid */
+                        work_order_id: string;
+                        /** @enum {string} */
+                        type: "status_changed" | "photo_added" | "note_added" | "part_used" | "part_removed" | "hour_meter_recorded";
+                        /** Format: date-time */
+                        occurred_at: string;
+                        payload?: string[] | null;
+                    }[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            results: ({
+                                client_event_id: string;
+                                /** @constant */
+                                result: "duplicate";
+                                code: string;
+                                message: null;
+                            } | {
+                                client_event_id: string;
+                                /** @constant */
+                                result: "rejected";
+                                /** @constant */
+                                code: "INTERNAL_ERROR";
+                                message: unknown;
+                            })[];
+                            server_time: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {

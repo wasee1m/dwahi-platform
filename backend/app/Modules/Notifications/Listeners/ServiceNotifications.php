@@ -10,7 +10,7 @@ use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-/** إشعارات الصيانة (01 §8): N-08، N-09، N-11، N-18، N-24، N-25، N-29، N-32. بعد الالتزام فقط. */
+/** إشعارات الصيانة (01 §8): N-08، N-09، N-11، N-13، N-18، N-24، N-25، N-29، N-32. بعد الالتزام فقط. */
 class ServiceNotifications implements ShouldHandleEventsAfterCommit
 {
     public function __construct(private readonly Notifier $notifier) {}
@@ -35,6 +35,7 @@ class ServiceNotifications implements ShouldHandleEventsAfterCommit
             ServiceEvent::RECEIVED => $this->notifier->notify($sr->customerRecipients(), 'N-32', ['number' => $sr->number, 'card' => (string) $e->note, 'item' => $item], $link),
             ServiceEvent::WO_SCHEDULED => $this->scheduled($sr, $e, $link, $item, $when),
             ServiceEvent::WO_CANCELLED => $this->cancelled($sr, $e, $link),
+            ServiceEvent::WO_ON_HOLD => $this->onHold($sr, $e, $item),
             default => null,
         };
     }
@@ -55,6 +56,19 @@ class ServiceNotifications implements ShouldHandleEventsAfterCommit
         $team = User::query()->whereIn('id', DB::table('work_order_assignments')->where('work_order_id', $wo->id)
             ->orderByDesc('assigned_at')->select('technician_user_id'))->get();
         $this->notifier->notify($team, 'N-29', ['number' => $wo->number, 'reason' => (string) $e->note], "/tech/tasks/{$wo->id}", [], 'N-29-tech');
+    }
+
+    /** N-13 لمنسقي الفرع. نهاية الدوام إيقاف عادي لا يحتاج تدخلاً فلا يُرسل له. */
+    private function onHold(ServiceRequest $sr, ServiceEvent $e, \Closure $item): void
+    {
+        $wo = $e->workOrder;
+        if ($e->note === 'end_of_shift') {
+            return;
+        }
+        $this->notifier->notify($this->coordinators($sr), 'N-13', [
+            'number' => $wo->number, 'item' => $item, 'technician' => $e->actor?->full_name ?? '',
+            'reason' => fn (string $l) => __("service.hold_reasons.{$e->note}", [], $l),
+        ], "/admin/work-orders/{$wo->id}");
     }
 
     /** منسقو الفرع (وإن لم يوجد أحد فكل المنسقين)، ومع تجاوز المهلة المدير أيضاً بدل "رئيس المنسقين" */
