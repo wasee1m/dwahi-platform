@@ -62,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_167"];
+        post: operations["modules.platform.admin.branchAdmin.save_197"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,8 +77,92 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_168"];
+        put: operations["modules.platform.admin.branchAdmin.save_198"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/cart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["cart.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/cart/items/{partId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** الكمية 0 تحذف البند */
+        put: operations["cart.setItem"];
+        post?: never;
+        delete: operations["cart.removeItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/cart/acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** العميل رأى الأسعار الجديدة ووافق عليها (US-14) */
+        post: operations["cart.acknowledge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/checkout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ملخص إتمام الطلب للاختيار الحالي (C-11 خطوة 2) */
+        get: operations["cart.checkout"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["order.index"];
+        put?: never;
+        /** 3.0: تأكيد الطلب بالدفع عند الاستلام أو التسليم */
+        post: operations["cart.place"];
         delete?: never;
         options?: never;
         head?: never;
@@ -94,7 +178,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_133"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_163"];
         delete?: never;
         options?: never;
         head?: never;
@@ -110,7 +194,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_135"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_165"];
         delete?: never;
         options?: never;
         head?: never;
@@ -126,7 +210,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_137"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_167"];
         delete?: never;
         options?: never;
         head?: never;
@@ -141,7 +225,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_134"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_164"];
         post?: never;
         delete?: never;
         options?: never;
@@ -157,7 +241,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_136"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_166"];
         post?: never;
         delete?: never;
         options?: never;
@@ -173,7 +257,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_138"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_168"];
         post?: never;
         delete?: never;
         options?: never;
@@ -206,7 +290,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_150"];
+        post: operations["modules.content.admin.contentAdmin.savePage_180"];
         delete?: never;
         options?: never;
         head?: never;
@@ -221,7 +305,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_152"];
+        put: operations["modules.content.admin.contentAdmin.savePage_182"];
         post?: never;
         delete?: never;
         options?: never;
@@ -238,7 +322,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_154"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_184"];
         delete?: never;
         options?: never;
         head?: never;
@@ -270,7 +354,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_156"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_186"];
         post?: never;
         delete?: never;
         options?: never;
@@ -287,7 +371,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_158"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_188"];
         delete?: never;
         options?: never;
         head?: never;
@@ -302,7 +386,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_159"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_189"];
         post?: never;
         delete?: never;
         options?: never;
@@ -751,7 +835,193 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_107"];
+        post: operations["modules.platform.file.upload_119"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["finance.invoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["finance.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices/{id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["finance.pdf"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices/{id}/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 6.2: إصدار مسودة (عرض معدة مقبول) بتاريخ استحقاق يحدده المحاسب */
+        post: operations["finance.issue"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices/{id}/void": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 6.5: إلغاء فاتورة صادرة بلا دفعات، بإشعار دائن */
+        post: operations["finance.void"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/invoices/{id}/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 6b.4: دفعة يدوية (تحويل، شيك، نقد، نقاط بيع) بمرجع وإيصال، والجزئية ممكنة (US-38) */
+        post: operations["finance.recordPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** الدفعات بفلترة التاريخ والفرع والطريقة */
+        get: operations["finance.payments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/finance/collection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * تقرير التحصيل اليومي (US-38): لكل فرع، مجمّع بالطريقة والموظف، ليطابقه المحاسب مع الصندوق وجهاز نقاط البيع.
+         *     الاستردادات في نفس اليوم تظهر مستقلة ولا تُخصم من التحصيل
+         */
+        get: operations["finance.collection"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/credit-notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["finance.creditNotes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** الاستردادات: المنفذة، والمرتجعات المستلمة بانتظار استردادها */
+        get: operations["finance.refunds"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/payments/{paymentId}/refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 6b.5: استرداد يدوي لدفعة، مع إشعار دائن (US-38) */
+        post: operations["finance.refund"];
         delete?: never;
         options?: never;
         head?: never;
@@ -817,6 +1087,38 @@ export interface paths {
         };
         /** السجل الزمني: القراءات والطلبات المرتبطة. الصيانة والتقارير تنضم في S7 و S9 */
         get: operations["fleet.history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["invoice.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/invoices/{id}/pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["invoice.pdf"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1000,7 +1302,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_74"];
+        get: operations["modules.notifications.notification.index_86"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1017,7 +1319,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_75"];
+        get: operations["modules.notifications.notification.count_87"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1035,7 +1337,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_76"];
+        post: operations["modules.notifications.notification.readAll_88"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1051,7 +1353,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_77"];
+        post: operations["modules.notifications.notification.read_89"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1065,7 +1367,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_88"];
+        get: operations["modules.notifications.notification.index_100"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1082,7 +1384,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_89"];
+        get: operations["modules.notifications.notification.count_101"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1100,7 +1402,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_90"];
+        post: operations["modules.notifications.notification.readAll_102"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1116,7 +1418,173 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_91"];
+        post: operations["modules.notifications.notification.read_103"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["order.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/orders/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 3.6: إلغاء العميل قبل بدء التجهيز دون رسوم (BR-13) */
+        post: operations["order.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/orders/{id}/returns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 3b.1: طلب إرجاع بالبنود والسبب والصور (BR-12) */
+        post: operations["order.requestReturn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["orderAdmin.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["orderAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/returns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["orderAdmin.returnsIndex"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/returns/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** SM-3b: قرار الإرجاع واستلامه (قطع)، والاسترداد (محاسب) */
+        post: operations["orderAdmin.returnAct"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/orders/{id}/deliver": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 3.11 و 3.12: التسليم برمز الاستلام أو إثبات التوصيل، مع الدفعة في نفس الخطوة (BR-18) */
+        post: operations["orderAdmin.deliver"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/orders/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** انتقالات التجهيز (SM-3a 3.5 إلى 3.10)، والإلغاء بسبب إلزامي (3.7)، وتسجيل الاتصال (BR-18) */
+        post: operations["orderAdmin.act"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/rfqs/{rfqId}/sales-order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 3.14 يدوياً: طلب القطع من عرض قطع مقبول، مع ربط البنود غير المدرجة بالكتالوج */
+        post: operations["orderAdmin.fromQuote"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2829,7 +3297,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_167": {
+    "modules.platform.admin.branchAdmin.save_197": {
         parameters: {
             query?: never;
             header?: never;
@@ -2885,7 +3353,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_168": {
+    "modules.platform.admin.branchAdmin.save_198": {
         parameters: {
             query?: never;
             header?: never;
@@ -2928,6 +3396,579 @@ export interface operations {
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
             404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            items: {
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    name: string;
+                                    brand: string;
+                                    unit: string;
+                                    is_returnable: string;
+                                    availability: string;
+                                    cover_image_url: string | null;
+                                };
+                                quantity: string;
+                                unit_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                previous_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                /** @enum {string|null} */
+                                problem: "inactive" | "insufficient" | null;
+                                line_subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            }[];
+                            totals: {
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            };
+                            has_changes: boolean;
+                            can_checkout: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.setItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                partId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    quantity: number;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            items: {
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    name: string;
+                                    brand: string;
+                                    unit: string;
+                                    is_returnable: string;
+                                    availability: string;
+                                    cover_image_url: string | null;
+                                };
+                                quantity: string;
+                                unit_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                previous_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                /** @enum {string|null} */
+                                problem: "inactive" | "insufficient" | null;
+                                line_subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            }[];
+                            totals: {
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            };
+                            has_changes: boolean;
+                            can_checkout: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.removeItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                partId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            items: {
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    name: string;
+                                    brand: string;
+                                    unit: string;
+                                    is_returnable: string;
+                                    availability: string;
+                                    cover_image_url: string | null;
+                                };
+                                quantity: string;
+                                unit_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                previous_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                /** @enum {string|null} */
+                                problem: "inactive" | "insufficient" | null;
+                                line_subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            }[];
+                            totals: {
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            };
+                            has_changes: boolean;
+                            can_checkout: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            items: {
+                                part: {
+                                    id: string;
+                                    part_number: string;
+                                    name: string;
+                                    brand: string;
+                                    unit: string;
+                                    is_returnable: string;
+                                    availability: string;
+                                    cover_image_url: string | null;
+                                };
+                                quantity: string;
+                                unit_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                previous_price: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                /** @enum {string|null} */
+                                problem: "inactive" | "insufficient" | null;
+                                line_subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            }[];
+                            totals: {
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            };
+                            has_changes: boolean;
+                            can_checkout: boolean;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.checkout": {
+        parameters: {
+            query?: {
+                fulfillment?: "delivery" | "pickup" | null;
+                branch_id?: string | null;
+                address_id?: string | null;
+                organization_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            cart: {
+                                items: {
+                                    part: {
+                                        id: string;
+                                        part_number: string;
+                                        name: string;
+                                        brand: string;
+                                        unit: string;
+                                        is_returnable: string;
+                                        availability: string;
+                                        cover_image_url: string | null;
+                                    };
+                                    quantity: string;
+                                    unit_price: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    previous_price: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    /** @enum {string|null} */
+                                    problem: "inactive" | "insufficient" | null;
+                                    line_subtotal: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                }[];
+                                totals: {
+                                    subtotal: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    vat_total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                };
+                                has_changes: boolean;
+                                can_checkout: boolean;
+                            };
+                            fulfillment: string | null;
+                            branch_id: string | null;
+                            delivery_fee: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            totals: {
+                                subtotal: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                vat_total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                delivery_fee: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                            };
+                            needs_phone_confirmation: boolean;
+                            problem: null;
+                            open_orders: {
+                                count: number;
+                                limit: number;
+                                blocked: boolean;
+                            };
+                            branches: {
+                                id: string;
+                                name: string | null;
+                                address: string | null;
+                                can_fulfill: boolean;
+                            }[];
+                            delivery_fees: ({
+                                amount: string;
+                                currency: string;
+                            } | null)[];
+                            accepted_methods: [
+                                "cash",
+                                "pos_card",
+                                "bank_transfer"
+                            ];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "order.index": {
+        parameters: {
+            query?: {
+                tab?: string | null;
+                account?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            status: string;
+                            fulfillment: string;
+                            items_count: number | null;
+                            summary: string[] | string[];
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            branch: {
+                                id: string;
+                                name: string | null;
+                            } | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            customer: null;
+                            needs_phone_confirmation: boolean;
+                            pickup_deadline_at: string | null;
+                            from_quote: boolean;
+                            created_at: string | null;
+                        }[];
+                        counts: number[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "cart.place": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @enum {string|null} */
+                    fulfillment?: "delivery" | "pickup" | null;
+                    /** Format: uuid */
+                    branch_id?: string | null;
+                    /** Format: uuid */
+                    address_id?: string | null;
+                    /** Format: uuid */
+                    organization_id?: string | null;
+                    notes?: string | null;
+                    /** @enum {unknown} */
+                    accept_returns_policy?: "yes" | "on" | "1" | 1 | "true" | true;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -2987,7 +4028,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_133": {
+    "modules.catalog.admin.catalogSetup.saveBrand_163": {
         parameters: {
             query?: never;
             header?: never;
@@ -3069,7 +4110,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_135": {
+    "modules.catalog.admin.catalogSetup.saveCategory_165": {
         parameters: {
             query?: never;
             header?: never;
@@ -3166,7 +4207,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_137": {
+    "modules.catalog.admin.catalogSetup.saveModel_167": {
         parameters: {
             query?: never;
             header?: never;
@@ -3224,7 +4265,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_134": {
+    "modules.catalog.admin.catalogSetup.saveBrand_164": {
         parameters: {
             query?: never;
             header?: never;
@@ -3273,7 +4314,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_136": {
+    "modules.catalog.admin.catalogSetup.saveCategory_166": {
         parameters: {
             query?: never;
             header?: never;
@@ -3321,7 +4362,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_138": {
+    "modules.catalog.admin.catalogSetup.saveModel_168": {
         parameters: {
             query?: never;
             header?: never;
@@ -3470,7 +4511,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_150": {
+    "modules.content.admin.contentAdmin.savePage_180": {
         parameters: {
             query?: never;
             header?: never;
@@ -3571,7 +4612,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_152": {
+    "modules.content.admin.contentAdmin.savePage_182": {
         parameters: {
             query?: never;
             header?: never;
@@ -3659,7 +4700,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_154": {
+    "modules.content.admin.contentAdmin.saveFaq_184": {
         parameters: {
             query?: never;
             header?: never;
@@ -3748,7 +4789,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_156": {
+    "modules.content.admin.contentAdmin.saveFaq_186": {
         parameters: {
             query?: never;
             header?: never;
@@ -3849,7 +4890,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_158": {
+    "modules.content.admin.contentAdmin.saveBanner_188": {
         parameters: {
             query?: never;
             header?: never;
@@ -3903,7 +4944,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_159": {
+    "modules.content.admin.contentAdmin.saveBanner_189": {
         parameters: {
             query?: never;
             header?: never;
@@ -4200,6 +5241,86 @@ export interface operations {
                                 created_at: string | null;
                                 closed_at: string | null;
                             }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
+                            }[];
                             conversations: {
                                 rfq_id: string;
                                 number: string;
@@ -4458,6 +5579,86 @@ export interface operations {
                                 created_at: string | null;
                                 closed_at: string | null;
                             }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
+                            }[];
                             conversations: {
                                 rfq_id: string;
                                 number: string;
@@ -4668,6 +5869,86 @@ export interface operations {
                                 created_at: string | null;
                                 closed_at: string | null;
                             }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
+                            }[];
                             conversations: {
                                 rfq_id: string;
                                 number: string;
@@ -4823,6 +6104,86 @@ export interface operations {
                                 lost_reason: string | null;
                                 created_at: string | null;
                                 closed_at: string | null;
+                            }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
                             }[];
                             conversations: {
                                 rfq_id: string;
@@ -4986,6 +6347,86 @@ export interface operations {
                                 lost_reason: string | null;
                                 created_at: string | null;
                                 closed_at: string | null;
+                            }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
                             }[];
                             conversations: {
                                 rfq_id: string;
@@ -5151,6 +6592,86 @@ export interface operations {
                                 created_at: string | null;
                                 closed_at: string | null;
                             }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
+                            }[];
                             conversations: {
                                 rfq_id: string;
                                 number: string;
@@ -5315,6 +6836,86 @@ export interface operations {
                                 lost_reason: string | null;
                                 created_at: string | null;
                                 closed_at: string | null;
+                            }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
                             }[];
                             conversations: {
                                 rfq_id: string;
@@ -5487,6 +7088,86 @@ export interface operations {
                                 lost_reason: string | null;
                                 created_at: string | null;
                                 closed_at: string | null;
+                            }[];
+                            orders: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                fulfillment: string;
+                                items_count: number | null;
+                                summary: string[] | string[];
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                needs_phone_confirmation: boolean;
+                                pickup_deadline_at: string | null;
+                                from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            invoices: {
+                                id: string;
+                                number: string | null;
+                                status: string;
+                                overdue: boolean;
+                                source: {
+                                    type: string;
+                                    id: string | null;
+                                    number: string | null;
+                                };
+                                issue_date: string | null;
+                                due_date: string | null;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                paid: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                balance: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                pdf_url: string | null;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: unknown;
+                                    phone: string | null;
+                                };
+                                credit_notes: {
+                                    id: string;
+                                    number: string;
+                                    reason: string;
+                                    total: {
+                                        amount: string;
+                                        currency: string;
+                                    } | null;
+                                    issued_at: string;
+                                    pdf_url: string | null;
+                                    invoice: {
+                                        id: string;
+                                        number: string | null;
+                                    } | null;
+                                }[] | string[];
                             }[];
                             conversations: {
                                 rfq_id: string;
@@ -6429,7 +8110,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_107": {
+    "modules.platform.file.upload_119": {
         parameters: {
             query?: never;
             header?: never;
@@ -6467,6 +8148,616 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.invoices": {
+        parameters: {
+            query?: {
+                status?: "draft" | "issued" | "partially_paid" | "paid" | "void" | "overdue" | "unpaid" | null;
+                branch_id?: string | null;
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            status: string;
+                            overdue: boolean;
+                            source: {
+                                type: string;
+                                id: string | null;
+                                number: string | null;
+                            };
+                            issue_date: string | null;
+                            due_date: string | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            paid: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            balance: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            pdf_url: string | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: unknown;
+                                phone: string | null;
+                            };
+                            credit_notes: {
+                                id: string;
+                                number: string;
+                                reason: string;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                issued_at: string;
+                                pdf_url: string | null;
+                                invoice: {
+                                    id: string;
+                                    number: string | null;
+                                } | null;
+                            }[] | string[];
+                        }[];
+                        counts: {
+                            draft: number;
+                            unpaid: number;
+                            overdue: number;
+                        };
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: date */
+                    due_date?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.void": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.recordPayment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    method: "cash" | "pos_card" | "bank_transfer" | "cheque";
+                    amount: number;
+                    reference_text?: string | null;
+                    /** Format: uuid */
+                    proof_id?: string | null;
+                    /** Format: date-time */
+                    received_at?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.payments": {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                branch_id?: string | null;
+                method?: "cash" | "pos_card" | "bank_transfer" | "cheque" | null;
+                refundable?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            method: string;
+                            status: string;
+                            amount: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            refunded: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            reference: string | null;
+                            received_at: string | null;
+                            by: string | null;
+                            branch: string | null;
+                            invoice: {
+                                id: string;
+                                number: string | null;
+                            } | null;
+                            order: {
+                                id: string;
+                                number: string;
+                            } | null;
+                            refunds: {
+                                id: string;
+                                amount: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                method: string;
+                                reason: string;
+                                reference: string | null;
+                                at: string | null;
+                            }[] | string[];
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.collection": {
+        parameters: {
+            query?: {
+                date?: string | null;
+                branch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            date: string;
+                            total: {
+                                amount: string;
+                                /** @constant */
+                                currency: "OMR";
+                            };
+                            branches: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.creditNotes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            reason: string;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            issued_at: string;
+                            pdf_url: string | null;
+                            invoice: {
+                                id: string;
+                                number: string | null;
+                            } | null;
+                        }[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            pending_returns: {
+                                id: string;
+                                order: {
+                                    id: string;
+                                    number: string;
+                                };
+                                reason: string;
+                                received_at: string | null;
+                                amount: {
+                                    amount: string;
+                                    /** @constant */
+                                    currency: "OMR";
+                                };
+                            }[];
+                            refunds: {
+                                id: string;
+                                amount: {
+                                    amount: string;
+                                    /** @constant */
+                                    currency: "OMR";
+                                };
+                                method: string;
+                                reason: string;
+                                reference: string | null;
+                                at: string | null;
+                                by: string;
+                                credit_note: {
+                                    id: string;
+                                    number: string;
+                                } | null;
+                                invoice: {
+                                    id: string;
+                                    number: string | null;
+                                } | null;
+                                order: {
+                                    id: string;
+                                    number: string;
+                                } | null;
+                            }[];
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "finance.refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    amount: number;
+                    /** @enum {string} */
+                    method: "cash" | "bank_transfer" | "pos_card";
+                    reason: string;
+                    reference_text?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            credit_note_id: string | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
             422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
@@ -6914,6 +9205,127 @@ export interface operations {
                 };
             };
             401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "invoice.index": {
+        parameters: {
+            query?: {
+                status?: "unpaid" | "paid" | "void" | null;
+                account?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string | null;
+                            status: string;
+                            overdue: boolean;
+                            source: {
+                                type: string;
+                                id: string | null;
+                                number: string | null;
+                            };
+                            issue_date: string | null;
+                            due_date: string | null;
+                            total: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            paid: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            balance: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            pdf_url: string | null;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            customer: null;
+                            credit_notes: {
+                                id: string;
+                                number: string;
+                                reason: string;
+                                total: {
+                                    amount: string;
+                                    currency: string;
+                                } | null;
+                                issued_at: string;
+                                pdf_url: string | null;
+                                invoice: {
+                                    id: string;
+                                    number: string | null;
+                                } | null;
+                            }[] | string[];
+                        }[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "invoice.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            404: components["responses"]["ModelNotFoundException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -7512,7 +9924,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_74": {
+    "modules.notifications.notification.index_86": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -7562,7 +9974,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_75": {
+    "modules.notifications.notification.count_87": {
         parameters: {
             query?: never;
             header?: never;
@@ -7598,7 +10010,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_76": {
+    "modules.notifications.notification.readAll_88": {
         parameters: {
             query?: never;
             header?: never;
@@ -7634,7 +10046,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_77": {
+    "modules.notifications.notification.read_89": {
         parameters: {
             query?: never;
             header?: never;
@@ -7673,7 +10085,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_88": {
+    "modules.notifications.notification.index_100": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -7723,7 +10135,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_89": {
+    "modules.notifications.notification.count_101": {
         parameters: {
             query?: never;
             header?: never;
@@ -7759,7 +10171,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_90": {
+    "modules.notifications.notification.readAll_102": {
         parameters: {
             query?: never;
             header?: never;
@@ -7795,7 +10207,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_91": {
+    "modules.notifications.notification.read_103": {
         parameters: {
             query?: never;
             header?: never;
@@ -7820,6 +10232,453 @@ export interface operations {
             };
             401: components["responses"]["AuthenticationException"];
             404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "order.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "order.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    reason?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "order.requestReturn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    items: {
+                        /** Format: uuid */
+                        order_item_id: string;
+                        quantity: number;
+                    }[];
+                    reason: string;
+                    attachment_ids?: string[] | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.index": {
+        parameters: {
+            query?: {
+                status?: "pending_payment" | "confirmed" | "processing" | "ready_for_pickup" | "out_for_delivery" | "delivered" | "cancelled" | "active" | null;
+                branch_id?: string | null;
+                fulfillment?: "delivery" | "pickup" | null;
+                q?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[][];
+                        counts: string[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.returnsIndex": {
+        parameters: {
+            query?: {
+                status?: "requested" | "approved" | "rejected" | "received" | "refunded" | "open" | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[][];
+                        counts: string[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.returnAct": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    note?: string | null;
+                    restock?: boolean[] | null;
+                    /** @enum {string|null} */
+                    method?: "cash" | "bank_transfer" | "pos_card" | null;
+                    reference_text?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.deliver": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    code?: string | null;
+                    /** Format: uuid */
+                    proof_id?: string | null;
+                    payment?: {
+                        /** @enum {string} */
+                        method?: "cash" | "pos_card" | "bank_transfer";
+                        amount?: number;
+                        reference_text?: string | null;
+                        /** Format: uuid */
+                        proof_id?: string | null;
+                    } | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.act": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    reason?: string | null;
+                    confirmed?: boolean | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "orderAdmin.fromQuote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rfqId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    map?: string[] | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
             /** @description Too many requests */
             429: {
                 headers: {
@@ -10452,6 +13311,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -10620,6 +13485,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -10797,6 +13668,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -10969,6 +13846,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -11299,6 +14182,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -11563,6 +14452,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -11773,6 +14668,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -11955,6 +14856,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -12138,6 +15045,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;
@@ -12320,6 +15233,12 @@ export interface operations {
                             cancel_reason: string | null;
                             delivery_country: string;
                             delivery_address_text: string | null;
+                            /** @description طلب القطع الناتج عن قبول عرض قطع (3.14) */
+                            sales_order: {
+                                id: string;
+                                number: string;
+                                status: string;
+                            } | null;
                             equipment: {
                                 id: string;
                                 name: string;

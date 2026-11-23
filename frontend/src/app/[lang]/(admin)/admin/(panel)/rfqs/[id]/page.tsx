@@ -8,6 +8,8 @@ import { hasLocale, intlLocale } from "@/i18n/config";
 import { getAppDictionary } from "@/i18n/get-dictionary";
 import { authed, currentUser } from "@/lib/auth/client";
 import { formatMoney, formatPhone } from "@/lib/format";
+import { ActionButton } from "@/components/ActionButton";
+import { orderFromQuote } from "../../order-actions";
 import { staffMessage, staffUpload } from "../../rfq-actions";
 import { RfqButtons } from "../RfqForms";
 import { specLines } from "@/lib/rfq";
@@ -17,6 +19,7 @@ import { STATUS_COLOR, type AdminRfqRow } from "../shared";
 type Props = PageProps<"/[lang]/admin/rfqs/[id]">;
 type Attachment = { id: string; name: string | null; mime_type: string; url: string | null };
 type Detail = AdminRfqRow & {
+  sales_order: { id: string; number: string; status: string } | null;
   notes: string | null; delivery_country: string; delivery_address_text: string | null; cancel_reason: string | null;
   items: { id: string; title: string; quantity: string; specs: Record<string, string | number> | null; attachments: Attachment[];
     listing: { slug: string; status: string } | null; part: { part_number: string; brand: string } | null }[];
@@ -74,6 +77,15 @@ async function View({ params, searchParams }: { params: Props["params"]; searchP
       </div>
       {sp.sent && <Notice tone="success">{a.sentNotice}</Notice>}
       {r.status === "won" && <Notice tone="success">{a.won}</Notice>}
+      {r.status === "won" && r.type === "parts" && (r.sales_order ? (
+        <p className="text-sm">{t.admin.orders.linkedOrder}:{" "}
+          <Link href={`/${lang}/admin/orders/${r.sales_order.id}`} className="num font-semibold underline" dir="ltr">{r.sales_order.number}</Link></p>
+      ) : me.permissions.includes("orders.deliver") ? (
+        <div className="rounded-md border border-sand-300 bg-sand-0 p-4 text-sm">
+          <p>{t.admin.orders.noOrderYet}</p>
+          <div className="mt-2"><ActionButton action={orderFromQuote} fields={{ lang, id: r.id }} label={t.admin.orders.createOrder} look="primary" /></div>
+        </div>
+      ) : null)}
       {r.status === "lost" && r.lost_reason && <Notice tone="danger">{a.lose}: {r.lost_reason}</Notice>}
 
       <RfqButtons lang={lang} t={a} rfq={r} assignees={people.ok ? people.data : []}

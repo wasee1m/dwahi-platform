@@ -10,8 +10,12 @@ use App\Modules\Accounts\Models\Address;
 use App\Modules\Accounts\Models\CustomerEquipment;
 use App\Modules\Accounts\Models\CustomerNote;
 use App\Modules\Accounts\Services\OrganizationService;
+use App\Modules\Billing\Http\InvoicePresenter;
+use App\Modules\Billing\Models\Invoice;
 use App\Modules\Identity\Models\Organization;
 use App\Modules\Identity\Services\TokenService;
+use App\Modules\Orders\Http\OrderPresenter;
+use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Platform\Support\Audit;
 use App\Modules\Quoting\Http\RfqPresenter;
 use App\Modules\Quoting\Models\Rfq;
@@ -25,7 +29,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-/** A-12 العملاء والشركات (FR-ADM-05، US-45، SM-7). الفواتير تنضم في S6 والصيانة في S7. */
+/** A-12 العملاء والشركات (FR-ADM-05، US-45، SM-7). الصيانة تنضم في S7. */
 class CustomerAdminController
 {
     private const PAGE = 30;
@@ -143,6 +147,8 @@ class CustomerAdminController
             'fleet' => CustomerEquipment::query()->ownedBy($u, null)->whereNull('archived_at')->with(FleetController::WITH)->get()
                 ->map(fn (CustomerEquipment $e) => AccountPresenter::equipment($e))->values(),
             'requests' => $this->requests(clone $rfqs),
+            'orders' => $this->orders(SalesOrder::query()->where('customer_user_id', $u->id)),
+            'invoices' => $this->invoices(Invoice::query()->where('customer_user_id', $u->id)),
             'conversations' => $this->conversations(clone $rfqs),
             'notes' => $this->notes('user_id', $u->id),
         ]]);
@@ -161,6 +167,8 @@ class CustomerAdminController
             'fleet' => CustomerEquipment::query()->where('organization_id', $o->id)->whereNull('archived_at')->with(FleetController::WITH)->get()
                 ->map(fn (CustomerEquipment $e) => AccountPresenter::equipment($e))->values(),
             'requests' => $this->requests(clone $rfqs),
+            'orders' => $this->orders(SalesOrder::query()->where('organization_id', $o->id)),
+            'invoices' => $this->invoices(Invoice::query()->where('organization_id', $o->id)),
             'conversations' => $this->conversations(clone $rfqs),
             'notes' => $this->notes('organization_id', $o->id),
         ]]);
@@ -258,6 +266,19 @@ class CustomerAdminController
         return $rfqs->with(['items.listing', 'items.part', 'customer', 'organization', 'assignee', 'quotations'])
             ->orderByDesc('created_at')->limit(self::RECENT)->get()
             ->map(fn (Rfq $r) => RfqPresenter::row($r, true))->values()->all();
+    }
+
+    private function orders(Builder $orders): array
+    {
+        return $orders->with(['items', 'branch', 'organization', 'customer'])->orderByDesc('created_at')->limit(self::RECENT)->get()
+            ->map(fn (SalesOrder $o) => OrderPresenter::row($o, true))->values()->all();
+    }
+
+    /** الصادرة فقط، والمتأخرة معلّمة (BR-15) */
+    private function invoices(Builder $invoices): array
+    {
+        return $invoices->where('status', '!=', 'draft')->with(InvoicePresenter::WITH)->orderByDesc('issue_date')->limit(self::RECENT)->get()
+            ->map(fn (Invoice $i) => InvoicePresenter::row($i, true))->values()->all();
     }
 
     /** @return list<array{rfq_id: string, number: string, messages: int, last_message_at: string|null}> */

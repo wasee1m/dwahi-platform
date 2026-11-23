@@ -22,6 +22,9 @@ final unreadCountProvider = FutureProvider.autoDispose<int>((ref) async {
 String? appRoute(String link) {
   if (link.startsWith('/account/company')) return '/account/company'; // N-19
   if (link.startsWith('/account/settings')) return '/account/privacy'; // N-33
+  if (link.startsWith('/account/invoices')) return '/account/invoices'; // N-16
+  final order = RegExp(r'^/account/orders/([0-9a-f-]{36})').firstMatch(link); // N-05، N-06، N-07، N-26، N-27
+  if (order != null) return '/orders/${order[1]}';
   final m = RegExp(r'^/account/quotes/([0-9a-f-]{36})(#messages)?').firstMatch(link);
   if (m == null) return null;
   return m[2] != null ? '/requests/${m[1]}/messages' : '/requests/${m[1]}';

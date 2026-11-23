@@ -6,15 +6,20 @@ use App\Models\User;
 use App\Modules\Accounts\Console\AccountJobs;
 use App\Modules\Accounts\Events\DataExportReady;
 use App\Modules\Accounts\Events\MemberInvited;
+use App\Modules\Billing\Events\InvoiceIssued;
 use App\Modules\Identity\Authorization\Permissions;
 use App\Modules\Identity\Sms\LogSmsSender;
 use App\Modules\Identity\Sms\SmsSender;
 use App\Modules\Messaging\Events\MessagePosted;
 use App\Modules\Notifications\Listeners\AccountNotifications;
 use App\Modules\Notifications\Listeners\MessageNotifications;
+use App\Modules\Notifications\Listeners\OrderNotifications;
 use App\Modules\Notifications\Listeners\QuotingNotifications;
 use App\Modules\Notifications\Push\LogPushSender;
 use App\Modules\Notifications\Push\PushSender;
+use App\Modules\Orders\Console\OrderJobs;
+use App\Modules\Orders\Events\OrderEvent;
+use App\Modules\Orders\Listeners\QuoteAccepted;
 use App\Modules\Quoting\Events\QuotingEvent;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
@@ -55,6 +60,10 @@ class AppServiceProvider extends ServiceProvider
         // رفع الملفات لكل من يدير محتوى يحتاج صوراً
         Gate::define('uploads.create', fn (User $user) => $user->hasAbility('catalog.manage')
             || $user->hasAbility('parts.manage') || $user->hasAbility('content.manage'));
+        // طلبات القطع: موظف القطع يديرها، والمحاسب يقرؤها للاسترداد والمطابقة
+        Gate::define('orders.view', fn (User $user) => $user->hasAbility('orders.deliver') || $user->hasAbility('refunds.manage') || $user->hasAbility('invoices.manage'));
+        Gate::define('staff.uploads', fn (User $user) => $user->hasAbility('quotation.send') || $user->hasAbility('orders.deliver')
+            || $user->hasAbility('invoices.manage') || $user->hasAbility('rfq.create_on_behalf'));
         // قراءة الماركات والفئات والموديلات: موظف القطع يحتاجها للتوافق (A-04) دون صلاحية تعديلها
         Gate::define('catalog.read', fn (User $user) => $user->hasAbility('catalog.manage') || $user->hasAbility('parts.manage'));
 
@@ -63,7 +72,10 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(MessagePosted::class, MessageNotifications::class);
         Event::listen(MemberInvited::class, [AccountNotifications::class, 'invited']);
         Event::listen(DataExportReady::class, [AccountNotifications::class, 'exportReady']);
-        $this->commands([AccountJobs::class]);
+        Event::listen(QuotingEvent::class, QuoteAccepted::class);
+        Event::listen(OrderEvent::class, OrderNotifications::class);
+        Event::listen(InvoiceIssued::class, [OrderNotifications::class, 'invoiceIssued']);
+        $this->commands([AccountJobs::class, OrderJobs::class]);
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));
@@ -79,6 +91,8 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('account', fn (Request $r) => Limit::perMinute(120)->by($r->user()?->id ?? $r->ip()));
         // كل دعوة رسالة SMS على حساب الشركة
         RateLimiter::for('invitations', fn (Request $r) => [Limit::perHour(10)->by('inv:h:'.$r->user()?->id), Limit::perDay(30)->by('inv:d:'.$r->user()?->id)]);
+        // إتمام الطلب وطلبات الإرجاع لكل مستخدم
+        RateLimiter::for('orders', fn (Request $r) => [Limit::perMinute(10)->by('ord:m:'.$r->user()?->id), Limit::perDay(30)->by('ord:d:'.$r->user()?->id)]);
         RateLimiter::for('exports', fn (Request $r) => Limit::perDay(3)->by('export:'.$r->user()?->id));
         RateLimiter::for('uploads', fn (Request $r) => [Limit::perMinute(20)->by('up:m:'.($r->user()?->id ?? $r->ip())), Limit::perDay(300)->by('up:d:'.($r->user()?->id ?? $r->ip()))]);
 

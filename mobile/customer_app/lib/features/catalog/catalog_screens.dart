@@ -7,7 +7,10 @@ import '../../core/account_strings.dart';
 import '../../core/api.dart';
 import '../../core/format.dart';
 import '../../core/media.dart';
+import '../../core/order_strings.dart';
 import '../../core/strings.dart';
+import '../auth/auth_controller.dart';
+import '../orders/order_screens.dart';
 
 // M-07 المعدات، M-08 تفاصيل معدة، M-09 القطع، M-10 تفاصيل قطعة (FR-CAT-01..03، FR-PRT-01..03)
 // للزائر أيضاً: التصفح لا يحتاج دخولاً، والطلب يطلبه (07 M-02).
@@ -454,14 +457,22 @@ class _PartDetailScreenState extends ConsumerState<PartDetailScreen> {
               IconButton.outlined(onPressed: () => setState(() => qty++), icon: const Icon(Icons.add)),
             ]),
             const SizedBox(height: 16),
-            FilledButton(
+            if (p['availability'] != 'on_request') ...[
+              FilledButton.icon(
+                icon: const Icon(Icons.add_shopping_cart),
+                onPressed: () => ref.read(authProvider).value == null ? context.push('/login') : addToCart(context, ref, p['id'] as String, qty),
+                label: Text(s.addToCart),
+              ),
+              const SizedBox(height: 4),
+              Text(s.payOnPickupNote, style: t.textTheme.bodySmall, textAlign: TextAlign.center),
+              const SizedBox(height: 8),
+            ],
+            (p['availability'] == 'on_request' ? FilledButton.new : OutlinedButton.new)(
               onPressed: () => context.push(Uri(path: '/requests/new', queryParameters: {
                 'type': 'parts', 'part': p['id'], 'qty': '$qty', 'label': '${(p['brand'] as Map)['name']} ${p['part_number']} · ${p['name']}',
               }).toString()),
               child: Text(s.requestQuantity),
             ),
-            const SizedBox(height: 8),
-            Text(s.cartSoon, style: t.textTheme.bodySmall, textAlign: TextAlign.center),
           ]);
         },
       ),

@@ -3,14 +3,16 @@ import { intlLocale, type Locale } from "@/i18n/config";
 import { fill, type AppDictionary } from "@/i18n/get-dictionary";
 import type { Address, CustomerProfile, FleetItem } from "@/lib/account-types";
 import { formatMoney, formatNumber, formatPhone } from "@/lib/format";
+import { INVOICE_COLOR, ORDER_COLOR, type InvoiceRow, type OrderRow } from "@/lib/order-types";
 import { STATUS_COLOR, type AdminRfqRow } from "../rfqs/shared";
 import { NoteForm } from "./CustomerForms";
 
 // أقسام ملف 360° المشتركة بين العميل والشركة (A-12)
 export const card = "rounded-md border border-sand-300 bg-sand-0 p-5";
 
-export function Records({ lang, t, requests, conversations, fleet, addresses, canOpenRequests }: {
+export function Records({ lang, t, requests, conversations, fleet, addresses, canOpenRequests, orders, invoices, canOpenOrders, canOpenInvoices }: {
   lang: Locale; t: AppDictionary; requests: AdminRfqRow[]; conversations: CustomerProfile["conversations"]; fleet: FleetItem[]; addresses: Address[]; canOpenRequests: boolean;
+  orders: OrderRow[]; invoices: InvoiceRow[]; canOpenOrders: boolean; canOpenInvoices: boolean;
 }) {
   const c = t.admin.customers;
   const r = t.admin.rfqs;
@@ -34,6 +36,48 @@ export function Records({ lang, t, requests, conversations, fleet, addresses, ca
                 <span className="text-end">
                   <span className="block font-semibold" style={{ color: STATUS_COLOR[x.status] }}>{r.statuses[x.status]}</span>
                   {x.quotation && <><span className="num" dir="ltr">{x.quotation.number}</span> · <span className="num">{formatMoney(x.quotation.total, lang)}</span></>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className={card}>
+        <h2 className="mb-3 text-xl">{c.orders}</h2>
+        {orders.length === 0 ? none : (
+          <ul className="divide-y divide-sand-300 text-sm">
+            {orders.map((x) => (
+              <li key={x.id} className="flex flex-wrap justify-between gap-3 py-2">
+                <span>
+                  {canOpenOrders ? <Link href={`/${lang}/admin/orders/${x.id}`} className="num font-semibold underline" dir="ltr">{x.number}</Link> : <span className="num font-semibold" dir="ltr">{x.number}</span>}
+                  {x.created_at && <> · {date.format(new Date(x.created_at))}</>}
+                  <span className="block text-ink-muted">{x.summary.join(lang === "ar" ? "، " : ", ")}</span>
+                </span>
+                <span className="text-end">
+                  <span className="block font-semibold" style={{ color: ORDER_COLOR[x.status] }}>{t.orders.statuses[x.status]}</span>
+                  {x.total && <span className="num">{formatMoney(x.total, lang)}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className={card}>
+        <h2 className="mb-3 text-xl">{c.invoices}</h2>
+        {invoices.length === 0 ? none : (
+          <ul className="divide-y divide-sand-300 text-sm">
+            {invoices.map((x) => (
+              <li key={x.id} className="flex flex-wrap justify-between gap-3 py-2">
+                <span>
+                  {canOpenInvoices ? <Link href={`/${lang}/admin/finance/invoices/${x.id}`} className="num font-semibold underline" dir="ltr">{x.number}</Link> : <span className="num font-semibold" dir="ltr">{x.number}</span>}
+                  {x.issue_date && <> · {date.format(new Date(x.issue_date))}</>}
+                </span>
+                <span className="text-end">
+                  <span className="block font-semibold" style={{ color: INVOICE_COLOR[x.status] }}>{t.invoices.statuses[x.status]}</span>
+                  {x.overdue && <span className="rounded-sm bg-danger px-1.5 text-xs font-bold text-white">{t.invoices.overdue}</span>}
+                  {x.total && <span className="num ms-2">{formatMoney(x.total, lang)}</span>}
                 </span>
               </li>
             ))}

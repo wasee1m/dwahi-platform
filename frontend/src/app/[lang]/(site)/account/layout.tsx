@@ -41,6 +41,9 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
         <ul className="space-y-1">
           <li><Link href={`/${lang}/account`} className={link}>{t.account.nav.dashboard}</Link></li>
           <li><Link href={`/${lang}/account/quotes`} className={link}>{t.account.nav.quotes}</Link></li>
+          <li><Link href={`/${lang}/account/orders`} className={link}>{t.account.nav.orders}</Link></li>
+          <li><Link href={`/${lang}/account/invoices`} className={link}>{t.account.nav.invoices}</Link></li>
+          <li><Link href={`/${lang}/cart`} className={link}>{t.account.nav.cart}</Link></li>
           <li>
             <Link href={`/${lang}/account/notifications`} className={link}>
               {t.account.nav.notifications}

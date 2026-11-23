@@ -2,6 +2,7 @@
 
 namespace App\Modules\Quoting\Http;
 
+use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Platform\Models\Attachment;
 use App\Modules\Quoting\Models\Quotation;
 use App\Modules\Quoting\Models\QuotationItem;
@@ -52,6 +53,9 @@ final class RfqPresenter
             'cancel_reason' => $r->cancel_reason,
             'delivery_country' => $r->delivery_country,
             'delivery_address_text' => $r->delivery_address_text,
+            /** @var array{id: string, number: string, status: string}|null طلب القطع الناتج عن قبول عرض قطع (3.14) */
+            'sales_order' => $r->type === 'parts' && $r->status === 'won'
+                ? SalesOrder::query()->where('rfq_id', $r->id)->first(['id', 'number', 'status'])?->only(['id', 'number', 'status']) : null,
             /** @var array{id: string, name: string, serial_number: string|null}|null */
             'equipment' => $r->customerEquipment ? [
                 'id' => $r->customerEquipment->id, 'name' => $r->customerEquipment->displayName(), 'serial_number' => $r->customerEquipment->serial_number,

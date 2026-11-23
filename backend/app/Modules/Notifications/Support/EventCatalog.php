@@ -5,7 +5,7 @@ namespace App\Modules\Notifications\Support;
 /**
  * أحداث الإشعارات المبنية حتى الآن (01 §8): الفئة لتفضيلات المستخدم (FR-NOT-03)، والقنوات، والإلزامية.
  * in_app دائماً (مركز الإشعارات C-19)، والقنوات الأخرى تُرسل في الطابور. الإلزامي لا تعطله التفضيلات.
- * تُضاف الأحداث مع وحداتها (الطلبات S6، الصيانة S7).
+ * تُضاف الأحداث مع وحداتها (الصيانة S7).
  */
 final class EventCatalog
 {
@@ -15,19 +15,13 @@ final class EventCatalog
     public const CATEGORIES = ['quotes', 'orders', 'service', 'messages', 'marketing'];
 
     /** أحداث للموظف وحده، فلا تدخل مصفوفة العميل */
-    private const STAFF_ONLY = ['N-03'];
+    private const STAFF_ONLY = ['N-03', 'N-23'];
 
     /**
      * أحداث العميل في الوحدات القادمة كما في 01 §8، لتعرض C-20 الإلزامي صحيحاً من الآن.
      * ينتقل كل حدث إلى EVENTS مع وحدته.
      */
     private const UPCOMING = [
-        'N-05' => ['category' => 'orders', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],
-        'N-06' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
-        'N-07' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
-        'N-16' => ['category' => 'orders', 'channels' => ['email'], 'mandatory' => true],
-        'N-26' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],
-        'N-27' => ['category' => 'orders', 'channels' => ['push'], 'mandatory' => true],
         'N-10' => ['category' => 'service', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],
         'N-11' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
         'N-12' => ['category' => 'service', 'channels' => ['push', 'sms'], 'mandatory' => true],
@@ -46,6 +40,13 @@ final class EventCatalog
         'N-04' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => false],   // ينتهي خلال 48 ساعة
         'N-17' => ['category' => 'messages', 'channels' => ['push'], 'mandatory' => false],          // رسالة جديدة (+بريد J-10)
         'N-19' => ['category' => 'account', 'channels' => ['sms', 'email'], 'mandatory' => true],     // دعوة لحساب شركة
+        'N-05' => ['category' => 'orders', 'channels' => ['push', 'email', 'sms'], 'mandatory' => true],   // تأكيد الطلب
+        'N-06' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],   // جاهز / خرج للتوصيل / تم التسليم
+        'N-07' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],   // إلغاء الطلب وتذكير الاستلام
+        'N-16' => ['category' => 'orders', 'channels' => ['email'], 'mandatory' => true],   // إصدار فاتورة
+        'N-26' => ['category' => 'orders', 'channels' => ['push', 'sms'], 'mandatory' => true],   // تعذر التسليم
+        'N-27' => ['category' => 'orders', 'channels' => ['push'], 'mandatory' => true],   // قرار الإرجاع (وللموظف: طلب جديد)
+        'N-23' => ['category' => 'orders', 'channels' => ['email'], 'mandatory' => true],            // طلب قطع جديد لموظفي الفرع
         'N-25' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => true],    // خسارة الطلب مع السبب
         'N-31' => ['category' => 'quotes', 'channels' => ['push', 'email'], 'mandatory' => true],    // طلب اعتماد من عضو
         'N-33' => ['category' => 'account', 'channels' => ['email'], 'mandatory' => true],           // نسخة البيانات جاهزة

@@ -4,9 +4,11 @@ namespace App\Modules\Accounts\Services;
 
 use App\Models\User;
 use App\Modules\Accounts\Models\Invitation;
+use App\Modules\Billing\Models\Invoice;
 use App\Modules\Identity\Models\Organization;
 use App\Modules\Identity\Services\OtpService;
 use App\Modules\Identity\Services\TokenService;
+use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Platform\Support\Audit;
 use App\Modules\Quoting\Models\Rfq;
 use App\Support\ApiProblem;
@@ -42,12 +44,15 @@ final class AccountDeletion
             }
         }
 
-        // طلبات القطع (S6) والصيانة (S7) تنضم لهذه القائمة مع وحدتيهما
-        $requests = Rfq::query()->whereIn('status', self::OPEN)
-            ->where(fn ($w) => $w->where(fn ($x) => $x->whereNull('organization_id')->where('customer_user_id', $user->id))
-                ->orWhereIn('organization_id', $alone))
-            ->orderBy('created_at')->get()
-            ->map(fn (Rfq $r) => ['id' => $r->id, 'number' => $r->number, 'status' => $r->status])->values()->all();
+        // المفتوح الشخصي أو لشركة يغادرها وحده: طلبات العروض، وطلبات القطع، والفواتير غير المسددة. الصيانة مع S7
+        $mine = fn ($w) => $w->where(fn ($x) => $x->whereNull('organization_id')->where('customer_user_id', $user->id))
+            ->orWhereIn('organization_id', $alone);
+        $row = fn ($m) => ['id' => (string) $m->id, 'number' => (string) $m->number, 'status' => (string) $m->status];
+        $requests = [
+            ...Rfq::query()->whereIn('status', self::OPEN)->where($mine)->orderBy('created_at')->get()->map($row)->all(),
+            ...SalesOrder::query()->whereIn('status', SalesOrder::OPEN)->where($mine)->orderBy('created_at')->get()->map($row)->all(),
+            ...Invoice::query()->whereIn('status', Invoice::UNPAID)->where($mine)->orderBy('issue_date')->get()->map($row)->all(),
+        ];
 
         return ['can_delete' => $companies === [] && $requests === [], 'companies' => $companies, 'requests' => $requests];
     }

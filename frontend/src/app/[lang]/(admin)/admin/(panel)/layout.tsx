@@ -31,6 +31,8 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
     { href: "/admin", label: t.admin.nav.home, ability: null },
     { href: "/admin/rfqs", label: t.admin.nav.rfqs, ability: "quotation.send" },
     { href: "/admin/customers", label: t.admin.nav.customers, ability: "customers.view" },
+    { href: "/admin/orders", label: t.admin.nav.orders, ability: "orders.deliver" },
+    { href: "/admin/finance", label: t.admin.nav.finance, ability: "invoices.manage" },
     { href: "/admin/notifications", label: t.admin.nav.notifications, ability: null, badge: unread },
     { href: "/admin/equipment", label: t.admin.nav.equipment, ability: "catalog.manage" },
     { href: "/admin/catalog-setup", label: t.admin.nav.catalogSetup, ability: "catalog.manage" },

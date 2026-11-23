@@ -47,4 +47,50 @@ final class StockService
             throw $e;
         }
     }
+
+    /**
+     * حجز كمية لطلب (BR-05، SM-3a انتقال 3.0): يزيد المحجوز بشرط أن يبقى المتاح كافياً، بتحديث شرطي واحد
+     * فلا يحجز طلبان نفس القطعة الأخيرة.
+     */
+    public function reserve(string $partId, string $locationId, string $qty): void
+    {
+        $n = DB::table('stock_levels')->where('part_id', $partId)->where('location_id', $locationId)
+            ->whereRaw('qty_on_hand - qty_reserved >= ?', [$qty])
+            ->update(['qty_reserved' => DB::raw('qty_reserved + '.(float) $qty)]);
+        if ($n === 0) {
+            throw new ApiProblem('STOCK_INSUFFICIENT', 422, null, ['part_id' => $partId]);
+        }
+    }
+
+    /** تحرير الحجز عند الإلغاء (3.6، 3.7، 3.13) */
+    public function release(string $partId, string $locationId, string $qty): void
+    {
+        DB::table('stock_levels')->where('part_id', $partId)->where('location_id', $locationId)
+            ->update(['qty_reserved' => DB::raw('GREATEST(qty_reserved - '.(float) $qty.', 0)')]);
+    }
+
+    /** البيع عند التسليم (3.11، 3.12): يُحرَّر الحجز ويُخصم المخزون بحركة sale مرتبطة بالطلب */
+    public function sell(string $partId, string $locationId, string $qty, User $by, string $orderId): void
+    {
+        DB::transaction(function () use ($partId, $locationId, $qty, $by, $orderId) {
+            $this->release($partId, $locationId, $qty);
+            $this->move($partId, $locationId, '-'.$qty, 'sale', $by, null, ['sales_order_id' => $orderId]);
+        });
+    }
+
+    /**
+     * موقع في الفرع يكفي متاحه الكمية كلها، الأكبر متاحاً أولاً.
+     *
+     * @return string|null معرّف الموقع
+     */
+    public function locationFor(string $partId, string $branchId, string $qty): ?string
+    {
+        return DB::table('stock_levels')
+            ->join('stock_locations', 'stock_locations.id', '=', 'stock_levels.location_id')
+            ->where('stock_locations.branch_id', $branchId)
+            ->where('stock_levels.part_id', $partId)
+            ->whereRaw('qty_on_hand - qty_reserved >= ?', [$qty])
+            ->orderByRaw('qty_on_hand - qty_reserved DESC')
+            ->value('stock_levels.location_id');
+    }
 }

@@ -6,6 +6,8 @@ use App\Modules\Accounts\Http\Controllers\FleetController;
 use App\Modules\Accounts\Http\Controllers\OrganizationController;
 use App\Modules\Accounts\Http\Controllers\PrivacyController;
 use App\Modules\Accounts\Http\Middleware\EnsureCustomer;
+use App\Modules\Billing\Http\Controllers\Admin\FinanceController;
+use App\Modules\Billing\Http\Controllers\InvoiceController;
 use App\Modules\Catalog\Http\Controllers\Admin\CatalogSetupController;
 use App\Modules\Catalog\Http\Controllers\Admin\EquipmentAdminController;
 use App\Modules\Catalog\Http\Controllers\EquipmentController;
@@ -24,6 +26,9 @@ use App\Modules\Identity\Http\Controllers\SessionController;
 use App\Modules\Identity\Http\Controllers\StaffAuthController;
 use App\Modules\Notifications\Http\Controllers\NotificationController;
 use App\Modules\Notifications\Http\Controllers\PreferenceController;
+use App\Modules\Orders\Http\Controllers\Admin\OrderAdminController;
+use App\Modules\Orders\Http\Controllers\CartController;
+use App\Modules\Orders\Http\Controllers\OrderController;
 use App\Modules\Parts\Http\Controllers\Admin\PartAdminController;
 use App\Modules\Parts\Http\Controllers\Admin\PartImportController;
 use App\Modules\Parts\Http\Controllers\CompatiblePartsController;
@@ -132,6 +137,20 @@ Route::prefix('v1')->group(function () {
             Route::delete('fleet/{id}', [FleetController::class, 'archive']);
             Route::post('fleet/{id}/hour-readings', [FleetController::class, 'addReading']);
             Route::get('fleet/{id}/history', [FleetController::class, 'history']);
+
+            // السلة وإتمام الطلب (C-10، C-11، M-11)، والطلبات (C-13، C-14، M-19)، والفواتير (C-18، M-23)
+            Route::get('cart', [CartController::class, 'show']);
+            Route::put('cart/items/{partId}', [CartController::class, 'setItem']);
+            Route::delete('cart/items/{partId}', [CartController::class, 'removeItem']);
+            Route::post('cart/acknowledge', [CartController::class, 'acknowledge']);
+            Route::get('checkout', [CartController::class, 'checkout']);
+            Route::post('orders', [CartController::class, 'place'])->middleware('throttle:orders');
+            Route::get('orders', [OrderController::class, 'index']);
+            Route::get('orders/{id}', [OrderController::class, 'show']);
+            Route::post('orders/{id}/cancel', [OrderController::class, 'cancel']);
+            Route::post('orders/{id}/returns', [OrderController::class, 'requestReturn'])->middleware('throttle:orders');
+            Route::get('invoices', [InvoiceController::class, 'index']);
+            Route::get('invoices/{id}/pdf', [InvoiceController::class, 'pdf']);
         });
 
         // C-20: حقوق البيانات لا تنتظر إكمال الملف
@@ -195,7 +214,38 @@ Route::prefix('v1')->group(function () {
             Route::delete('quotations/{id}', [QuotationAdminController::class, 'destroy']);
             Route::post('quotations/{id}/send', [QuotationAdminController::class, 'send']);
             Route::get('quotations/{id}/pdf', [QuotationAdminController::class, 'pdf']);
-            Route::post('staff-uploads', [FileController::class, 'upload']); // مرفقات خاصة للموظف (رسائل، طلب نيابة)
+        });
+        // مرفقات خاصة للموظف: الرسائل، والطلب نيابة، وإثبات التسليم، وإيصال التحويل
+        Route::post('staff-uploads', [FileController::class, 'upload'])->middleware(['can:staff.uploads', 'throttle:uploads']);
+
+        // A-07: طلبات القطع والإرجاع (قطع، مدير، ويقرأ المحاسب)
+        Route::middleware('can:orders.view')->group(function () {
+            Route::get('orders', [OrderAdminController::class, 'index']);
+            Route::get('orders/{id}', [OrderAdminController::class, 'show']);
+            Route::get('returns', [OrderAdminController::class, 'returnsIndex']);
+            Route::post('returns/{id}/{action}', [OrderAdminController::class, 'returnAct'])->whereIn('action', ['approve', 'reject', 'receive', 'refund']);
+        });
+        Route::middleware('can:orders.deliver')->group(function () {
+            Route::post('orders/{id}/deliver', [OrderAdminController::class, 'deliver']);
+            Route::post('orders/{id}/{action}', [OrderAdminController::class, 'act'])->whereIn('action', ['process', 'ready', 'dispatch', 'delivery-failed', 'cancel', 'phone']);
+            Route::post('rfqs/{id}/sales-order', [OrderAdminController::class, 'fromQuote']);
+        });
+
+        // A-13: المالية (محاسب، مدير)
+        Route::middleware('can:invoices.manage')->group(function () {
+            Route::get('invoices', [FinanceController::class, 'invoices']);
+            Route::get('invoices/{id}', [FinanceController::class, 'show']);
+            Route::get('invoices/{id}/pdf', [FinanceController::class, 'pdf']);
+            Route::post('invoices/{id}/issue', [FinanceController::class, 'issue']);
+            Route::post('invoices/{id}/void', [FinanceController::class, 'void']);
+            Route::post('invoices/{id}/payments', [FinanceController::class, 'recordPayment']);
+            Route::get('payments', [FinanceController::class, 'payments']);
+            Route::get('finance/collection', [FinanceController::class, 'collection']);
+            Route::get('credit-notes', [FinanceController::class, 'creditNotes']);
+        });
+        Route::middleware('can:refunds.manage')->group(function () {
+            Route::get('refunds', [FinanceController::class, 'refunds']);
+            Route::post('payments/{id}/refunds', [FinanceController::class, 'refund']);
         });
         // الطلب نيابة عن عميل: العثور عليه أو إنشاء حسابه (مبيعات، منسق، مدير)
         Route::middleware('can:rfq.create_on_behalf')->group(function () {

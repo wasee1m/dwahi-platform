@@ -79,3 +79,9 @@ function staffToken($test, string $role): string
 
     return adminSignIn($test, $email)['access_token'];
 }
+
+/** عدد الإشعارات بالرمز، ولمستخدم إن حُدد */
+function notified(string $code, ?string $userId = null): int
+{
+    return DB::table('notifications')->where('event_code', $code)->when($userId, fn ($q) => $q->where('user_id', $userId))->count();
+}

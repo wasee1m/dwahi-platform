@@ -26,11 +26,6 @@ function partsRfq($test, string $token): array
     ]])->assertCreated()->json('data');
 }
 
-function notified(string $code, ?string $userId = null): int
-{
-    return DB::table('notifications')->where('event_code', $code)->when($userId, fn ($q) => $q->where('user_id', $userId))->count();
-}
-
 it('creates a parts request with a catalog line and an unlisted part with its photo (US-12)', function () {
     staffUser(['sales'], 'sales@dwahi.test');
     $t = customerToken($this);

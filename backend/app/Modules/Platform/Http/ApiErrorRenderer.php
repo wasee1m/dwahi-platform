@@ -62,6 +62,19 @@ final class ApiErrorRenderer
         'ACCOUNT_DELETED' => ['ar' => 'هذا الحساب محذوف. تواصل معنا إن لم تكن أنت من حذفه.', 'en' => 'This account was deleted. Contact us if you did not delete it.'],
         'HOUR_METER_LOWER' => ['ar' => 'القراءة أقل من السابقة.', 'en' => 'The reading is lower than the previous one.'],
         'APPROVAL_REQUIRED' => ['ar' => 'قبول العروض لمالك الحساب أو عضو بصلاحية الاعتماد. أرسله للاعتماد.', 'en' => 'Only the account owner or a member with approval rights can accept. Send it for approval.'],
+        // الطلبات والفوترة (S6)
+        'CART_FULL' => ['ar' => 'السلة ممتلئة. أتمّ الطلب الحالي أولاً.', 'en' => 'Your cart is full. Place the current order first.'],
+        'CART_EMPTY' => ['ar' => 'السلة فارغة.', 'en' => 'Your cart is empty.'],
+        'CART_CHANGED' => ['ar' => 'تغيّر سعر أو توفر بعض القطع. راجع السلة ثم أكّد.', 'en' => 'Some prices or stock changed. Review your cart, then confirm.'],
+        'ORDER_LIMIT' => ['ar' => 'لديك طلبات مفتوحة غير مدفوعة بالحد الأقصى. استلم طلباتك الحالية أولاً.', 'en' => 'You have the maximum number of open unpaid orders. Collect your current orders first.'],
+        'PHONE_CONFIRMATION_REQUIRED' => ['ar' => 'سجّل نتيجة الاتصال بالعميل قبل التجهيز.', 'en' => 'Record the phone call with the customer before preparing.'],
+        'PICKUP_CODE_INVALID' => ['ar' => 'رمز الاستلام غير صحيح.', 'en' => 'The pickup code is not correct.'],
+        'PICKUP_CODE_LOCKED' => ['ar' => 'محاولات خاطئة كثيرة لرمز الاستلام. حاول بعد قليل.', 'en' => 'Too many wrong pickup codes. Try again later.'],
+        'PAYMENT_REQUIRED' => ['ar' => 'سجّل الدفعة قبل التسليم.', 'en' => 'Record the payment before handing over.'],
+        'REFUND_FIRST' => ['ar' => 'على الطلب دفعة. نفّذ الاسترداد قبل الإلغاء.', 'en' => 'This order has a payment. Refund it before cancelling.'],
+        'RETURN_WINDOW_CLOSED' => ['ar' => 'انتهت مدة الإرجاع أو لا توجد قطع قابلة للإرجاع.', 'en' => 'The return period ended or no items can be returned.'],
+        'NO_PAYMENT_TO_REFUND' => ['ar' => 'لا توجد دفعة على الطلب لاستردادها.', 'en' => 'There is no payment on this order to refund.'],
+        'ORDER_EXISTS' => ['ar' => 'أُنشئ طلب القطع لهذا العرض من قبل.', 'en' => 'A parts order already exists for this quote.'],
     ];
 
     public static function render(Throwable $e): JsonResponse

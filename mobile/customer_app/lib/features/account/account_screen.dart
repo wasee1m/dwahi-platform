@@ -11,7 +11,7 @@ import '../auth/auth_controller.dart';
 /// يطابق version في pubspec.yaml (اختبار يتحقق)
 const appVersion = '1.0.0';
 
-/// M-22 حسابي (C-02 + C-03 + C-04 + C-20). الفواتير تُفتح مع S6.
+/// M-22 حسابي (C-02 + C-03 + C-04 + C-18 + C-20)
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 
@@ -41,7 +41,7 @@ class AccountScreen extends ConsumerWidget {
         link(Icons.agriculture_outlined, s.myFleet, '/account/fleet'),
         link(Icons.business_outlined, s.companyAndMembers, '/account/company'),
         link(Icons.place_outlined, s.addresses, '/account/addresses'),
-        ListTile(enabled: false, leading: const Icon(Icons.receipt_outlined), title: Text(s.invoices), trailing: Text(s.soon)),
+        link(Icons.receipt_outlined, s.invoices, '/account/invoices'),
         const Divider(),
         link(Icons.person_outline, s.profile, '/account/profile'),
         link(Icons.notifications_outlined, s.notifications, '/notifications'),

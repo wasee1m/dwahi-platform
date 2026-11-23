@@ -12,8 +12,9 @@ import { getPart } from "@/lib/api";
 import { portalEnabled } from "@/lib/features";
 import { formatMoney } from "@/lib/format";
 import { alternates } from "@/lib/seo";
+import { AddToCart } from "../../../cart/CartForms";
 
-// W-05 تفاصيل القطعة (FR-PRT-03، FR-CAT-07). "أضف للسلة" يعمل مع حسابات العملاء (S6).
+// W-05 تفاصيل القطعة (FR-PRT-03، FR-CAT-07). "أضف للسلة" للقطعة المتوفرة (FR-ORD-01)، و"اطلب كمية" لغيرها.
 type Props = PageProps<"/[lang]/parts/[brand]/[number]">;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -67,12 +68,18 @@ async function Detail({ params }: { params: Props["params"] }) {
             <li>{part.is_returnable ? t.returnable : t.notReturnable}</li>
           </ul>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink href={portalEnabled()
+          {portalEnabled() && part.availability !== "on_request" && (
+            <div className="mt-6">
+              <AddToCart lang={lang} part={part.id} back={`/${lang}/parts/${brand}/${number}`}
+                labels={{ add: t.addToCart, added: t.added, viewCart: t.viewCart, quantity: t.quantity }} />
+              <p className="mt-2 max-w-md text-xs text-ink-muted">{t.payOnPickup}</p>
+            </div>
+          )}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <ButtonLink variant={portalEnabled() && part.availability !== "on_request" ? "secondary" : "primary"} href={portalEnabled()
               ? `/${lang}/account/quotes/new?type=parts&part=${part.id}&label=${encodeURIComponent(`${part.brand.name} ${part.part_number} · ${part.name}`)}`
               : `/${lang}/contact?topic=parts&ref=${encodeURIComponent(part.part_number)}`}>{t.requestQuantity}</ButtonLink>
           </div>
-          <p className="mt-3 max-w-md text-xs text-ink-muted">{t.cartSoon}</p>
 
           {part.description && <p className="mt-6 leading-relaxed">{part.description}</p>}
 

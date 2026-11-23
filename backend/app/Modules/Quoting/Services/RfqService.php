@@ -5,6 +5,7 @@ namespace App\Modules\Quoting\Services;
 use App\Models\User;
 use App\Modules\Accounts\Models\Address;
 use App\Modules\Accounts\Models\CustomerEquipment;
+use App\Modules\Accounts\Support\AccountChoice;
 use App\Modules\Billing\Support\DocumentNumber;
 use App\Modules\Catalog\Models\EquipmentListing;
 use App\Modules\Parts\Models\Part;
@@ -29,7 +30,7 @@ final class RfqService
      */
     public function create(User $customer, User $creator, string $source, array $data): Rfq
     {
-        $orgId = $this->account($customer, $data);
+        $orgId = AccountChoice::resolve($customer, $data);
         $address = $this->address($customer, $orgId, $data['delivery_address_id'] ?? null);
         $equipmentId = $this->equipment($customer, $orgId, $data['customer_equipment_id'] ?? null);
 
@@ -68,26 +69,6 @@ final class RfqService
         QuotingEvent::dispatch(QuotingEvent::RFQ_SUBMITTED, $rfq, null, $creator);
 
         return $rfq;
-    }
-
-    /**
-     * حساب الطلب (06 §2 "شخصي / الشركة"): null شخصي، أو شركة العميل عضو نشط فيها.
-     * غياب الحقل يأخذ أقدم شركة له، وهو سلوك نسخ التطبيق السابقة.
-     *
-     * @param  array<string, mixed>  $data
-     */
-    private function account(User $customer, array $data): ?string
-    {
-        $orgs = DB::table('organization_members')->where('user_id', $customer->id)->whereNull('removed_at')
-            ->orderBy('joined_at')->pluck('organization_id');
-        if (! array_key_exists('organization_id', $data)) {
-            return $orgs->first();
-        }
-        if ($data['organization_id'] !== null && ! $orgs->contains($data['organization_id'])) {
-            throw ValidationException::withMessages(['organization_id' => [__('quoting.not_a_member')]]);
-        }
-
-        return $data['organization_id'];
     }
 
     private function address(User $customer, ?string $orgId, ?string $id): ?Address

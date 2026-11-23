@@ -55,6 +55,8 @@ final class Anonymizer
             ]);
             DB::table('hour_meter_readings')->whereIn('customer_equipment_id', $personalFleet)->update(['note' => null, 'photo_id' => null]);
             DB::table('rfqs')->whereIn('id', $personalRfqs)->update(['notes' => null, 'delivery_address_text' => null, 'cancel_reason' => null]);
+            DB::table('sales_orders')->where('customer_user_id', $id)->whereNull('organization_id')->update(['delivery_address' => null, 'notes' => null]);
+            DB::table('return_requests')->where('created_by', $id)->update(['reason' => '—']);
             DB::table('messages')->where('sender_user_id', $id)
                 ->whereIn('conversation_id', DB::table('conversations')->whereIn('rfq_id', $personalRfqs)->select('id'))
                 ->update(['body' => null]);

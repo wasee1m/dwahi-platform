@@ -91,6 +91,11 @@
     "noImage": "No photo yet"
   },
   "parts": {
+    "addToCart": "Add to cart",
+    "added": "Added to cart.",
+    "viewCart": "View cart",
+    "quantity": "Quantity",
+    "payOnPickup": "The part is reserved when you place the order; pay on pickup or delivery.",
     "byEquipment": {"tab": "By machine", "byNumber": "By number or name", "model": "Brand and model", "show": "Show parts", "fromFleet": "From my fleet", "notLinked": "This machine is not linked to a catalog model, so we cannot show compatible parts.", "none": "No parts are linked to this model yet.", "requestFor": "Request a part for this machine", "request": "Request it", "other": "Other"},
     "title": "Spare parts search",
     "placeholder": "Part number or name",

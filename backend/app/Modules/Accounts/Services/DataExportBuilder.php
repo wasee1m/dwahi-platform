@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Modules\Accounts\Http\AccountPresenter;
 use App\Modules\Accounts\Models\Address;
 use App\Modules\Accounts\Models\CustomerEquipment;
+use App\Modules\Billing\Models\Invoice;
+use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Quoting\Http\RfqPresenter;
 use App\Modules\Quoting\Models\Rfq;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +45,16 @@ final class DataExportBuilder
                 'readings' => $e->readings->map->only(['reading', 'note', 'recorded_at'])->values()->all(),
             ])->all(),
             'quote_requests' => $rfqs->map(fn (Rfq $r) => $this->request($r))->all(),
+            'parts_orders' => SalesOrder::query()->visibleTo($user)->where('customer_user_id', $user->id)->with('items')->orderBy('created_at')->get()
+                ->map(fn (SalesOrder $o) => [
+                    ...$o->only(['number', 'status', 'fulfillment', 'subtotal', 'delivery_fee', 'vat_total', 'total', 'notes', 'cancel_reason']),
+                    'delivery_address' => $o->delivery_address['text'] ?? null,
+                    'created_at' => $o->created_at?->toIso8601ZuluString(), 'delivered_at' => $o->delivered_at?->toIso8601ZuluString(),
+                    'items' => $o->items->map->only(['part_number_snapshot', 'name_ar_snapshot', 'quantity', 'unit_price', 'line_total'])->values()->all(),
+                ])->all(),
+            'invoices' => Invoice::query()->visibleTo($user)->where('customer_user_id', $user->id)->where('status', '!=', 'draft')->orderBy('issue_date')->get()
+                ->map(fn (Invoice $i) => $i->only(['number', 'status', 'subtotal', 'vat_total', 'total', 'amount_paid', 'buyer_snapshot'])
+                    + ['issue_date' => $i->issue_date?->toDateString(), 'due_date' => $i->due_date?->toDateString()])->all(),
             'messages' => $rows(DB::table('messages')->where('sender_user_id', $user->id)->orderBy('created_at')->get(['body', 'created_at'])),
             'notifications' => $rows(DB::table('notifications')->where('user_id', $user->id)->orderBy('created_at')->get(['event_code', 'title', 'body', 'created_at', 'read_at'])),
             'notification_preferences' => $rows(DB::table('notification_preferences')->where('user_id', $user->id)->get(['category', 'channel', 'enabled'])),
