@@ -41,6 +41,9 @@ use App\Modules\Platform\Http\Controllers\FileController;
 use App\Modules\Quoting\Http\Controllers\Admin\QuotationAdminController;
 use App\Modules\Quoting\Http\Controllers\Admin\RfqAdminController;
 use App\Modules\Quoting\Http\Controllers\RfqController;
+use App\Modules\Service\Http\Controllers\Admin\ServiceAdminController;
+use App\Modules\Service\Http\Controllers\Admin\WorkOrderAdminController;
+use App\Modules\Service\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 // /api/v1 (04 §4)
@@ -151,6 +154,13 @@ Route::prefix('v1')->group(function () {
             Route::post('orders/{id}/returns', [OrderController::class, 'requestReturn'])->middleware('throttle:orders');
             Route::get('invoices', [InvoiceController::class, 'index']);
             Route::get('invoices/{id}/pdf', [InvoiceController::class, 'pdf']);
+
+            // طلبات الصيانة (C-15، C-16، M-15، M-16)
+            Route::get('service-requests/meta', [ServiceController::class, 'meta']);
+            Route::get('service-requests', [ServiceController::class, 'index']);
+            Route::post('service-requests', [ServiceController::class, 'store'])->middleware('throttle:orders');
+            Route::get('service-requests/{id}', [ServiceController::class, 'show']);
+            Route::post('service-requests/{id}/cancel', [ServiceController::class, 'cancel']);
         });
 
         // C-20: حقوق البيانات لا تنتظر إكمال الملف
@@ -229,6 +239,28 @@ Route::prefix('v1')->group(function () {
             Route::post('orders/{id}/deliver', [OrderAdminController::class, 'deliver']);
             Route::post('orders/{id}/{action}', [OrderAdminController::class, 'act'])->whereIn('action', ['process', 'ready', 'dispatch', 'delivery-failed', 'cancel', 'phone']);
             Route::post('rfqs/{id}/sales-order', [OrderAdminController::class, 'fromQuote']);
+        });
+
+        // A-08 الفرز، A-09 أوامر العمل، A-10 التوزيع (منسق، مدير)
+        Route::middleware('can:service.triage')->group(function () {
+            Route::get('service-requests', [ServiceAdminController::class, 'index']);
+            Route::get('service-requests/{id}', [ServiceAdminController::class, 'show']);
+            Route::post('service-requests/{id}/triage', [ServiceAdminController::class, 'triage']);
+            Route::post('service-requests/{id}/decline', [ServiceAdminController::class, 'decline']);
+            Route::post('service-requests/{id}/estimate', [ServiceAdminController::class, 'estimate']);
+            Route::post('service-requests/{id}/repair', [ServiceAdminController::class, 'repair']);
+            Route::get('work-orders', [WorkOrderAdminController::class, 'index']);
+            Route::get('work-orders/{id}', [WorkOrderAdminController::class, 'show']);
+            Route::post('work-orders/{id}/schedule', [WorkOrderAdminController::class, 'schedule']);
+            Route::post('work-orders/{id}/cancel', [WorkOrderAdminController::class, 'cancel']);
+            Route::get('dispatch', [WorkOrderAdminController::class, 'board']);
+        });
+        // A-22 الاستلام في الورشة (منسق، مدير)
+        Route::middleware('can:workshop.handover')->group(function () {
+            Route::post('service-requests/walk-in', [ServiceAdminController::class, 'walkIn']);
+            Route::post('service-requests/{id}/intake', [ServiceAdminController::class, 'intake']);
+            Route::get('service-requests/{id}/receipt', [ServiceAdminController::class, 'receipt']);
+            Route::get('intakes/{number}', [ServiceAdminController::class, 'byCard']);
         });
 
         // A-13: المالية (محاسب، مدير)

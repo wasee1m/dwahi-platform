@@ -12,6 +12,7 @@ import '../auth/auth_controller.dart';
 import '../auth/error_text.dart';
 import '../catalog/catalog_screens.dart';
 import '../orders/order_screens.dart';
+import '../service/service_screens.dart';
 import 'pickers.dart';
 
 // M-16 طلباتي (تبويب العروض)، M-18 تفاصيل العرض، M-24 طلب عرض سعر جديد (FR-RFQ-01، FR-RFQ-03، FR-RFQ-04، US-12، US-13)
@@ -23,7 +24,7 @@ String _lang(BuildContext c) => Localizations.localeOf(c).languageCode;
 
 void _toast(BuildContext context, String text) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
 
-/// M-16: تبويبات علوية الصيانة · العروض · القطع. الصيانة مع وحدتها (S7).
+/// M-16: تبويبات علوية الصيانة · العروض · القطع
 class RequestsScreen extends StatelessWidget {
   const RequestsScreen({super.key});
   @override
@@ -40,7 +41,7 @@ class RequestsScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => context.push('/requests/new'), icon: const Icon(Icons.add), label: Text(s.newRequest)),
         body: TabBarView(children: [
-          Center(child: Text(s.soon)),
+          const ServiceLists(),
           const _QuoteLists(),
           const OrderLists(),
         ]),

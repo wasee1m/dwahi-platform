@@ -19,7 +19,7 @@ export default async function AccountHome({ params }: PageProps<"/[lang]/account
   const a = t.account;
 
   const quick = [
-    { href: `/${lang}/services`, label: a.quickService, soon: true },
+    { href: `/${lang}/service/new`, label: a.quickService, soon: false },
     { href: `/${lang}/parts`, label: a.quickPart, soon: false },
     { href: `/${lang}/account/quotes/new`, label: a.quickQuote, soon: false },
   ];

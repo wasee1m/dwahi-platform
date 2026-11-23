@@ -31,6 +31,10 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
     { href: "/admin", label: t.admin.nav.home, ability: null },
     { href: "/admin/rfqs", label: t.admin.nav.rfqs, ability: "quotation.send" },
     { href: "/admin/customers", label: t.admin.nav.customers, ability: "customers.view" },
+    { href: "/admin/service-requests", label: t.admin.nav.serviceRequests, ability: "service.triage" },
+    { href: "/admin/work-orders", label: t.admin.nav.workOrders, ability: "service.triage" },
+    { href: "/admin/dispatch", label: t.admin.nav.dispatch, ability: "service.triage" },
+    { href: "/admin/workshop-desk", label: t.admin.nav.desk, ability: "workshop.handover" },
     { href: "/admin/orders", label: t.admin.nav.orders, ability: "orders.deliver" },
     { href: "/admin/finance", label: t.admin.nav.finance, ability: "invoices.manage" },
     { href: "/admin/notifications", label: t.admin.nav.notifications, ability: null, badge: unread },
@@ -45,7 +49,7 @@ async function Sidebar({ lang, t }: { lang: Locale; t: AppDictionary }) {
   ].filter((i) => !i.ability || me.permissions.includes(i.ability));
 
   return (
-    <aside className="flex flex-col bg-night p-5 text-on-night">
+    <aside className="flex flex-col bg-night p-5 text-on-night print:hidden">
       <Link href={`/${lang}/admin`} className="block"><Logo inverse /></Link>
       <nav aria-label={t.admin.panel} className="mt-8 flex-1">
         <ul className="space-y-1">

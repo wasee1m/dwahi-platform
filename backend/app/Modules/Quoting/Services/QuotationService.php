@@ -224,6 +224,21 @@ final class QuotationService
         return $q;
     }
 
+    /**
+     * 2.9: اعتماد آلي لتقدير صيانة لا يتجاوز حد الموافقة المسبقة للشركة (BR-06). يُستدعى داخل معاملة
+     * وحدة الصيانة بعد الإرسال، فلا رد من العميل ولا موقّع.
+     */
+    public function autoAccept(Quotation $q): void
+    {
+        $q = Quotation::query()->lockForUpdate()->findOrFail($q->id);
+        if ($q->status !== 'sent') {
+            return;
+        }
+        $q->update(['status' => 'accepted', 'responded_at' => now(), 'response_note' => 'auto_preapproved']);
+        Rfq::query()->whereKey($q->rfq_id)->update(['status' => 'won', 'closed_at' => now()]);
+        Audit::record('quotation.auto_accepted', 'quotation', $q->id, ['status' => 'sent'], ['status' => 'accepted'], null);
+    }
+
     /** 2.4: الرفض بسبب اختياري، والطلب lost */
     public function reject(Quotation $q, User $user, ?string $reason): Quotation
     {

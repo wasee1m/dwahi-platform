@@ -15,12 +15,16 @@ use App\Modules\Notifications\Listeners\AccountNotifications;
 use App\Modules\Notifications\Listeners\MessageNotifications;
 use App\Modules\Notifications\Listeners\OrderNotifications;
 use App\Modules\Notifications\Listeners\QuotingNotifications;
+use App\Modules\Notifications\Listeners\ServiceNotifications;
 use App\Modules\Notifications\Push\LogPushSender;
 use App\Modules\Notifications\Push\PushSender;
 use App\Modules\Orders\Console\OrderJobs;
 use App\Modules\Orders\Events\OrderEvent;
 use App\Modules\Orders\Listeners\QuoteAccepted;
 use App\Modules\Quoting\Events\QuotingEvent;
+use App\Modules\Service\Console\ServiceJobs;
+use App\Modules\Service\Events\ServiceEvent;
+use App\Modules\Service\Listeners\EstimateResponses;
 use Dedoc\Scramble\Scramble;
 use Dedoc\Scramble\Support\Generator\OpenApi;
 use Dedoc\Scramble\Support\Generator\SecurityScheme;
@@ -63,19 +67,21 @@ class AppServiceProvider extends ServiceProvider
         // طلبات القطع: موظف القطع يديرها، والمحاسب يقرؤها للاسترداد والمطابقة
         Gate::define('orders.view', fn (User $user) => $user->hasAbility('orders.deliver') || $user->hasAbility('refunds.manage') || $user->hasAbility('invoices.manage'));
         Gate::define('staff.uploads', fn (User $user) => $user->hasAbility('quotation.send') || $user->hasAbility('orders.deliver')
-            || $user->hasAbility('invoices.manage') || $user->hasAbility('rfq.create_on_behalf'));
+            || $user->hasAbility('invoices.manage') || $user->hasAbility('rfq.create_on_behalf') || $user->hasAbility('workshop.handover'));
         // قراءة الماركات والفئات والموديلات: موظف القطع يحتاجها للتوافق (A-04) دون صلاحية تعديلها
         Gate::define('catalog.read', fn (User $user) => $user->hasAbility('catalog.manage') || $user->hasAbility('parts.manage'));
 
         // أحداث المجال بين الوحدات (04 §3)
+        Event::listen(QuotingEvent::class, EstimateResponses::class); // قبل إشعارات العروض: الاعتماد الآلي يمنع N-10
         Event::listen(QuotingEvent::class, QuotingNotifications::class);
+        Event::listen(ServiceEvent::class, ServiceNotifications::class);
         Event::listen(MessagePosted::class, MessageNotifications::class);
         Event::listen(MemberInvited::class, [AccountNotifications::class, 'invited']);
         Event::listen(DataExportReady::class, [AccountNotifications::class, 'exportReady']);
         Event::listen(QuotingEvent::class, QuoteAccepted::class);
         Event::listen(OrderEvent::class, OrderNotifications::class);
         Event::listen(InvoiceIssued::class, [OrderNotifications::class, 'invoiceIssued']);
-        $this->commands([AccountJobs::class, OrderJobs::class]);
+        $this->commands([AccountJobs::class, OrderJobs::class, ServiceJobs::class]);
 
         // تحديد معدل الطلبات (NFR-09). حدود OTP لكل رقم ودولة في OtpService
         RateLimiter::for('public', fn (Request $r) => Limit::perMinute(120)->by($r->ip()));

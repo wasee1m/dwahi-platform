@@ -8,7 +8,7 @@ import { createStaff, staffAction, updateStaffRoles, type AdminState } from "../
 export type Staff = {
   id: string; full_name: string; email: string | null; phone: string | null; status: "active" | "suspended";
   suspended_reason: string | null; employee_no: string | null; branch: { code: string; name: string } | null;
-  restrict_to_branch: boolean; roles: string[]; two_factor_enabled: boolean; activated: boolean; last_login_at: string | null;
+  restrict_to_branch: boolean; skills: string[]; roles: string[]; two_factor_enabled: boolean; activated: boolean; last_login_at: string | null;
 };
 type T = AppDictionary["admin"]["users"] & { roleNames: AppDictionary["admin"]["roles"] };
 type Branch = { code: string; name: string };
@@ -127,6 +127,10 @@ export function StaffRow({ lang, t, staff, roles, branches, self }: { lang: stri
                 <label className="flex items-center gap-2 text-sm">
                   <input type="checkbox" name="restrict_to_branch" defaultChecked={staff.restrict_to_branch} className="size-4 accent-[var(--sun)]" /> {t.restrict}
                 </label>
+                {staff.roles.includes("technician") && (
+                  <input name="skills" defaultValue={staff.skills.join("، ")} placeholder={t.skills} aria-label={t.skills}
+                    className="min-w-60 rounded-sm border border-sand-300 px-2 py-1.5 text-sm" />
+                )}
                 <SubmitButton pending={saving}>{t.saveRoles}</SubmitButton>
                 {saveState.ok && <span className="text-sm font-semibold text-success">✓</span>}
                 {saveState.error && <span className="text-sm text-danger">{saveState.error.message}</span>}

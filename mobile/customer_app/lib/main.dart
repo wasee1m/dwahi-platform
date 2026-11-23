@@ -21,6 +21,7 @@ import 'features/catalog/catalog_screens.dart';
 import 'features/home/home_screens.dart';
 import 'features/notifications/notifications_screen.dart';
 import 'features/orders/order_screens.dart';
+import 'features/service/service_screens.dart';
 import 'features/quotes/messages_screen.dart';
 import 'features/quotes/quote_screens.dart';
 
@@ -148,6 +149,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/requests/:id', builder: (_, state) => QuoteDetailScreen(id: state.pathParameters['id']!)),
       GoRoute(path: '/requests/:id/messages', builder: (_, state) => MessagesScreen(rfqId: state.pathParameters['id']!)),
       GoRoute(path: '/notifications', builder: (_, _) => const NotificationsScreen()),
+      GoRoute(path: '/service/new', builder: (_, state) => NewServiceScreen(equipmentId: state.uri.queryParameters['equipment'])),
+      GoRoute(path: '/service/:id', builder: (_, state) => ServiceDetailScreen(id: state.pathParameters['id']!)),
       GoRoute(path: '/cart', builder: (_, _) => const CartScreen()),
       GoRoute(path: '/checkout', builder: (_, _) => const CheckoutScreen()),
       GoRoute(path: '/orders/:id', builder: (_, state) => OrderDetailScreen(id: state.pathParameters['id']!)),

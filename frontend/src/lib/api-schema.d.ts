@@ -62,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_197"];
+        post: operations["modules.platform.admin.branchAdmin.save_217"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +77,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_198"];
+        put: operations["modules.platform.admin.branchAdmin.save_218"];
         post?: never;
         delete?: never;
         options?: never;
@@ -178,7 +178,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_163"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_183"];
         delete?: never;
         options?: never;
         head?: never;
@@ -194,7 +194,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_165"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_185"];
         delete?: never;
         options?: never;
         head?: never;
@@ -210,7 +210,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_167"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_187"];
         delete?: never;
         options?: never;
         head?: never;
@@ -225,7 +225,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_164"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_184"];
         post?: never;
         delete?: never;
         options?: never;
@@ -241,7 +241,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_166"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_186"];
         post?: never;
         delete?: never;
         options?: never;
@@ -257,7 +257,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_168"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_188"];
         post?: never;
         delete?: never;
         options?: never;
@@ -290,7 +290,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_180"];
+        post: operations["modules.content.admin.contentAdmin.savePage_200"];
         delete?: never;
         options?: never;
         head?: never;
@@ -305,7 +305,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_182"];
+        put: operations["modules.content.admin.contentAdmin.savePage_202"];
         post?: never;
         delete?: never;
         options?: never;
@@ -322,7 +322,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_184"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_204"];
         delete?: never;
         options?: never;
         head?: never;
@@ -354,7 +354,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_186"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_206"];
         post?: never;
         delete?: never;
         options?: never;
@@ -371,7 +371,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_188"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_208"];
         delete?: never;
         options?: never;
         head?: never;
@@ -386,7 +386,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_189"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_209"];
         post?: never;
         delete?: never;
         options?: never;
@@ -835,7 +835,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_119"];
+        post: operations["modules.platform.file.upload_124"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1302,7 +1302,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_86"];
+        get: operations["modules.notifications.notification.index_91"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1319,7 +1319,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_87"];
+        get: operations["modules.notifications.notification.count_92"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1337,7 +1337,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_88"];
+        post: operations["modules.notifications.notification.readAll_93"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1353,7 +1353,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_89"];
+        post: operations["modules.notifications.notification.read_94"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1367,7 +1367,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_100"];
+        get: operations["modules.notifications.notification.index_105"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1384,7 +1384,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_101"];
+        get: operations["modules.notifications.notification.count_106"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1402,7 +1402,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_102"];
+        post: operations["modules.notifications.notification.readAll_107"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1418,7 +1418,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_103"];
+        post: operations["modules.notifications.notification.read_108"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2395,6 +2395,240 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/service-requests/meta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ما يحتاجه المعالج قبل التأكيد: رسوم الفحص (BR-11)، ومهلة الرد (BR-09)، وعنوان الورشة وساعاتها */
+        get: operations["service.meta"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/service-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["service.index"];
+        put?: never;
+        post: operations["service.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/service-requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["service.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/service-requests/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 4.4: الإلغاء قبل بدء العمل */
+        post: operations["service.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** قائمة الفرز: submitted بالمهلة الأقرب والعاجل أولاً، وتبويب لكل الحالات */
+        get: operations["serviceAdmin.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["serviceAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/triage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 4.2: الفرز بالأولوية والفرع والمسار */
+        post: operations["serviceAdmin.triage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 4.3 */
+        post: operations["serviceAdmin.decline"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/estimate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** التقدير: مسودة عرض "صيانة" تُفتح في محرر العروض A-06 */
+        post: operations["serviceAdmin.estimate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/repair": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 4.11: أمر الإصلاح لطلب معتمد */
+        post: operations["serviceAdmin.repair"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/walk-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** US-48: عميل حاضر دون طلب، فيُنشأ الطلب (walk_in) ويُستلم في نفس الخطوة */
+        post: operations["serviceAdmin.walkIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/intake": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** FR-SRV-08: بطاقة الاستلام */
+        post: operations["serviceAdmin.intake"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/service-requests/{id}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["serviceAdmin.receipt"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/intakes/{number}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** فتح الطلب بمسح ملصق QR أو كتابة رقم البطاقة */
+        get: operations["serviceAdmin.byCard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/auth/token/refresh": {
         parameters: {
             query?: never;
@@ -2678,6 +2912,91 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["upload.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/work-orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["workOrderAdmin.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/work-orders/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["workOrderAdmin.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/work-orders/{id}/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 5.2 و 5.3: الإسناد والنافذة، مع كشف التعارض وتأكيده (force) */
+        post: operations["workOrderAdmin.schedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/work-orders/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["workOrderAdmin.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/dispatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A-10: الفنيون بمهاراتهم ومهامهم في الفترة، وأوامر العمل غير المسندة مع حالة استلام المعدة.
+         *     الفترة بتوقيت مسقط، يوم أو أسبوع
+         */
+        get: operations["workOrderAdmin.board"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3297,7 +3616,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_197": {
+    "modules.platform.admin.branchAdmin.save_217": {
         parameters: {
             query?: never;
             header?: never;
@@ -3353,7 +3672,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_198": {
+    "modules.platform.admin.branchAdmin.save_218": {
         parameters: {
             query?: never;
             header?: never;
@@ -4028,7 +4347,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_163": {
+    "modules.catalog.admin.catalogSetup.saveBrand_183": {
         parameters: {
             query?: never;
             header?: never;
@@ -4110,7 +4429,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_165": {
+    "modules.catalog.admin.catalogSetup.saveCategory_185": {
         parameters: {
             query?: never;
             header?: never;
@@ -4207,7 +4526,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_167": {
+    "modules.catalog.admin.catalogSetup.saveModel_187": {
         parameters: {
             query?: never;
             header?: never;
@@ -4265,7 +4584,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_164": {
+    "modules.catalog.admin.catalogSetup.saveBrand_184": {
         parameters: {
             query?: never;
             header?: never;
@@ -4314,7 +4633,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_166": {
+    "modules.catalog.admin.catalogSetup.saveCategory_186": {
         parameters: {
             query?: never;
             header?: never;
@@ -4362,7 +4681,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_168": {
+    "modules.catalog.admin.catalogSetup.saveModel_188": {
         parameters: {
             query?: never;
             header?: never;
@@ -4511,7 +4830,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_180": {
+    "modules.content.admin.contentAdmin.savePage_200": {
         parameters: {
             query?: never;
             header?: never;
@@ -4612,7 +4931,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_182": {
+    "modules.content.admin.contentAdmin.savePage_202": {
         parameters: {
             query?: never;
             header?: never;
@@ -4700,7 +5019,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_184": {
+    "modules.content.admin.contentAdmin.saveFaq_204": {
         parameters: {
             query?: never;
             header?: never;
@@ -4789,7 +5108,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_186": {
+    "modules.content.admin.contentAdmin.saveFaq_206": {
         parameters: {
             query?: never;
             header?: never;
@@ -4890,7 +5209,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_188": {
+    "modules.content.admin.contentAdmin.saveBanner_208": {
         parameters: {
             query?: never;
             header?: never;
@@ -4944,7 +5263,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_189": {
+    "modules.content.admin.contentAdmin.saveBanner_209": {
         parameters: {
             query?: never;
             header?: never;
@@ -5269,6 +5588,44 @@ export interface operations {
                                 needs_phone_confirmation: boolean;
                                 pickup_deadline_at: string | null;
                                 from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
                                 created_at: string | null;
                             }[];
                             invoices: {
@@ -5609,6 +5966,44 @@ export interface operations {
                                 from_quote: boolean;
                                 created_at: string | null;
                             }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
+                                created_at: string | null;
+                            }[];
                             invoices: {
                                 id: string;
                                 number: string | null;
@@ -5899,6 +6294,44 @@ export interface operations {
                                 from_quote: boolean;
                                 created_at: string | null;
                             }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
+                                created_at: string | null;
+                            }[];
                             invoices: {
                                 id: string;
                                 number: string | null;
@@ -6133,6 +6566,44 @@ export interface operations {
                                 needs_phone_confirmation: boolean;
                                 pickup_deadline_at: string | null;
                                 from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
                                 created_at: string | null;
                             }[];
                             invoices: {
@@ -6376,6 +6847,44 @@ export interface operations {
                                 needs_phone_confirmation: boolean;
                                 pickup_deadline_at: string | null;
                                 from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
                                 created_at: string | null;
                             }[];
                             invoices: {
@@ -6622,6 +7131,44 @@ export interface operations {
                                 from_quote: boolean;
                                 created_at: string | null;
                             }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
+                                created_at: string | null;
+                            }[];
                             invoices: {
                                 id: string;
                                 number: string | null;
@@ -6865,6 +7412,44 @@ export interface operations {
                                 needs_phone_confirmation: boolean;
                                 pickup_deadline_at: string | null;
                                 from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
                                 created_at: string | null;
                             }[];
                             invoices: {
@@ -7117,6 +7702,44 @@ export interface operations {
                                 needs_phone_confirmation: boolean;
                                 pickup_deadline_at: string | null;
                                 from_quote: boolean;
+                                created_at: string | null;
+                            }[];
+                            service_requests: {
+                                id: string;
+                                number: string;
+                                status: string;
+                                customer_status: {
+                                    /** @enum {string} */
+                                    key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                    date: string | null;
+                                    reason: string | null;
+                                };
+                                urgency: string;
+                                source: string;
+                                equipment: {
+                                    id: string;
+                                    name: string;
+                                    serial_number: string | null;
+                                } | null;
+                                component_type: string | null;
+                                component_details: string | null;
+                                preferred_date: string | null;
+                                received: boolean;
+                                account: {
+                                    id: string;
+                                    name: string;
+                                } | null;
+                                customer: {
+                                    id: string;
+                                    name: string;
+                                    phone: string | null;
+                                    organization: string | null;
+                                };
+                                branch: {
+                                    id: string;
+                                    name: string | null;
+                                } | null;
+                                sla_due_at: string;
                                 created_at: string | null;
                             }[];
                             invoices: {
@@ -8035,7 +8658,7 @@ export interface operations {
                 "multipart/form-data": {
                     /**
                      * Format: binary
-                     * @description Maximum file size: 10240 kilobytes.
+                     * @description Maximum file size: 102400 kilobytes.
                      */
                     file: string;
                 };
@@ -8110,7 +8733,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_119": {
+    "modules.platform.file.upload_124": {
         parameters: {
             query?: never;
             header?: never;
@@ -8122,7 +8745,7 @@ export interface operations {
                 "multipart/form-data": {
                     /**
                      * Format: binary
-                     * @description Maximum file size: 10240 kilobytes.
+                     * @description Maximum file size: 102400 kilobytes.
                      */
                     file: string;
                 };
@@ -9924,7 +10547,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_86": {
+    "modules.notifications.notification.index_91": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -9974,7 +10597,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_87": {
+    "modules.notifications.notification.count_92": {
         parameters: {
             query?: never;
             header?: never;
@@ -10010,7 +10633,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_88": {
+    "modules.notifications.notification.readAll_93": {
         parameters: {
             query?: never;
             header?: never;
@@ -10046,7 +10669,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_89": {
+    "modules.notifications.notification.read_94": {
         parameters: {
             query?: never;
             header?: never;
@@ -10085,7 +10708,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_100": {
+    "modules.notifications.notification.index_105": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -10135,7 +10758,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_101": {
+    "modules.notifications.notification.count_106": {
         parameters: {
             query?: never;
             header?: never;
@@ -10171,7 +10794,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_102": {
+    "modules.notifications.notification.readAll_107": {
         parameters: {
             query?: never;
             header?: never;
@@ -10207,7 +10830,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_103": {
+    "modules.notifications.notification.read_108": {
         parameters: {
             query?: never;
             header?: never;
@@ -15563,6 +16186,767 @@ export interface operations {
             };
         };
     };
+    "service.meta": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            inspection_fee: {
+                                amount: string;
+                                currency: string;
+                            } | null;
+                            sla: {
+                                normal_working_hours: number;
+                                urgent_hours: number;
+                            };
+                            expected: {
+                                normal: string;
+                                urgent: string;
+                            };
+                            components: [
+                                "diesel_engine",
+                                "hydraulic_pump",
+                                "hydraulic_cylinder",
+                                "transmission",
+                                "other"
+                            ];
+                            workshop: {
+                                name: string | null;
+                                address: string | null;
+                                phone: string | null;
+                                whatsapp: string | null;
+                                working_hours: {
+                                    [key: string]: unknown;
+                                };
+                            } | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "service.index": {
+        parameters: {
+            query?: {
+                tab?: string | null;
+                account?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                            status: string;
+                            customer_status: {
+                                /** @enum {string} */
+                                key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                date: string | null;
+                                reason: string | null;
+                            };
+                            urgency: string;
+                            source: string;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
+                            component_type: string | null;
+                            component_details: string | null;
+                            preferred_date: string | null;
+                            received: boolean;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            customer: null;
+                            branch: {
+                                id: string;
+                                name: string | null;
+                            } | null;
+                            sla_due_at: null;
+                            created_at: string | null;
+                        }[];
+                        counts: number[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "service.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    organization_id?: string | null;
+                    /** Format: uuid */
+                    customer_equipment_id?: string | null;
+                    new_equipment?: {
+                        /** Format: uuid */
+                        model_id?: string | null;
+                        brand_text?: string | null;
+                        model_text?: string | null;
+                        serial_number?: string | null;
+                    } | null;
+                    /** @enum {string|null} */
+                    component_type?: "diesel_engine" | "hydraulic_pump" | "hydraulic_cylinder" | "transmission" | "other" | null;
+                    component_details?: string | null;
+                    problem_description?: string | null;
+                    /** Format: uuid */
+                    voice_attachment_id?: string | null;
+                    attachments?: {
+                        /** Format: uuid */
+                        id: string;
+                        /** @enum {string} */
+                        kind: "photo" | "video";
+                    }[] | null;
+                    /** @enum {string} */
+                    urgency: "normal" | "urgent";
+                    /** Format: date */
+                    preferred_date?: string | null;
+                    /** @enum {unknown} */
+                    fees_acknowledged?: "yes" | "on" | "1" | 1 | "true" | true;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "service.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "service.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    reason?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.index": {
+        parameters: {
+            query?: {
+                status?: "submitted" | "triaged" | "awaiting_approval" | "approved" | "in_service" | "completed" | "closed" | "cancelled" | "declined" | "triage" | "open" | "all" | null;
+                q?: string | null;
+                received?: boolean | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: string | {
+                            id: string;
+                            number: string;
+                            status: string;
+                            customer_status: {
+                                /** @enum {string} */
+                                key: "awaiting_dropoff" | "additional_awaiting" | "scheduling" | "scheduled" | "in_progress" | "on_hold" | "final_review";
+                                date: string | null;
+                                reason: string | null;
+                            };
+                            urgency: string;
+                            source: string;
+                            equipment: {
+                                id: string;
+                                name: string;
+                                serial_number: string | null;
+                            } | null;
+                            component_type: string | null;
+                            component_details: string | null;
+                            preferred_date: string | null;
+                            received: boolean;
+                            account: {
+                                id: string;
+                                name: string;
+                            } | null;
+                            customer: {
+                                id: string;
+                                name: string;
+                                phone: string | null;
+                                organization: string | null;
+                            };
+                            branch: {
+                                id: string;
+                                name: string | null;
+                            } | null;
+                            sla_due_at: string;
+                            created_at: string | null;
+                        }[];
+                        counts: {
+                            triage: string | number;
+                            open: string | number;
+                            approved: string | number;
+                        };
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.triage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    route: "direct_estimate" | "inspection";
+                    /**
+                     * @description no_approval مع الضمان والعقود (P2)
+                     * @enum {string}
+                     */
+                    urgency: "normal" | "urgent";
+                    /** Format: uuid */
+                    branch_id: string;
+                    instructions?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.estimate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            quotation_id: string;
+                            rfq_id: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.repair": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    instructions?: string | null;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            number: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.walkIn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    customer_id: string;
+                };
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.intake": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    brought_by_name: string;
+                    brought_by_phone?: string | null;
+                    condition_notes?: string | null;
+                    accessories?: string | null;
+                    hour_meter_reading?: number | null;
+                    hour_meter_missing_reason?: string | null;
+                    /** Format: uuid */
+                    signature_id: string;
+                    photo_ids?: string[] | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "serviceAdmin.byCard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                number: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            service_request_id: string;
+                            number: string;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "session.refresh": {
         parameters: {
             query?: never;
@@ -16076,6 +17460,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16128,6 +17513,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16182,6 +17568,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16242,6 +17629,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16297,6 +17685,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16351,6 +17740,7 @@ export interface operations {
                                 name: string | null;
                             } | null;
                             restrict_to_branch: boolean;
+                            skills: string[];
                             roles: string[];
                             two_factor_enabled: boolean;
                             activated: boolean;
@@ -16647,6 +18037,244 @@ export interface operations {
                             mime_type: string;
                             width: number | null;
                             height: number | null;
+                        };
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "workOrderAdmin.index": {
+        parameters: {
+            query?: {
+                status?: "unassigned" | "scheduled" | "in_progress" | "on_hold" | "work_completed" | "verified" | "closed" | "cancelled" | "open" | null;
+                technician_id?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[][];
+                        counts: string[];
+                        next_cursor: string | null;
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "workOrderAdmin.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "workOrderAdmin.schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /** Format: uuid */
+                    lead_id: string;
+                    assistant_ids?: string[] | null;
+                    /** Format: date-time */
+                    start: string;
+                    /** Format: date-time */
+                    end: string;
+                    force?: boolean | null;
+                    reason?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "workOrderAdmin.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    reason: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: unknown[];
+                    };
+                };
+            };
+            401: components["responses"]["AuthenticationException"];
+            403: components["responses"]["AuthorizationException"];
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "workOrderAdmin.board": {
+        parameters: {
+            query?: {
+                from?: string | null;
+                days?: number | null;
+                skill?: string | null;
+                branch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            from: string;
+                            days: number;
+                            technicians: {
+                                id: string;
+                                name: string;
+                                skills: unknown[];
+                                tasks: string | {
+                                    id: string;
+                                    number: string;
+                                    type: string;
+                                    status: string;
+                                    role: string;
+                                    service_request: string;
+                                    start: string | null;
+                                    end: string | null;
+                                }[];
+                            }[];
+                            unassigned: unknown[][];
                         };
                     };
                 };

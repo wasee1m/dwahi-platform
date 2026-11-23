@@ -11,6 +11,7 @@ use App\Modules\Identity\Services\TokenService;
 use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Platform\Support\Audit;
 use App\Modules\Quoting\Models\Rfq;
+use App\Modules\Service\Models\ServiceRequest;
 use App\Support\ApiProblem;
 use Illuminate\Support\Facades\DB;
 
@@ -44,13 +45,14 @@ final class AccountDeletion
             }
         }
 
-        // المفتوح الشخصي أو لشركة يغادرها وحده: طلبات العروض، وطلبات القطع، والفواتير غير المسددة. الصيانة مع S7
+        // المفتوح الشخصي أو لشركة يغادرها وحده: طلبات العروض، وطلبات القطع، وطلبات الصيانة، والفواتير غير المسددة
         $mine = fn ($w) => $w->where(fn ($x) => $x->whereNull('organization_id')->where('customer_user_id', $user->id))
             ->orWhereIn('organization_id', $alone);
         $row = fn ($m) => ['id' => (string) $m->id, 'number' => (string) $m->number, 'status' => (string) $m->status];
         $requests = [
             ...Rfq::query()->whereIn('status', self::OPEN)->where($mine)->orderBy('created_at')->get()->map($row)->all(),
             ...SalesOrder::query()->whereIn('status', SalesOrder::OPEN)->where($mine)->orderBy('created_at')->get()->map($row)->all(),
+            ...ServiceRequest::query()->whereIn('status', ServiceRequest::OPEN)->where($mine)->orderBy('created_at')->get()->map($row)->all(),
             ...Invoice::query()->whereIn('status', Invoice::UNPAID)->where($mine)->orderBy('issue_date')->get()->map($row)->all(),
         ];
 

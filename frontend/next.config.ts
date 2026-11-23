@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   // صور المعدات (حتى 10MB) وملفات استيراد القطع تمر عبر Server Actions (04 §8.2)
-  experimental: { serverActions: { bodySizeLimit: "12mb" } },
+  experimental: { serverActions: { bodySizeLimit: "110mb" } },
   images: {
     unoptimized: localDevImages,
     remotePatterns: [{ protocol: imageHost.protocol.replace(":", "") as "http" | "https", hostname: imageHost.hostname, port: imageHost.port, pathname: "/storage/**" }],

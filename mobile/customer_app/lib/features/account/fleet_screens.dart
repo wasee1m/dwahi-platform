@@ -301,7 +301,7 @@ class EquipmentScreenDetail extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: 8),
-            OutlinedButton(onPressed: null, child: Text('${s.requestService} · ${s.soon}')),
+            OutlinedButton(onPressed: () => context.push('/service/new?equipment=${e['id']}'), child: Text(s.requestService)),
             const SizedBox(height: 20),
             Text(s.history, style: t.titleMedium),
             ...history.when(

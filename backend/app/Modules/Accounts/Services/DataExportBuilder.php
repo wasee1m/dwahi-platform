@@ -10,6 +10,7 @@ use App\Modules\Billing\Models\Invoice;
 use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Quoting\Http\RfqPresenter;
 use App\Modules\Quoting\Models\Rfq;
+use App\Modules\Service\Models\ServiceRequest;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -52,6 +53,9 @@ final class DataExportBuilder
                     'created_at' => $o->created_at?->toIso8601ZuluString(), 'delivered_at' => $o->delivered_at?->toIso8601ZuluString(),
                     'items' => $o->items->map->only(['part_number_snapshot', 'name_ar_snapshot', 'quantity', 'unit_price', 'line_total'])->values()->all(),
                 ])->all(),
+            'service_requests' => ServiceRequest::query()->visibleTo($user)->where('customer_user_id', $user->id)->orderBy('created_at')->get()
+                ->map(fn (ServiceRequest $s) => $s->only(['number', 'status', 'urgency', 'component_type', 'component_details', 'problem_description', 'cancel_reason', 'decline_reason'])
+                    + ['preferred_date' => $s->preferred_date?->toDateString(), 'created_at' => $s->created_at?->toIso8601ZuluString()])->all(),
             'invoices' => Invoice::query()->visibleTo($user)->where('customer_user_id', $user->id)->where('status', '!=', 'draft')->orderBy('issue_date')->get()
                 ->map(fn (Invoice $i) => $i->only(['number', 'status', 'subtotal', 'vat_total', 'total', 'amount_paid', 'buyer_snapshot'])
                     + ['issue_date' => $i->issue_date?->toDateString(), 'due_date' => $i->due_date?->toDateString()])->all(),

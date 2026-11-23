@@ -4,15 +4,17 @@ import { fill, type AppDictionary } from "@/i18n/get-dictionary";
 import type { Address, CustomerProfile, FleetItem } from "@/lib/account-types";
 import { formatMoney, formatNumber, formatPhone } from "@/lib/format";
 import { INVOICE_COLOR, ORDER_COLOR, type InvoiceRow, type OrderRow } from "@/lib/order-types";
+import { SERVICE_COLOR, type ServiceRow } from "@/lib/service-types";
 import { STATUS_COLOR, type AdminRfqRow } from "../rfqs/shared";
 import { NoteForm } from "./CustomerForms";
 
 // أقسام ملف 360° المشتركة بين العميل والشركة (A-12)
 export const card = "rounded-md border border-sand-300 bg-sand-0 p-5";
 
-export function Records({ lang, t, requests, conversations, fleet, addresses, canOpenRequests, orders, invoices, canOpenOrders, canOpenInvoices }: {
+export function Records({ lang, t, requests, conversations, fleet, addresses, canOpenRequests, orders, invoices, canOpenOrders, canOpenInvoices, services, canOpenServices }: {
   lang: Locale; t: AppDictionary; requests: AdminRfqRow[]; conversations: CustomerProfile["conversations"]; fleet: FleetItem[]; addresses: Address[]; canOpenRequests: boolean;
   orders: OrderRow[]; invoices: InvoiceRow[]; canOpenOrders: boolean; canOpenInvoices: boolean;
+  services: ServiceRow[]; canOpenServices: boolean;
 }) {
   const c = t.admin.customers;
   const r = t.admin.rfqs;
@@ -37,6 +39,23 @@ export function Records({ lang, t, requests, conversations, fleet, addresses, ca
                   <span className="block font-semibold" style={{ color: STATUS_COLOR[x.status] }}>{r.statuses[x.status]}</span>
                   {x.quotation && <><span className="num" dir="ltr">{x.quotation.number}</span> · <span className="num">{formatMoney(x.quotation.total, lang)}</span></>}
                 </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className={card}>
+        <h2 className="mb-3 text-xl">{c.service}</h2>
+        {services.length === 0 ? none : (
+          <ul className="divide-y divide-sand-300 text-sm">
+            {services.map((x) => (
+              <li key={x.id} className="flex flex-wrap justify-between gap-3 py-2">
+                <span>
+                  {canOpenServices ? <Link href={`/${lang}/admin/service-requests/${x.id}`} className="num font-semibold underline" dir="ltr">{x.number}</Link> : <span className="num font-semibold" dir="ltr">{x.number}</span>}
+                  {" · "}{x.equipment?.name ?? t.service.components[x.component_type as keyof typeof t.service.components]}
+                </span>
+                <span className="font-semibold" style={{ color: SERVICE_COLOR[x.status] }}>{t.admin.service.statuses[x.status]}</span>
               </li>
             ))}
           </ul>
@@ -128,7 +147,6 @@ export function Records({ lang, t, requests, conversations, fleet, addresses, ca
         )}
       </section>
 
-      <p className="text-sm text-ink-muted">{c.comingSections}</p>
     </>
   );
 }

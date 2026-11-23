@@ -13,6 +13,7 @@ import type { AdminRfqRow } from "../../rfqs/shared";
 import { activateCustomer } from "../../customer-actions";
 import { SuspendForm } from "../CustomerForms";
 import type { InvoiceRow, OrderRow } from "@/lib/order-types";
+import type { ServiceRow } from "@/lib/service-types";
 import { card, Notes, Records } from "../Sections";
 import { CUSTOMER_COLOR } from "../shared";
 
@@ -93,7 +94,8 @@ async function View({ params }: { params: Props["params"] }) {
       <Records lang={lang} t={t} requests={u.requests as unknown as AdminRfqRow[]} conversations={u.conversations} fleet={u.fleet} addresses={u.addresses}
         canOpenRequests={me.permissions.includes("quotation.send")}
         orders={u.orders as unknown as OrderRow[]} invoices={u.invoices as unknown as InvoiceRow[]}
-        canOpenOrders={me.permissions.includes("orders.deliver")} canOpenInvoices={me.permissions.includes("invoices.manage")} />
+        canOpenOrders={me.permissions.includes("orders.deliver")} canOpenInvoices={me.permissions.includes("invoices.manage")}
+        services={u.service_requests as unknown as ServiceRow[]} canOpenServices={me.permissions.includes("service.triage")} />
     </>
   );
 }

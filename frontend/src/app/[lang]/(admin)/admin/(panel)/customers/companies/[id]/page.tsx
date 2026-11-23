@@ -13,6 +13,7 @@ import type { AdminRfqRow } from "../../../rfqs/shared";
 import { removeCompanyMember, revokeCompanyInvitation } from "../../../customer-actions";
 import { StaffInviteForm, StaffMemberForm } from "../../CustomerForms";
 import type { InvoiceRow, OrderRow } from "@/lib/order-types";
+import type { ServiceRow } from "@/lib/service-types";
 import { card, Notes, Records } from "../../Sections";
 
 // A-12 ملف الشركة: الأعضاء، ويديرهم مدير النظام (01 §3.2)، وسجلاتها والملاحظات
@@ -84,7 +85,8 @@ async function View({ params }: { params: Props["params"] }) {
       <Records lang={lang} t={t} requests={o.requests as unknown as AdminRfqRow[]} conversations={o.conversations} fleet={o.fleet} addresses={o.addresses}
         canOpenRequests={me.permissions.includes("quotation.send")}
         orders={o.orders as unknown as OrderRow[]} invoices={o.invoices as unknown as InvoiceRow[]}
-        canOpenOrders={me.permissions.includes("orders.deliver")} canOpenInvoices={me.permissions.includes("invoices.manage")} />
+        canOpenOrders={me.permissions.includes("orders.deliver")} canOpenInvoices={me.permissions.includes("invoices.manage")}
+        services={o.service_requests as unknown as ServiceRow[]} canOpenServices={me.permissions.includes("service.triage")} />
     </>
   );
 }

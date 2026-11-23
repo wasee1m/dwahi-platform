@@ -111,7 +111,11 @@ export async function updateStaffRoles(_prev: AdminState, form: FormData): Promi
   const l = lang(form);
   const r = await authed("admin", l, `/admin/staff/${encodeURIComponent(str(form, "id"))}`, {
     method: "PATCH",
-    body: { roles: form.getAll("roles").map(String), branch_code: str(form, "branch_code"), restrict_to_branch: form.get("restrict_to_branch") === "on" },
+    body: {
+      roles: form.getAll("roles").map(String), branch_code: str(form, "branch_code"), restrict_to_branch: form.get("restrict_to_branch") === "on",
+      // مهارات الفني لفلترة لوحة التوزيع (FR-WO-02)، مفصولة بفاصلة
+      skills: str(form, "skills").split(/[,،]/).map((s) => s.trim()).filter(Boolean),
+    },
   });
   if (!r.ok) return fail(r.error);
   revalidatePath(`/${l}/admin/users`);

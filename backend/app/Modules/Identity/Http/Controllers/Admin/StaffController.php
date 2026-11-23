@@ -50,6 +50,7 @@ class StaffController
                 'user_id' => $user->id, 'employee_no' => $data['employee_no'],
                 'branch_id' => Branch::query()->where('code', $data['branch_code'])->value('id'),
                 'restrict_to_branch' => (bool) ($data['restrict_to_branch'] ?? false),
+                'skills' => array_values(array_unique(array_filter(array_map('trim', $data['skills'] ?? [])))),
             ]);
             $user->syncRoles($data['roles']);
 
@@ -78,7 +79,10 @@ class StaffController
             if (isset($data['branch_code'])) {
                 $profile->branch_id = Branch::query()->where('code', $data['branch_code'])->value('id');
             }
-            foreach (['employee_no', 'restrict_to_branch'] as $k) {
+            if (array_key_exists('skills', $data)) {
+                $data['skills'] = array_values(array_unique(array_filter(array_map('trim', $data['skills'] ?? []))));
+            }
+            foreach (['employee_no', 'restrict_to_branch', 'skills'] as $k) {
                 if (array_key_exists($k, $data)) {
                     $profile->{$k} = $data[$k];
                 }
@@ -178,6 +182,9 @@ class StaffController
             'roles' => [$req, 'array', 'min:1'],
             'roles.*' => [Rule::in(array_keys(Permissions::ROLE_ABILITIES))],
             'restrict_to_branch' => ['sometimes', 'boolean'],
+            // مهارات الفني لفلترة لوحة التوزيع (FR-WO-02)، مثل "سلندرات هيدروليك"
+            'skills' => ['sometimes', 'array', 'max:20'],
+            'skills.*' => ['string', 'max:60'],
             'preferred_locale' => ['sometimes', Rule::in(['ar', 'en'])],
         ]);
     }
@@ -204,6 +211,8 @@ class StaffController
             'employee_no' => $p?->employee_no,
             'branch' => $p?->branch ? ['code' => $p->branch->code, 'name' => $p->branch->localized('name')] : null,
             'restrict_to_branch' => (bool) $p?->restrict_to_branch,
+            /** @var list<string> */
+            'skills' => $p?->skills ?? [],
             'roles' => $u->roleNames(),
             'two_factor_enabled' => $p?->totp_enabled_at !== null,
             'activated' => $u->password_hash !== null,

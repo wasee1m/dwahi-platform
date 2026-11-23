@@ -26,8 +26,11 @@ class QuotingNotifications implements ShouldHandleEventsAfterCommit
 
         match ($e->type) {
             QuotingEvent::RFQ_SUBMITTED => $this->submitted($rfq, $e->actor, $customerLink, $staffLink, $customerName),
-            QuotingEvent::QUOTATION_SENT => $this->notifier->notify($rfq->customerRecipients(), 'N-02',
-                ['number' => $q->number, 'rfq' => $rfq->number, 'total' => $total, 'valid_until' => $q->valid_until->format('Y-m-d')], $customerLink),
+            QuotingEvent::QUOTATION_SENT => $rfq->type === 'service'
+                ? ($q->fresh()?->status === 'sent' ? $this->notifier->notify($rfq->customerRecipients(), 'N-10',
+                    ['number' => $q->number, 'total' => $total, 'valid_until' => $q->valid_until->format('Y-m-d')], $customerLink) : null)
+                : $this->notifier->notify($rfq->customerRecipients(), 'N-02',
+                    ['number' => $q->number, 'rfq' => $rfq->number, 'total' => $total, 'valid_until' => $q->valid_until->format('Y-m-d')], $customerLink),
             QuotingEvent::QUOTATION_ACCEPTED => $this->toStaff($rfq, $q?->sent_by, 'accepted', $customerName, $staffLink, $q?->number),
             QuotingEvent::QUOTATION_REJECTED => $this->toStaff($rfq, $q?->sent_by, 'rejected', $customerName, $staffLink, $q?->number, $e->note),
             QuotingEvent::REVISION_REQUESTED => $this->toStaff($rfq, $q?->sent_by, 'revision', $customerName, $staffLink, $q?->number, $e->note),

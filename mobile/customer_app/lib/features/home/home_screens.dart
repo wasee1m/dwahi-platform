@@ -58,17 +58,16 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           IntrinsicHeight(child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             for (final (icon, label, route) in [
-              (Icons.build_outlined, s.requestService, null),
+              (Icons.build_outlined, s.requestService, '/service/new'),
               (Icons.search, s.findPart, '/parts'),
               (Icons.agriculture_outlined, s.browseEquipment, '/equipment'),
             ])
               Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: Card(child: InkWell(
-                onTap: route == null ? null : () => context.go(route),
+                onTap: () => route.startsWith('/service') ? context.push(route) : context.go(route),
                 child: Padding(padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8), child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Icon(icon, size: 32),
                   const SizedBox(height: 8),
                   Text(label, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700)),
-                  if (route == null) Text(s.soon, style: t.textTheme.bodySmall),
                 ])),
               )))),
           ])),

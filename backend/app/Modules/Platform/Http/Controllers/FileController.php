@@ -31,7 +31,7 @@ class FileController
     /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11). */
     public function upload(Request $request, Uploads $uploads): JsonResponse
     {
-        $request->validate(['file' => ['required', 'file', 'max:10240']]);
+        $request->validate(['file' => ['required', 'file', 'max:102400']]); // الحد لكل نوع في Uploads
         /** @var User $user */
         $user = $request->user();
         $a = $uploads->store($request->file('file'), 'private', $user);

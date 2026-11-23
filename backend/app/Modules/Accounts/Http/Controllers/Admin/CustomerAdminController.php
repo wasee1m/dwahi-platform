@@ -19,6 +19,8 @@ use App\Modules\Orders\Models\SalesOrder;
 use App\Modules\Platform\Support\Audit;
 use App\Modules\Quoting\Http\RfqPresenter;
 use App\Modules\Quoting\Models\Rfq;
+use App\Modules\Service\Http\ServicePresenter;
+use App\Modules\Service\Models\ServiceRequest;
 use App\Support\ApiProblem;
 use App\Support\OffsetCursor;
 use App\Support\Search;
@@ -29,7 +31,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-/** A-12 العملاء والشركات (FR-ADM-05، US-45، SM-7). الصيانة تنضم في S7. */
+/** A-12 العملاء والشركات (FR-ADM-05، US-45، SM-7) */
 class CustomerAdminController
 {
     private const PAGE = 30;
@@ -148,6 +150,7 @@ class CustomerAdminController
                 ->map(fn (CustomerEquipment $e) => AccountPresenter::equipment($e))->values(),
             'requests' => $this->requests(clone $rfqs),
             'orders' => $this->orders(SalesOrder::query()->where('customer_user_id', $u->id)),
+            'service_requests' => $this->services(ServiceRequest::query()->where('customer_user_id', $u->id)),
             'invoices' => $this->invoices(Invoice::query()->where('customer_user_id', $u->id)),
             'conversations' => $this->conversations(clone $rfqs),
             'notes' => $this->notes('user_id', $u->id),
@@ -168,6 +171,7 @@ class CustomerAdminController
                 ->map(fn (CustomerEquipment $e) => AccountPresenter::equipment($e))->values(),
             'requests' => $this->requests(clone $rfqs),
             'orders' => $this->orders(SalesOrder::query()->where('organization_id', $o->id)),
+            'service_requests' => $this->services(ServiceRequest::query()->where('organization_id', $o->id)),
             'invoices' => $this->invoices(Invoice::query()->where('organization_id', $o->id)),
             'conversations' => $this->conversations(clone $rfqs),
             'notes' => $this->notes('organization_id', $o->id),
@@ -272,6 +276,12 @@ class CustomerAdminController
     {
         return $orders->with(['items', 'branch', 'organization', 'customer'])->orderByDesc('created_at')->limit(self::RECENT)->get()
             ->map(fn (SalesOrder $o) => OrderPresenter::row($o, true))->values()->all();
+    }
+
+    private function services(Builder $requests): array
+    {
+        return $requests->with(ServicePresenter::WITH)->orderByDesc('created_at')->limit(self::RECENT)->get()
+            ->map(fn (ServiceRequest $s) => ServicePresenter::row($s, true))->values()->all();
     }
 
     /** الصادرة فقط، والمتأخرة معلّمة (BR-15) */

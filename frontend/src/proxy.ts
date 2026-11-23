@@ -21,7 +21,7 @@ function protectedArea(rest: string): Area | null {
   if (/^\/admin(\/|$)/.test(rest)) {
     return /^\/admin\/(login|set-password|forgot)(\/|$)/.test(rest) ? null : "admin";
   }
-  return /^\/(account|onboarding|cart|checkout)(\/|$)/.test(rest) ? "customer" : null;
+  return /^\/(account|onboarding|cart|checkout|service)(\/|$)/.test(rest) ? "customer" : null;
 }
 
 // طلبات متزامنة (مثل جلب الروابط مسبقاً) تحمل نفس رمز التحديث: نجدده مرة واحدة ونشارك النتيجة،

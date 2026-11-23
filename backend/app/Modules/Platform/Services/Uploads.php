@@ -22,6 +22,18 @@ final class Uploads
 
     public const DOC_TYPES = ['application/pdf' => 'pdf'];
 
+    /** فيديو العطل والتسجيل الصوتي (FR-SRV-01): للملفات الخاصة فقط، وحتى 100MB (NFR-11) */
+    public const MEDIA_TYPES = [
+        'video/mp4' => 'mp4', 'application/mp4' => 'mp4', 'video/quicktime' => 'mov', 'video/webm' => 'webm', 'video/3gpp' => '3gp',
+        'audio/mpeg' => 'mp3', 'audio/mp4' => 'm4a', 'audio/x-m4a' => 'm4a', 'audio/aac' => 'aac', 'audio/ogg' => 'ogg',
+        'audio/webm' => 'webm', 'audio/wav' => 'wav', 'audio/x-wav' => 'wav', 'audio/3gpp' => '3gp',
+    ];
+
+    /** الصور والمستندات حتى 10MB، والفيديو والصوت حتى 100MB (NFR-11) */
+    private const MAX_BYTES = 10 * 1024 * 1024;
+
+    private const MAX_MEDIA_BYTES = 100 * 1024 * 1024;
+
     /** أنواع يولدها النظام ولا يقبلها الرفع */
     private const GENERATED_TYPES = ['application/json' => 'json'];
 
@@ -30,9 +42,13 @@ final class Uploads
     public function store(UploadedFile $file, string $visibility, ?User $by): Attachment
     {
         $mime = (string) $file->getMimeType(); // finfo على المحتوى
-        $ext = self::IMAGE_TYPES[$mime] ?? self::DOC_TYPES[$mime] ?? null;
+        $media = $visibility === 'private' && isset(self::MEDIA_TYPES[$mime]);
+        $ext = self::IMAGE_TYPES[$mime] ?? self::DOC_TYPES[$mime] ?? ($media ? self::MEDIA_TYPES[$mime] : null);
         if (! $ext) {
-            throw ValidationException::withMessages(['file' => __('validation.mimetypes', ['attribute' => 'file', 'values' => 'jpg, png, pdf'])]);
+            throw ValidationException::withMessages(['file' => __('validation.mimetypes', ['attribute' => 'file', 'values' => $visibility === 'private' ? 'jpg, png, pdf, mp4, mov, m4a, mp3, ogg, webm' : 'jpg, png, pdf'])]);
+        }
+        if ((int) $file->getSize() > ($media ? self::MAX_MEDIA_BYTES : self::MAX_BYTES)) {
+            throw ValidationException::withMessages(['file' => __('validation.max.file', ['attribute' => 'file', 'max' => $media ? 102400 : 10240])]);
         }
 
         [$bytes, $width, $height] = isset(self::IMAGE_TYPES[$mime])

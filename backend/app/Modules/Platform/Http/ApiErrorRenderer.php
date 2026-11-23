@@ -75,6 +75,11 @@ final class ApiErrorRenderer
         'RETURN_WINDOW_CLOSED' => ['ar' => 'انتهت مدة الإرجاع أو لا توجد قطع قابلة للإرجاع.', 'en' => 'The return period ended or no items can be returned.'],
         'NO_PAYMENT_TO_REFUND' => ['ar' => 'لا توجد دفعة على الطلب لاستردادها.', 'en' => 'There is no payment on this order to refund.'],
         'ORDER_EXISTS' => ['ar' => 'أُنشئ طلب القطع لهذا العرض من قبل.', 'en' => 'A parts order already exists for this quote.'],
+        // الصيانة (S7)
+        'SERVICE_WORK_STARTED' => ['ar' => 'بدأ العمل على المعدة، فالإلغاء عبر المنسق. تواصل معنا.', 'en' => 'Work has started, so cancellation goes through the coordinator. Contact us.'],
+        'SCHEDULE_CONFLICT' => ['ar' => 'للفني مهمة في نفس الوقت. اختر وقتاً أو فنياً آخر، أو أكّد رغم التعارض.', 'en' => 'The technician has a task at the same time. Choose another time or technician, or confirm anyway.'],
+        'ALREADY_RECEIVED' => ['ar' => 'سُجّل استلام هذا الطلب من قبل.', 'en' => 'This request was already received.'],
+        'NOT_RECEIVED' => ['ar' => 'لم تُستلم المعدة في الورشة بعد (BR-20).', 'en' => 'The item has not been received at the workshop yet (BR-20).'],
     ];
 
     public static function render(Throwable $e): JsonResponse
