@@ -29,10 +29,17 @@ const cookieBase = { httpOnly: true, sameSite: "lax" as const, secure: process.e
 
 export async function staffLogin(_prev: AdminState, form: FormData): Promise<AdminState> {
   const l = lang(form);
-  const r = await api<{ mfa_token: string; setup_required: boolean; secret?: string; otpauth_url?: string }>("/auth/staff/login", {
+  const r = await api<{ mfa_token: string; setup_required: boolean; secret?: string; otpauth_url?: string } | (TokenPayload & { user: Me; two_factor_skipped: true })>("/auth/staff/login", {
     method: "POST", locale: l, body: { email: str(form, "email"), password: String(form.get("password") ?? "") },
   });
   if (!r.ok) return { step: "password", error: r.error };
+
+  // التطوير المحلي حين يُعطَّل التحقق الثنائي (STAFF_2FA_REQUIRED=false): الجلسة مباشرة
+  if ("two_factor_skipped" in r.data) {
+    await saveSession("admin", r.data);
+    const next = str(form, "next");
+    redirect(/^\/(ar|en)\/admin(\/|$)/.test(next) ? next : `/${l}/admin`);
+  }
 
   // رمز الخطوة الثانية في كوكي HttpOnly، لا في الصفحة
   (await cookies()).set(MFA_COOKIE, r.data.mfa_token, { ...cookieBase, maxAge: 300 });

@@ -5,6 +5,12 @@ use App\Models\User;
 return [
 
     /*
+    | التحقق الثنائي للوحة الإدارة إلزامي (NFR-08). يُعطَّل في التطوير المحلي فقط للتجربة (STAFF_2FA_REQUIRED=false)،
+    | ولا يُعطَّل في الإنتاج مهما كانت القيمة.
+    */
+    'staff_2fa_required' => env('APP_ENV') === 'production' || filter_var(env('STAFF_2FA_REQUIRED', true), FILTER_VALIDATE_BOOL),
+
+    /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------

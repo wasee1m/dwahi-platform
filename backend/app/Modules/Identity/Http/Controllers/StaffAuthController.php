@@ -37,6 +37,17 @@ class StaffAuthController
         $user = $this->checkCredentials(User::query()->where('email', $data['email']), $data['password']);
         $profile = $user->staffProfile;
 
+        // التطوير المحلي فقط: دخول بكلمة المرور دون الخطوة الثانية، ويُسجَّل في التدقيق
+        if (! config('auth.staff_2fa_required') && ! app()->isProduction()) {
+            Audit::record('auth.two_factor_skipped', 'user', $user->id, null, ['reason' => 'STAFF_2FA_REQUIRED=false'], $user);
+
+            return response()->json(['data' => [
+                ...$this->tokens->issue($user, 'admin', false, $request),
+                'user' => new MeResource($user),
+                'two_factor_skipped' => true,
+            ]]);
+        }
+
         $mfaToken = Str::random(64);
         $setup = $profile->totp_enabled_at === null;
         $secret = $setup ? $this->twoFactor->newSecret() : null;
