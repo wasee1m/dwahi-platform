@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, type ReactNode } from "react";
 import { hasLocale, intlLocale, type Locale } from "@/i18n/config";
 import { getContentPage } from "@/lib/api";
 import { alternates } from "@/lib/seo";
@@ -20,17 +20,18 @@ export async function cmsMetadata(params: Promise<{ lang: string }>, slug: strin
   };
 }
 
-export async function CmsPage({ params, slug }: { params: Promise<{ lang: string }>; slug: string }) {
+// children: optional content shown between the title and the page text (the owner card on About)
+export async function CmsPage({ params, slug, children }: { params: Promise<{ lang: string }>; slug: string; children?: ReactNode }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   return (
     <Suspense fallback={<Container className="py-10"><Skeleton className="h-96" /></Container>}>
-      <Body lang={lang} slug={slug} />
+      <Body lang={lang} slug={slug}>{children}</Body>
     </Suspense>
   );
 }
 
-async function Body({ lang, slug }: { lang: Locale; slug: string }) {
+async function Body({ lang, slug, children }: { lang: Locale; slug: string; children?: ReactNode }) {
   const page = await getContentPage(lang, slug);
   if (!page) notFound();
   const updated = new Intl.DateTimeFormat(intlLocale(lang), { dateStyle: "long", timeZone: "Asia/Muscat" }).format(new Date(page.updated_at));
@@ -43,6 +44,7 @@ async function Body({ lang, slug }: { lang: Locale; slug: string }) {
           <p className="mt-2 text-sm text-ink-muted"><time dateTime={page.updated_at}>{updated}</time></p>
         </Container>
       </div>
+      {children && <Container className="max-w-3xl pt-10">{children}</Container>}
       <Container className="max-w-3xl py-10">
         <Markdown source={page.body} />
       </Container>

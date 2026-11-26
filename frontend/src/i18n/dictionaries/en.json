@@ -148,6 +148,15 @@
     "days": { "sun": "Sunday", "mon": "Monday", "tue": "Tuesday", "wed": "Wednesday", "thu": "Thursday", "fri": "Friday", "sat": "Saturday" },
     "closed": "Closed"
   },
+  "owner": {
+    "label": "Company owner",
+    "name": "Ayman Al-Zahri",
+    "kunya": "Abu Abdulrahman",
+    "about": "Owner of DWAHI-ALBADIA: heavy equipment, spare parts and workshop repairs.",
+    "contact": "DWAHI-ALBADIA is owned by Ayman Al-Zahri (Abu Abdulrahman). Call us or message us on WhatsApp, or send your enquiry with the form.",
+    "call": "Call",
+    "whatsapp": "WhatsApp"
+  },
   "contact": {
     "title": "Contact us",
     "intro": "Send us your enquiry and our team will reply within one working day.",
