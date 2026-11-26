@@ -1,3 +1,4 @@
+import 'package:dwahi_ui/dwahi_ui.dart';
 import 'dart:io';
 
 import 'package:customer_app/core/api.dart';
@@ -48,6 +49,7 @@ Widget screen(FakeApi api, Widget child) => ProviderScope(
       retry: (_, _) => null,
       overrides: [apiProvider.overrideWithValue(api), tokenStoreProvider.overrideWithValue(SignedIn())],
       child: MaterialApp.router(
+        theme: dwTheme(Brightness.light), // the real theme, so theme-only layout bugs fail here too
         locale: const Locale('ar'),
         supportedLocales: const [Locale('ar'), Locale('en')],
         localizationsDelegates: GlobalMaterialLocalizations.delegates,

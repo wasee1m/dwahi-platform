@@ -272,7 +272,9 @@ class _NewServiceScreenState extends ConsumerState<NewServiceScreen> {
         controlsBuilder: (context, d) => Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Row(children: [
+            // The theme's full-width minimum size has no bound inside a Row, so give the button a finite one
             FilledButton(
+              style: FilledButton.styleFrom(minimumSize: const Size(120, 52)),
               onPressed: canNext ? () => step == 3 ? _send(account) : setState(() => step++) : null,
               child: Text(step == 3 ? s.sendRequest : s.nextStep),
             ),
@@ -313,7 +315,8 @@ class ServiceDetailScreen extends ConsumerWidget {
               if (r['status'] == 'awaiting_approval' && quote != null)
                 Card(child: ListTile(
                   title: Text('${quote['number'] ?? ''} · ${formatMoney(quote['total'] as Map<String, dynamic>?, lang)}'),
-                  trailing: FilledButton(onPressed: () => context.push('/requests/${estimate!['rfq_id']}'), child: Text(s.reviewEstimate)),
+                  trailing: FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(88, 52)),
+                      onPressed: () => context.push('/requests/${estimate!['rfq_id']}'), child: Text(s.reviewEstimate)),
                 )),
               const SizedBox(height: 8),
               Text(s.problemLabel, style: t.titleSmall),

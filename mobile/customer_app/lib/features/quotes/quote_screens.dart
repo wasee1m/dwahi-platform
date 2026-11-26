@@ -283,7 +283,7 @@ class _ReplyBarState extends ConsumerState<_ReplyBar> {
       content: TextField(controller: c, maxLines: 3, decoration: InputDecoration(labelText: label)),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx), child: Text(s.cancel)),
-        FilledButton(onPressed: () { if (!required || c.text.trim().isNotEmpty) Navigator.pop(ctx, c.text.trim()); }, child: Text(s.send)),
+        FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: () { if (!required || c.text.trim().isNotEmpty) Navigator.pop(ctx, c.text.trim()); }, child: Text(s.send)),
       ],
     ));
   }

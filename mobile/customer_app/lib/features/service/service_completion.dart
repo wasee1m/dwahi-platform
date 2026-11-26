@@ -43,7 +43,8 @@ class ServiceCompletion extends ConsumerWidget {
           title: Text('${s.additionalEstimate} · ${a['description']}'),
           subtitle: a['quotation'] == null ? null : Text(formatMoney((a['quotation'] as Map)['total'] as Map<String, dynamic>?, lang)),
           trailing: a['status'] == 'quoted' && a['rfq_id'] != null
-              ? FilledButton(onPressed: () => context.push('/requests/${a['rfq_id']}'), child: Text(s.reviewEstimate))
+              ? FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(88, 52)),
+                  onPressed: () => context.push('/requests/${a['rfq_id']}'), child: Text(s.reviewEstimate))
               : Text(s.additionalStatus('${a['status']}')),
         ),
       for (final r in reports)

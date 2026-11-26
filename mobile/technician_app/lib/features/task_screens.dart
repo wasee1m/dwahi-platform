@@ -285,7 +285,9 @@ class _ScanScreenState extends ConsumerState<ScanScreen> {
                   decoration: InputDecoration(labelText: s.cardNumber, hintText: 'RC-2026-000001'), onSubmitted: _open),
             ),
             const SizedBox(width: 8),
-            FilledButton(onPressed: _busy ? null : () => _open(_number.text), child: Text(s.open)),
+            // The theme's full-width minimum size has no bound inside a Row, so give the button a finite one
+            FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(88, 52)),
+                onPressed: _busy ? null : () => _open(_number.text), child: Text(s.open)),
           ]),
         ),
       ]),
@@ -515,9 +517,9 @@ class _ExecutionCard extends ConsumerWidget {
     final action = !t.assigned
         ? null
         : switch (t.status) {
-            'scheduled' => FilledButton.icon(key: const Key('start'), onPressed: blocked == null ? onStart : null, icon: const Icon(Icons.play_arrow), label: Text(s.start)),
-            'in_progress' => FilledButton.tonalIcon(key: const Key('pause'), onPressed: onPause, icon: const Icon(Icons.pause), label: Text(s.pause)),
-            'on_hold' => FilledButton.icon(key: const Key('resume'), onPressed: onStart, icon: const Icon(Icons.play_arrow), label: Text(s.resume)),
+            'scheduled' => FilledButton.icon(key: const Key('start'), style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: blocked == null ? onStart : null, icon: const Icon(Icons.play_arrow), label: Text(s.start)),
+            'in_progress' => FilledButton.tonalIcon(key: const Key('pause'), style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: onPause, icon: const Icon(Icons.pause), label: Text(s.pause)),
+            'on_hold' => FilledButton.icon(key: const Key('resume'), style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: onStart, icon: const Icon(Icons.play_arrow), label: Text(s.resume)),
             _ => null,
           };
     return Card(
@@ -667,7 +669,7 @@ class _TextDialogState extends State<_TextDialog> {
           decoration: InputDecoration(helperText: s.noteHint)),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: Text(s.cancel)),
-        FilledButton(onPressed: () => Navigator.pop(context, _c.text), child: Text(s.save)),
+        FilledButton(style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: () => Navigator.pop(context, _c.text), child: Text(s.save)),
       ],
     );
   }
@@ -723,7 +725,7 @@ class _MeterDialogState extends State<_MeterDialog> {
       ]),
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: Text(s.cancel)),
-        FilledButton(key: const Key('save-reading'), onPressed: value == null || value < 0 ? null : () => Navigator.pop(context, (value, _photo)), child: Text(s.save)),
+        FilledButton(key: const Key('save-reading'), style: FilledButton.styleFrom(minimumSize: const Size(88, 52)), onPressed: value == null || value < 0 ? null : () => Navigator.pop(context, (value, _photo)), child: Text(s.save)),
       ],
     );
   }

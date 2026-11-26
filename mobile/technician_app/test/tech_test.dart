@@ -1,3 +1,4 @@
+import 'package:dwahi_ui/dwahi_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,6 +139,7 @@ Map<String, Object> responses({Map<String, dynamic>? d}) => {
 Widget app(FakeApi api, MemoryOutboxStore store, Widget child, {List<Override> extra = const []}) => ProviderScope(
       overrides: [apiProvider.overrideWithValue(api), outboxStoreProvider.overrideWithValue(store), tokenStoreProvider.overrideWithValue(api.tokens), ...extra],
       child: MaterialApp.router(
+        theme: dwTheme(Brightness.light), // the real theme, so theme-only layout bugs fail here too
         locale: const Locale('ar'),
         supportedLocales: const [Locale('ar'), Locale('en')],
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
@@ -264,7 +266,7 @@ void main() {
 
     await tester.pumpWidget(UncontrolledProviderScope(
       container: container,
-      child: const MaterialApp(locale: Locale('ar'), supportedLocales: [Locale('ar')], localizationsDelegates: GlobalMaterialLocalizations.delegates, home: SyncScreen()),
+      child: MaterialApp(theme: dwTheme(Brightness.light), locale: const Locale('ar'), supportedLocales: const [Locale('ar')], localizationsDelegates: GlobalMaterialLocalizations.delegates, home: const SyncScreen()),
     ));
     await tester.pumpAndSettle();
     expect(find.text('رفضها الخادم'), findsOneWidget);
@@ -376,7 +378,7 @@ void main() {
 
     await tester.pumpWidget(UncontrolledProviderScope(
       container: container,
-      child: const MaterialApp(locale: Locale('ar'), supportedLocales: [Locale('ar')], localizationsDelegates: GlobalMaterialLocalizations.delegates, home: AccountScreen()),
+      child: MaterialApp(theme: dwTheme(Brightness.light), locale: const Locale('ar'), supportedLocales: const [Locale('ar')], localizationsDelegates: GlobalMaterialLocalizations.delegates, home: const AccountScreen()),
     ));
     await tester.pumpAndSettle();
     expect(find.text('سلندرات هيدروليك'), findsOneWidget);
