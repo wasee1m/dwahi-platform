@@ -22,6 +22,8 @@ use App\Modules\Notifications\Push\PushSender;
 use App\Modules\Orders\Console\OrderJobs;
 use App\Modules\Orders\Events\OrderEvent;
 use App\Modules\Orders\Listeners\QuoteAccepted;
+use App\Modules\Platform\Security\ClamavScanner;
+use App\Modules\Platform\Security\VirusScanner;
 use App\Modules\Quoting\Events\QuotingEvent;
 use App\Modules\Service\Console\ServiceJobs;
 use App\Modules\Service\Events\ServiceEvent;
@@ -43,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // فاحص البرمجيات الخبيثة (NFR-11)
+        $this->app->bind(VirusScanner::class, fn () => new ClamavScanner(
+            (string) config('services.antivirus.host'), (int) config('services.antivirus.port'),
+        ));
         // مزود SMS (FR-INT-02): السجل في التطوير حتى تختار الشركة المزود (Q-04)
         $this->app->singleton(SmsSender::class, fn () => match (config('services.sms.driver')) {
             default => new LogSmsSender,

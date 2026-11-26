@@ -35,6 +35,13 @@ return [
         'log_channel' => env('SMS_LOG_CHANNEL', 'stack'),
     ],
 
+    // فحص البرمجيات الخبيثة للملفات المرفوعة (NFR-11): none في التطوير، و clamav مع خدمة clamd في الإنتاج
+    'antivirus' => [
+        'driver' => env('ANTIVIRUS_DRIVER', 'none'),
+        'host' => env('CLAMAV_HOST', 'clamav'),
+        'port' => (int) env('CLAMAV_PORT', 3310),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

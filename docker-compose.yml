@@ -77,6 +77,13 @@ services:
     depends_on:
       - api
 
+  # فحص الملفات المرفوعة (NFR-11)، اختياري في التطوير: docker compose --profile av up، مع ANTIVIRUS_DRIVER=clamav
+  clamav:
+    image: clamav/clamav:1.4
+    profiles: ["av"]
+    ports:
+      - "3310:3310"
+
 volumes:
   mysql-data:
   redis-data:

@@ -62,7 +62,7 @@ export interface paths {
         };
         get: operations["branchAdmin.index"];
         put?: never;
-        post: operations["modules.platform.admin.branchAdmin.save_235"];
+        post: operations["modules.platform.admin.branchAdmin.save_236"];
         delete?: never;
         options?: never;
         head?: never;
@@ -77,7 +77,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.platform.admin.branchAdmin.save_236"];
+        put: operations["modules.platform.admin.branchAdmin.save_237"];
         post?: never;
         delete?: never;
         options?: never;
@@ -178,7 +178,7 @@ export interface paths {
         };
         get: operations["catalogSetup.brands"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveBrand_201"];
+        post: operations["modules.catalog.admin.catalogSetup.saveBrand_202"];
         delete?: never;
         options?: never;
         head?: never;
@@ -194,7 +194,7 @@ export interface paths {
         };
         get: operations["catalogSetup.categories"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveCategory_203"];
+        post: operations["modules.catalog.admin.catalogSetup.saveCategory_204"];
         delete?: never;
         options?: never;
         head?: never;
@@ -210,7 +210,7 @@ export interface paths {
         };
         get: operations["catalogSetup.models"];
         put?: never;
-        post: operations["modules.catalog.admin.catalogSetup.saveModel_205"];
+        post: operations["modules.catalog.admin.catalogSetup.saveModel_206"];
         delete?: never;
         options?: never;
         head?: never;
@@ -225,7 +225,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveBrand_202"];
+        put: operations["modules.catalog.admin.catalogSetup.saveBrand_203"];
         post?: never;
         delete?: never;
         options?: never;
@@ -241,7 +241,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveCategory_204"];
+        put: operations["modules.catalog.admin.catalogSetup.saveCategory_205"];
         post?: never;
         delete?: never;
         options?: never;
@@ -257,7 +257,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.catalog.admin.catalogSetup.saveModel_206"];
+        put: operations["modules.catalog.admin.catalogSetup.saveModel_207"];
         post?: never;
         delete?: never;
         options?: never;
@@ -425,7 +425,7 @@ export interface paths {
         };
         get: operations["contentAdmin.pages"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.savePage_218"];
+        post: operations["modules.content.admin.contentAdmin.savePage_219"];
         delete?: never;
         options?: never;
         head?: never;
@@ -440,7 +440,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["contentAdmin.page"];
-        put: operations["modules.content.admin.contentAdmin.savePage_220"];
+        put: operations["modules.content.admin.contentAdmin.savePage_221"];
         post?: never;
         delete?: never;
         options?: never;
@@ -457,7 +457,7 @@ export interface paths {
         };
         get: operations["contentAdmin.faqs"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveFaq_222"];
+        post: operations["modules.content.admin.contentAdmin.saveFaq_223"];
         delete?: never;
         options?: never;
         head?: never;
@@ -489,7 +489,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveFaq_224"];
+        put: operations["modules.content.admin.contentAdmin.saveFaq_225"];
         post?: never;
         delete?: never;
         options?: never;
@@ -506,7 +506,7 @@ export interface paths {
         };
         get: operations["contentAdmin.banners"];
         put?: never;
-        post: operations["modules.content.admin.contentAdmin.saveBanner_226"];
+        post: operations["modules.content.admin.contentAdmin.saveBanner_227"];
         delete?: never;
         options?: never;
         head?: never;
@@ -521,7 +521,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["modules.content.admin.contentAdmin.saveBanner_227"];
+        put: operations["modules.content.admin.contentAdmin.saveBanner_228"];
         post?: never;
         delete?: never;
         options?: never;
@@ -936,7 +936,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_34"];
+        post: operations["modules.platform.file.upload_35"];
         delete?: never;
         options?: never;
         head?: never;
@@ -970,7 +970,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_103"];
+        post: operations["modules.platform.file.upload_104"];
         delete?: never;
         options?: never;
         head?: never;
@@ -987,7 +987,7 @@ export interface paths {
         get?: never;
         put?: never;
         /** POST /me/uploads: صور القطع والسلندر وأمر الشراء ومرفقات الرسائل. خاصة دائماً (NFR-11) */
-        post: operations["modules.platform.file.upload_136"];
+        post: operations["modules.platform.file.upload_137"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1247,6 +1247,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform.health"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/invoices": {
         parameters: {
             query?: never;
@@ -1454,7 +1470,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_92"];
+        get: operations["modules.notifications.notification.index_93"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1471,7 +1487,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_93"];
+        get: operations["modules.notifications.notification.count_94"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1489,7 +1505,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_94"];
+        post: operations["modules.notifications.notification.readAll_95"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1505,7 +1521,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_95"];
+        post: operations["modules.notifications.notification.read_96"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1519,7 +1535,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["modules.notifications.notification.index_117"];
+        get: operations["modules.notifications.notification.index_118"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1536,7 +1552,7 @@ export interface paths {
             cookie?: never;
         };
         /** للعداد في رأس الصفحة والتطبيق */
-        get: operations["modules.notifications.notification.count_118"];
+        get: operations["modules.notifications.notification.count_119"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1554,7 +1570,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.readAll_119"];
+        post: operations["modules.notifications.notification.readAll_120"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1570,7 +1586,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["modules.notifications.notification.read_120"];
+        post: operations["modules.notifications.notification.read_121"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3953,7 +3969,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_235": {
+    "modules.platform.admin.branchAdmin.save_236": {
         parameters: {
             query?: never;
             header?: never;
@@ -4009,7 +4025,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.admin.branchAdmin.save_236": {
+    "modules.platform.admin.branchAdmin.save_237": {
         parameters: {
             query?: never;
             header?: never;
@@ -4684,7 +4700,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_201": {
+    "modules.catalog.admin.catalogSetup.saveBrand_202": {
         parameters: {
             query?: never;
             header?: never;
@@ -4766,7 +4782,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_203": {
+    "modules.catalog.admin.catalogSetup.saveCategory_204": {
         parameters: {
             query?: never;
             header?: never;
@@ -4863,7 +4879,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_205": {
+    "modules.catalog.admin.catalogSetup.saveModel_206": {
         parameters: {
             query?: never;
             header?: never;
@@ -4921,7 +4937,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveBrand_202": {
+    "modules.catalog.admin.catalogSetup.saveBrand_203": {
         parameters: {
             query?: never;
             header?: never;
@@ -4970,7 +4986,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveCategory_204": {
+    "modules.catalog.admin.catalogSetup.saveCategory_205": {
         parameters: {
             query?: never;
             header?: never;
@@ -5018,7 +5034,7 @@ export interface operations {
             };
         };
     };
-    "modules.catalog.admin.catalogSetup.saveModel_206": {
+    "modules.catalog.admin.catalogSetup.saveModel_207": {
         parameters: {
             query?: never;
             header?: never;
@@ -5557,7 +5573,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_218": {
+    "modules.content.admin.contentAdmin.savePage_219": {
         parameters: {
             query?: never;
             header?: never;
@@ -5658,7 +5674,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.savePage_220": {
+    "modules.content.admin.contentAdmin.savePage_221": {
         parameters: {
             query?: never;
             header?: never;
@@ -5746,7 +5762,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_222": {
+    "modules.content.admin.contentAdmin.saveFaq_223": {
         parameters: {
             query?: never;
             header?: never;
@@ -5835,7 +5851,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveFaq_224": {
+    "modules.content.admin.contentAdmin.saveFaq_225": {
         parameters: {
             query?: never;
             header?: never;
@@ -5936,7 +5952,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_226": {
+    "modules.content.admin.contentAdmin.saveBanner_227": {
         parameters: {
             query?: never;
             header?: never;
@@ -5990,7 +6006,7 @@ export interface operations {
             };
         };
     };
-    "modules.content.admin.contentAdmin.saveBanner_227": {
+    "modules.content.admin.contentAdmin.saveBanner_228": {
         parameters: {
             query?: never;
             header?: never;
@@ -9373,7 +9389,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_34": {
+    "modules.platform.file.upload_35": {
         parameters: {
             query?: never;
             header?: never;
@@ -9460,7 +9476,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_103": {
+    "modules.platform.file.upload_104": {
         parameters: {
             query?: never;
             header?: never;
@@ -9513,7 +9529,7 @@ export interface operations {
             };
         };
     };
-    "modules.platform.file.upload_136": {
+    "modules.platform.file.upload_137": {
         parameters: {
             query?: never;
             header?: never;
@@ -10622,6 +10638,37 @@ export interface operations {
             };
         };
     };
+    "platform.health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
     "invoice.index": {
         parameters: {
             query?: {
@@ -11327,7 +11374,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_92": {
+    "modules.notifications.notification.index_93": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -11377,7 +11424,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_93": {
+    "modules.notifications.notification.count_94": {
         parameters: {
             query?: never;
             header?: never;
@@ -11413,7 +11460,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_94": {
+    "modules.notifications.notification.readAll_95": {
         parameters: {
             query?: never;
             header?: never;
@@ -11449,7 +11496,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_95": {
+    "modules.notifications.notification.read_96": {
         parameters: {
             query?: never;
             header?: never;
@@ -11488,7 +11535,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.index_117": {
+    "modules.notifications.notification.index_118": {
         parameters: {
             query?: {
                 category?: "quotes" | "orders" | "service" | "messages" | "marketing" | null;
@@ -11538,7 +11585,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.count_118": {
+    "modules.notifications.notification.count_119": {
         parameters: {
             query?: never;
             header?: never;
@@ -11574,7 +11621,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.readAll_119": {
+    "modules.notifications.notification.readAll_120": {
         parameters: {
             query?: never;
             header?: never;
@@ -11610,7 +11657,7 @@ export interface operations {
             };
         };
     };
-    "modules.notifications.notification.read_120": {
+    "modules.notifications.notification.read_121": {
         parameters: {
             query?: never;
             header?: never;

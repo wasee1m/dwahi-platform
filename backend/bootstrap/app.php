@@ -5,6 +5,7 @@ use App\Modules\Identity\Console\ResetTwoFactor;
 use App\Modules\Identity\Http\Middleware\EnsureActiveSession;
 use App\Modules\Platform\Http\ApiErrorRenderer;
 use App\Modules\Platform\Http\Middleware\AssignTraceId;
+use App\Modules\Platform\Http\Middleware\SecurityHeaders;
 use App\Modules\Platform\Http\Middleware\SetLocaleFromHeader;
 use App\Modules\Quoting\Console\QuotationJobs;
 use Illuminate\Foundation\Application;
@@ -25,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         QuotationJobs::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->api(prepend: [AssignTraceId::class, SetLocaleFromHeader::class]);
+        $middleware->api(prepend: [AssignTraceId::class, SecurityHeaders::class, SetLocaleFromHeader::class]);
         // خادم Next.js (والموازن في الإنتاج) يمرر عنوان المستخدم الحقيقي. الثقة بعناوين محددة فقط، لا "*" في الإنتاج
         $middleware->trustProxies(at: array_filter(explode(',', (string) env('TRUSTED_PROXIES', ''))));
         $middleware->alias(['ensure.session' => EnsureActiveSession::class]);

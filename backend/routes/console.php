@@ -1,8 +1,12 @@
 <?php
 
+use App\Modules\Platform\Http\Controllers\HealthController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schedule;
 
 // المهام المجدولة (02 §9). كلها متكررة الأمان، و onOneServer لأن Scheduler نسخة واحدة (04 §9).
+// نبضة المجدول لفحص الصحة (NFR-20)
+Schedule::call(fn () => Cache::put(HealthController::HEARTBEAT, now()->toIso8601ZuluString(), now()->addHour()))->everyMinute()->name('health-heartbeat')->onOneServer();
 Schedule::command('orders:run expire')->everyFiveMinutes()->onOneServer()->withoutOverlapping(); // J-01
 Schedule::command('service:run sla')->everyFiveMinutes()->onOneServer()->withoutOverlapping(); // J-04
 Schedule::command('service:run reviews')->hourly()->onOneServer()->withoutOverlapping(); // J-05

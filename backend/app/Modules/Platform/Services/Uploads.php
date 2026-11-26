@@ -3,6 +3,7 @@
 namespace App\Modules\Platform\Services;
 
 use App\Models\User;
+use App\Modules\Platform\Jobs\ScanAttachment;
 use App\Modules\Platform\Models\Attachment;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -58,7 +59,7 @@ final class Uploads
         $key = sprintf('uploads/%s/%s.%s', now()->format('Y/m'), Str::uuid7(), $ext);
         Storage::disk($visibility === 'public' ? 'public' : 'local')->put($key, $bytes);
 
-        return Attachment::query()->create([
+        $attachment = Attachment::query()->create([
             'storage_key' => $key,
             'original_name' => substr($file->getClientOriginalName(), 0, 255),
             'mime_type' => $mime,
@@ -71,6 +72,11 @@ final class Uploads
             'uploaded_by' => $by?->id,
             'created_at' => now(),
         ]);
+        if ($attachment->scan_status === 'pending') {
+            ScanAttachment::dispatch($attachment->id)->afterCommit();
+        }
+
+        return $attachment;
     }
 
     /** ملف يولده النظام (PDF العروض والفواتير): لا يحتاج فحصاً، ويُحفظ خاصاً */

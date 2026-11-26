@@ -10,6 +10,21 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  // ترويسات الأمان (NFR-06، OWASP ASVS V14): لا تضمين في إطار، ولا تخمين للنوع، وHTTPS دائماً في الإنتاج،
+  // والميكروفون (الملاحظة الصوتية) والموقع (دبوس العنوان) لهذا الموقع فقط
+  async headers() {
+    return [{
+      source: "/:path*",
+      headers: [
+        { key: "X-Frame-Options", value: "DENY" },
+        { key: "Content-Security-Policy", value: "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+        { key: "Permissions-Policy", value: "camera=(), microphone=(self), geolocation=(self), payment=()" },
+        ...(process.env.NODE_ENV === "production" ? [{ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" }] : []),
+      ],
+    }];
+  },
   // صور المعدات (حتى 10MB) وملفات استيراد القطع تمر عبر Server Actions (04 §8.2)
   experimental: { serverActions: { bodySizeLimit: "110mb" } },
   images: {

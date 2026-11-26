@@ -38,6 +38,7 @@ use App\Modules\Platform\Http\Controllers\Admin\BranchAdminController;
 use App\Modules\Platform\Http\Controllers\Admin\SettingsController;
 use App\Modules\Platform\Http\Controllers\Admin\UploadController;
 use App\Modules\Platform\Http\Controllers\FileController;
+use App\Modules\Platform\Http\Controllers\HealthController;
 use App\Modules\Quoting\Http\Controllers\Admin\QuotationAdminController;
 use App\Modules\Quoting\Http\Controllers\Admin\RfqAdminController;
 use App\Modules\Quoting\Http\Controllers\RfqController;
@@ -53,6 +54,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     // ---------- عام: الموقع والتطبيق دون تسجيل دخول ----------
     Route::middleware('throttle:public')->group(function () {
+        Route::get('health', HealthController::class); // المراقبة الخارجية (NFR-04، NFR-20)
         Route::get('equipment', [EquipmentController::class, 'index']);
         Route::get('equipment/facets', [EquipmentController::class, 'facets']);
         Route::get('equipment/{slug}', [EquipmentController::class, 'show']);
